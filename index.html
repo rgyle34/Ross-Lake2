@@ -6,1351 +6,647 @@
 <title>Ross Lake — Wilderness Fishing Adventure</title>
 
 <style>
-* { box-sizing:border-box; }
-
-:root {
-  --gold:#ffd675;
-  --panel:#102b2b;
-  --green:#315b42;
-}
-
-html,body {
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#07191d;
-  color:#fff;
-  font-family:system-ui,-apple-system,Arial,sans-serif;
-}
-
-button {
-  font:inherit;
-  cursor:pointer;
-  touch-action:manipulation;
-  -webkit-tap-highlight-color:transparent;
-}
-
-#app {
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-}
-
-#topbar {
-  flex-shrink:0;
-  text-align:center;
-  padding:7px 8px;
-  background:#0b2022;
-  border-bottom:1px solid #45605a;
-  z-index:2;
-}
-
-h1 {
-  color:var(--gold);
-  font-size:clamp(18px,4vw,25px);
-  letter-spacing:2px;
-  margin:0;
-}
-
-.subtitle {
-  font-size:9px;
-  letter-spacing:3px;
-  color:#c8d9ce;
-}
-
-#stats {
-  display:flex;
-  gap:14px;
-  justify-content:center;
-  flex-wrap:wrap;
-  font-size:11px;
-  margin-top:4px;
-}
-
-#scene {
-  position:relative;
-  flex:1;
-  min-height:0;
-  overflow:hidden;
-}
-
-#gameCanvas {
-  width:100%;
-  height:100%;
-  display:block;
-}
-
-#hud {
-  position:absolute;
-  top:8px;
-  left:8px;
-  right:8px;
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  pointer-events:none;
-}
-
-.hudCard {
-  width:min(43%,170px);
-  background:rgba(5,25,28,.82);
-  border:1px solid rgba(255,255,255,.2);
-  border-radius:9px;
-  padding:7px 9px;
-  font-size:11px;
-}
-
-.hudLabel {
-  color:#c5d9d1;
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-}
-
-.bar {
-  height:8px;
-  background:#263d3a;
-  border-radius:10px;
-  overflow:hidden;
-  margin:4px 0;
-}
-
-.fill {
-  height:100%;
-  width:0%;
-  border-radius:10px;
-  transition:width .12s;
-}
-
-#tensionFill { background:#69d6a0; }
-#staminaFill { background:#ffd36a; }
-
-#message {
-  position:absolute;
-  z-index:3;
-  left:50%;
-  top:45%;
-  transform:translate(-50%,-50%);
-  width:min(88%,390px);
-  padding:13px;
-  text-align:center;
-  line-height:1.5;
-  font-size:13px;
-  border-radius:12px;
-  background:rgba(5,23,25,.9);
-  border:1px solid rgba(255,255,255,.2);
-  box-shadow:0 5px 25px #0004;
-  pointer-events:none;
-}
-
-#message strong {
-  color:var(--gold);
-  font-size:18px;
-}
-
-.hidden { display:none!important; }
-
-#controls {
-  flex-shrink:0;
-  background:#091b1d;
-  border-top:1px solid #354e48;
-  padding:7px 9px max(9px,env(safe-area-inset-bottom));
-}
-
-#status {
-  text-align:center;
-  min-height:18px;
-  margin-bottom:6px;
-  color:#d6e3da;
-  font-size:11px;
-}
-
-.buttonRow {
-  display:none;
-  gap:7px;
-  width:100%;
-  max-width:700px;
-  margin:auto;
-}
-
-.buttonRow.active { display:flex; }
-
-.action {
-  flex:1;
-  min-width:0;
-  min-height:47px;
-  padding:7px 4px;
-  border:1px solid #55736a;
-  border-radius:9px;
-  background:#27483d;
-  color:white;
-  font-weight:800;
-  font-size:clamp(10px,2.7vw,13px);
-}
-
-.action.primary {
-  background:linear-gradient(#ffe394,#e5a943);
-  color:#19261d;
-  border-color:#fff0bd;
-}
-
-.action:active { transform:scale(.98); }
-
-#footerNote {
-  text-align:center;
-  font-size:9px;
-  color:#a9c0b5;
-  margin-top:6px;
-}
-
-.overlay {
-  position:absolute;
-  z-index:10;
-  inset:0;
-  overflow:auto;
-  background:linear-gradient(#102f32f2,#07191dfc);
-  padding:12px;
-}
-
-.overlay h2 {
-  text-align:center;
-  color:var(--gold);
-  margin:4px 0;
-  letter-spacing:2px;
-}
-
-.intro {
-  text-align:center;
-  font-size:12px;
-  color:#d0dfd5;
-  margin:4px 0 12px;
-}
-
-#anglerGrid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:9px;
-  width:min(100%,650px);
-  margin:auto;
-}
-
-.anglerCard {
-  padding:8px;
-  background:#234437;
-  color:white;
-  text-align:left;
-  border:2px solid #426455;
-  border-radius:11px;
-}
-
-.anglerCard.selected {
-  border-color:var(--gold);
-  background:#345b40;
-}
-
-.portrait {
-  display:block;
-  width:100%;
-  height:90px;
-  border-radius:7px;
-  background:#91b4b0;
-  margin-bottom:6px;
-}
-
-.anglerCard strong {
-  color:var(--gold);
-  font-size:15px;
-}
-
-.anglerCard p {
-  font-size:10px;
-  line-height:1.35;
-  margin:3px 0 0;
-}
-
-#startButton,#closeJournal {
-  display:block;
-  width:min(100%,340px);
-  min-height:47px;
-  margin:13px auto 3px;
-  background:linear-gradient(#ffe394,#dfa13b);
-  border:0;
-  border-radius:10px;
-  color:#17251d;
-  font-weight:900;
-}
-
-#journalScreen { display:none; }
-
-#journalList {
-  max-width:500px;
-  margin:10px auto;
-}
-
-.catchEntry {
-  background:#ffffff12;
-  border:1px solid #ffffff18;
-  border-radius:8px;
-  padding:9px;
-  margin:6px 0;
-  font-size:12px;
-}
-
-@media(max-height:650px) {
-  #topbar { padding:4px; }
-  #controls { padding-top:4px; }
-  .action { min-height:40px; }
-  #status { margin-bottom:3px; }
-  .portrait { height:66px; }
-  .overlay { padding-top:5px; }
+*{box-sizing:border-box}
+:root{--gold:#ffdb83;--panel:#102c30}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07191e;color:white;font-family:system-ui,Arial,sans-serif}
+button{font:inherit;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#app{height:100%;display:flex;flex-direction:column}
+header{flex-shrink:0;text-align:center;background:#0b2226;padding:5px;border-bottom:1px solid #55716a}
+h1{font-size:22px;letter-spacing:3px;color:var(--gold);margin:0}
+.subtitle{font-size:9px;letter-spacing:3px}
+#stats{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;font-size:11px;margin-top:4px}
+#scene{flex:1;min-height:0;position:relative;overflow:hidden}
+canvas#world{width:100%;height:100%;display:block}
+#message{position:absolute;left:50%;top:20%;transform:translateX(-50%);z-index:3;background:#071d20eF;border:1px solid #91b9a0;border-radius:10px;padding:10px 15px;text-align:center;width:max-content;max-width:90%;font-size:12px;line-height:1.5;pointer-events:none}
+#message strong{display:block;color:var(--gold);font-size:17px}
+.hidden{display:none!important}
+#hud{position:absolute;top:7px;left:7px;right:7px;display:flex;justify-content:space-between;gap:8px;pointer-events:none}
+.meter{background:#071e22d9;border:1px solid #ffffff38;border-radius:8px;padding:6px;width:145px;max-width:45%;font-size:10px}
+.meterLabel{font-size:9px;color:#c6dbd1}
+.bar{height:7px;border-radius:9px;background:#314b48;overflow:hidden;margin:3px 0}
+.fill{height:100%;width:0%;transition:width .1s}
+#tensionFill{background:#71dfa4}
+#staminaFill{background:#ffcf68}
+#controls{flex-shrink:0;padding:6px 8px max(8px,env(safe-area-inset-bottom));background:#091d20;border-top:1px solid #466259}
+#status{font-size:11px;text-align:center;min-height:18px;margin-bottom:5px;color:#d7e4da}
+.row{display:none;gap:7px;max-width:650px;margin:auto}
+.row.active{display:flex}
+.action{flex:1;min-width:0;min-height:44px;border:1px solid #597568;border-radius:9px;background:#294b3f;color:white;font-size:12px;font-weight:800;padding:5px}
+.primary{background:linear-gradient(#ffe8a7,#e9b54e);color:#1b2b23;border-color:#fff0c1}
+#footnote{text-align:center;color:#9cb6aa;font-size:9px;margin-top:4px}
+.overlay{position:absolute;z-index:10;inset:0;overflow:auto;background:linear-gradient(#153a3beF,#071a1efC);padding:10px}
+.overlay h2{text-align:center;color:var(--gold);letter-spacing:2px;margin:4px}
+.intro{text-align:center;font-size:12px;color:#d3e3d8}
+#anglerGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;max-width:620px;margin:auto}
+.angler{background:#23483a;color:white;border:2px solid #557462;border-radius:10px;padding:7px;text-align:left}
+.angler.selected{border-color:var(--gold);background:#365d43}
+.portrait{display:block;width:100%;height:70px;border-radius:6px;margin-bottom:5px;background:#8cb7b7}
+.angler strong{color:var(--gold)}
+.angler p{font-size:10px;margin:3px 0}
+.bigButton{display:block;width:min(100%,320px);min-height:44px;margin:12px auto;background:linear-gradient(#ffe8a7,#e9b54e);color:#17271e;border:0;border-radius:9px;font-weight:900}
+#catchScreen,#journalScreen{display:none;background:#061b20f5}
+.catchCard{max-width:430px;margin:5px auto 12px;background:#173a37;border:1px solid #6d9883;border-radius:13px;overflow:hidden;text-align:center}
+#catchCanvas{display:block;width:100%;height:230px;background:#174c55}
+.catchTitle{font-size:23px;color:var(--gold);font-weight:900;margin:8px 5px 0}
+.catchSpecies{font-size:14px;margin:2px}
+.catchStats{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:10px}
+.catchStat{background:#ffffff12;border-radius:8px;padding:8px 3px}
+.catchStat strong{display:block;color:var(--gold);font-size:17px}
+.catchStat span{font-size:9px;color:#d3e4d9}
+.catchBy{font-size:11px;color:#d5e3d9;padding-bottom:12px}
+#journalList{max-width:450px;margin:10px auto}
+.entry{background:#ffffff12;border:1px solid #ffffff20;border-radius:8px;padding:9px;margin:6px 0;font-size:12px}
+@media(max-height:620px){
+ h1{font-size:18px}header{padding:3px}
+ .portrait{height:52px}.action{min-height:38px}
+ #catchCanvas{height:160px}.overlay{padding:5px}
 }
 </style>
 </head>
 
 <body>
 <div id="app">
-
-<header id="topbar">
-  <h1>ROSS LAKE</h1>
-  <div class="subtitle">WILDERNESS FISHING ADVENTURE</div>
-  <div id="stats">
-    <span>🎣 <b id="anglerName">Choose Angler</b></span>
-    <span>🐟 Caught: <b id="caughtCount">0</b></span>
-    <span>🏆 Best: <b id="bestCatch">—</b></span>
-  </div>
+<header>
+<h1>ROSS LAKE</h1>
+<div class="subtitle">WILDERNESS FISHING ADVENTURE</div>
+<div id="stats">
+<span>🎣 <b id="anglerName">Choose Angler</b></span>
+<span>🐟 Caught: <b id="caughtCount">0</b></span>
+<span>🏆 Best: <b id="bestCatch">—</b></span>
+</div>
 </header>
 
 <main id="scene">
-  <canvas id="gameCanvas"></canvas>
+<canvas id="world"></canvas>
 
-  <div id="hud">
-    <div class="hudCard">
-      <div class="hudLabel">Line tension</div>
-      <div class="bar"><div class="fill" id="tensionFill"></div></div>
-      <div id="tensionText">Ready to fish</div>
-    </div>
-    <div class="hudCard">
-      <div class="hudLabel">Fish stamina</div>
-      <div class="bar"><div class="fill" id="staminaFill"></div></div>
-      <div id="staminaText">No fish hooked</div>
-    </div>
-  </div>
+<div id="hud">
+<div class="meter">
+<div class="meterLabel">LINE TENSION</div>
+<div class="bar"><div class="fill" id="tensionFill"></div></div>
+<div id="tensionText">Ready to fish</div>
+</div>
+<div class="meter">
+<div class="meterLabel">FISH STAMINA</div>
+<div class="bar"><div class="fill" id="staminaFill"></div></div>
+<div id="staminaText">No fish hooked</div>
+</div>
+</div>
 
-  <div id="message">
-    <strong>Welcome to Ross Lake</strong><br>
-    Choose your angler to start fishing.
-  </div>
+<div id="message"><strong>ROSS LAKE</strong>Choose an angler and look for fish beneath your boat.</div>
 
-  <section class="overlay" id="screenSelect">
-    <h2>ROSS LAKE</h2>
-    <p class="intro">Choose your angler for your fishing adventure.</p>
-    <div id="anglerGrid"></div>
-    <button id="startButton">START FISHING</button>
-  </section>
+<section class="overlay" id="selectScreen">
+<h2>CHOOSE YOUR ANGLER</h2>
+<p class="intro">Every angler has a unique face and fishing style.</p>
+<div id="anglerGrid"></div>
+<button class="bigButton" id="startButton">START FISHING</button>
+</section>
 
-  <section class="overlay" id="journalScreen">
-    <h2>FISHING JOURNAL</h2>
-    <p class="intro">Your catches at Ross Lake</p>
-    <div id="journalList"></div>
-    <button id="closeJournal">BACK TO FISHING</button>
-  </section>
+<section class="overlay" id="catchScreen">
+<h2>YOUR CATCH!</h2>
+<p class="intro">A new trophy for your fishing record.</p>
+<div class="catchCard">
+<canvas id="catchCanvas" width="600" height="360"></canvas>
+<div class="catchTitle" id="catchWeightTitle">FISH LANDED!</div>
+<div class="catchSpecies" id="catchSpecies"></div>
+<div class="catchStats">
+<div class="catchStat"><strong id="catchWeight">—</strong><span>WEIGHT</span></div>
+<div class="catchStat"><strong id="catchLength">—</strong><span>LENGTH</span></div>
+<div class="catchStat"><strong id="catchAngler">—</strong><span>ANGLER</span></div>
+</div>
+<div class="catchBy" id="catchDescription"></div>
+</div>
+<button class="bigButton" id="continueButton">BACK TO FISHING</button>
+</section>
+
+<section class="overlay" id="journalScreen">
+<h2>FISHING JOURNAL</h2>
+<p class="intro">Every fish you have landed at Ross Lake.</p>
+<div id="journalList"></div>
+<button class="bigButton" id="journalClose">BACK TO FISHING</button>
+</section>
 </main>
 
 <footer id="controls">
-  <div id="status">Choose your angler to begin.</div>
-
-  <div class="buttonRow active" id="normalControls">
-    <button class="action primary" id="castButton">🎣 CAST</button>
-    <button class="action" id="journalButton">📖 JOURNAL</button>
-  </div>
-
-  <div class="buttonRow" id="biteControls">
-    <button class="action primary" id="hookButton">⚡ SET HOOK!</button>
-  </div>
-
-  <div class="buttonRow" id="fightControls">
-    <button class="action primary" id="reelButton">🎣 REEL IN</button>
-    <button class="action" id="letRunButton">🌊 LET IT RUN</button>
-  </div>
-
-  <div id="footerNote">Watch the water beneath your boat for the hooked fish!</div>
+<div id="status">Fish are swimming beneath your boat.</div>
+<div class="row active" id="normalRow">
+<button class="action primary" id="castButton">🎣 CAST</button>
+<button class="action" id="journalButton">📖 JOURNAL</button>
+</div>
+<div class="row" id="biteRow">
+<button class="action primary" id="hookButton">⚡ SET HOOK!</button>
+</div>
+<div class="row" id="fightRow">
+<button class="action primary" id="reelButton">🎣 REEL IN</button>
+<button class="action" id="letRunButton">🌊 LET IT RUN</button>
+</div>
+<div id="footnote">Watch the fish swimming beneath your boat!</div>
 </footer>
 </div>
 
 <script>
-(() => {
+(()=>{
 'use strict';
 
-const $ = id => document.getElementById(id);
-const canvas = $('gameCanvas');
-const ctx = canvas.getContext('2d');
+const $=id=>document.getElementById(id);
+const canvas=$('world'),ctx=canvas.getContext('2d');
+const catchCanvas=$('catchCanvas'),catchCtx=catchCanvas.getContext('2d');
 
-const anglers = [
-  {
-    name:'Clay',
-    trait:'Steady & patient',
-    detail:'A calm, patient fisherman.',
-    skin:'#c98f68',hair:'#493329',beard:'#76513b',
-    shirt:'#526e48',hat:'#c4a06a',handling:1.2,luck:1
-  },
-  {
-    name:'Ryan',
-    trait:'Fast caster',
-    detail:'Gets the line into the water quickly.',
-    skin:'#e0b18a',hair:'#53392b',beard:'#473329',
-    shirt:'#315d86',hat:'#d5c4a0',handling:1,luck:1
-  },
-  {
-    name:'Justin',
-    trait:'Lucky angler',
-    detail:'Has a knack for attracting bites.',
-    skin:'#c58a62',hair:'#302821',beard:'#302821',
-    shirt:'#a35c42',hat:'#455b42',handling:1,luck:1.4
-  },
-  {
-    name:'Bob',
-    trait:'Trophy hunter',
-    detail:'Always hopes for a monster fish.',
-    skin:'#e3bc9a',hair:'#aaa08d',beard:'#c3b7a1',
-    shirt:'#75618c',hat:'#8e7650',handling:1,luck:1.05
-  }
+let W=1,H=1,D=1,last=0,raf=0;
+let selected=0,started=false,mode='idle',time=0;
+let waitTime=0,biteTime=0,fightTime=0;
+let tension=0,stamina=0,distance=1,hooked=null;
+let catches=[],caught=0,best=0,particles=[];
+let showCatch=false;
+
+const anglers=[
+ {name:'Clay',trait:'Steady & patient',skin:'#c78e67',hair:'#493126',beard:'#77513a',shirt:'#58764a',hat:'#c4a06a',skill:1.18},
+ {name:'Ryan',trait:'Fast caster',skin:'#e0b18a',hair:'#49352a',beard:'#49352a',shirt:'#315f8c',hat:'#d9c8a1',skill:1.08},
+ {name:'Justin',trait:'Lucky angler',skin:'#c58a62',hair:'#30251f',beard:'#30251f',shirt:'#a65e43',hat:'#496044',skill:1,luck:1.5},
+ {name:'Bob',trait:'Trophy hunter',skin:'#e2ba98',hair:'#aaa08c',beard:'#c3b6a0',shirt:'#75618c',hat:'#907750',skill:1,luck:1,trophy:1.2}
 ];
 
-const species = [
-  {name:'Rainbow Trout',min:.7,max:5.5,color:'#d7d5bf',back:'#64835d',chance:34},
-  {name:'Kokanee Salmon',min:1,max:4.5,color:'#e58c79',back:'#586c65',chance:22},
-  {name:'Smallmouth Bass',min:.8,max:5.8,color:'#b6a66f',back:'#727a4d',chance:24},
-  {name:'Bull Trout',min:2,max:12,color:'#b7b9ad',back:'#46534e',chance:12},
-  {name:'Lake Trout',min:3,max:20,color:'#b8c1b3',back:'#4c5b59',chance:8}
+const species=[
+ {name:'Rainbow Trout',min:.7,max:5.5,body:'#c6d6c6',back:'#587d59',belly:'#eee2c1',spot:'#4c5747',weight:34,size:1},
+ {name:'Kokanee Salmon',min:1,max:4.5,body:'#d87869',back:'#65766d',belly:'#f3d3b2',spot:'#ad4d43',weight:22,size:1.05},
+ {name:'Smallmouth Bass',min:.8,max:5.8,body:'#b7b27a',back:'#66774a',belly:'#e7dca9',spot:'#4b6142',weight:24,size:1.05},
+ {name:'Bull Trout',min:2,max:12,body:'#b9c4b4',back:'#344e4a',belly:'#d8dfc8',spot:'#c77b60',weight:12,size:1.25},
+ {name:'Lake Trout',min:3,max:20,body:'#bdc6b6',back:'#50635d',belly:'#e3dfc5',spot:'#384b46',weight:8,size:1.35}
 ];
 
-let W=0,H=0,dpr=1;
-let selected=0;
-let started=false;
-let mode='idle';
-let castTimer=0,biteDelay=0,biteTimer=0;
-let fightTime=0;
-let tension=0;
-let stamina=0;
-let distance=1;
-let hookedFish=null;
-let reelHeld=false;
-let totalCaught=0;
-let bestCatch=0;
-let catches=[];
-let boatTime=0;
-let particles=[];
-let ambientFish=[];
-let lastFrame=0;
-let animationId=0;
-let messageTimer=0;
-let splashTime=0;
+let shoal=[];
 
-function resize() {
-  const r=canvas.getBoundingClientRect();
-  dpr=Math.min(window.devicePixelRatio||1,2);
-  W=Math.max(1,r.width);
-  H=Math.max(1,r.height);
-  canvas.width=Math.round(W*dpr);
-  canvas.height=Math.round(H*dpr);
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  createAmbientFish();
+function resize(){
+ const r=canvas.getBoundingClientRect();
+ D=Math.min(devicePixelRatio||1,2);
+ W=Math.max(1,r.width);H=Math.max(1,r.height);
+ canvas.width=Math.round(W*D);canvas.height=Math.round(H*D);
+ ctx.setTransform(D,0,0,D,0,0);
+ makeShoal();
+ draw();
 }
 window.addEventListener('resize',resize);
 
-function status(text) {
-  $('status').textContent=text;
-}
-
-function message(title,body,duration=2000) {
-  $('message').innerHTML='<strong>'+title+'</strong><br>'+body;
-  $('message').classList.remove('hidden');
-  clearTimeout(messageTimer);
-  if(duration>0) {
-    messageTimer=setTimeout(()=>$('message').classList.add('hidden'),duration);
-  }
-}
-
-function hideMessage() {
-  $('message').classList.add('hidden');
-}
-
-function makePortrait(a) {
-  const c=document.createElement('canvas');
-  c.width=240;c.height=150;
-  const g=c.getContext('2d');
-
-  const sky=g.createLinearGradient(0,0,0,150);
-  sky.addColorStop(0,'#80a9b1');
-  sky.addColorStop(1,'#d4d2b1');
-  g.fillStyle=sky;g.fillRect(0,0,240,150);
-
-  g.fillStyle='#526f65';
-  g.beginPath();
-  g.moveTo(0,95);g.lineTo(40,39);g.lineTo(74,84);
-  g.lineTo(115,21);g.lineTo(158,87);g.lineTo(196,43);
-  g.lineTo(240,87);g.lineTo(240,150);g.lineTo(0,150);
-  g.fill();
-
-  g.fillStyle='#527f81';
-  g.fillRect(0,103,240,47);
-
-  g.fillStyle=a.shirt;
-  g.beginPath();
-  g.moveTo(40,150);g.lineTo(68,113);g.lineTo(91,101);
-  g.lineTo(147,101);g.lineTo(175,121);g.lineTo(201,150);
-  g.fill();
-
-  g.fillStyle=a.skin;
-  g.beginPath();g.ellipse(120,75,34,40,0,0,Math.PI*2);g.fill();
-
-  g.fillStyle=a.hair;
-  g.beginPath();g.ellipse(120,49,35,22,0,Math.PI,Math.PI*2);g.fill();
-  g.fillRect(86,45,9,25);g.fillRect(145,45,9,24);
-
-  if(a.name!=='Ryan') {
-    g.fillStyle=a.beard;
-    g.beginPath();
-    g.moveTo(89,78);g.lineTo(93,103);g.lineTo(109,116);
-    g.lineTo(124,120);g.lineTo(140,111);g.lineTo(151,80);
-    g.lineTo(143,92);g.lineTo(132,100);g.lineTo(109,100);
-    g.lineTo(97,91);g.fill();
-    g.fillStyle=a.skin;
-    g.fillRect(108,88,25,12);
-  }
-
-  g.fillStyle='#f8eee0';
-  g.beginPath();
-  g.ellipse(107,72,8,5,0,0,Math.PI*2);
-  g.ellipse(134,72,8,5,0,0,Math.PI*2);
-  g.fill();
-
-  g.fillStyle='#2c2923';
-  g.beginPath();
-  g.arc(108,72,3,0,Math.PI*2);
-  g.arc(134,72,3,0,Math.PI*2);
-  g.fill();
-
-  g.strokeStyle='#54392c';g.lineWidth=3;
-  g.beginPath();
-  g.moveTo(98,64);g.lineTo(115,64);
-  g.moveTo(127,64);g.lineTo(143,64);
-  g.stroke();
-
-  g.strokeStyle='#754b39';g.lineWidth=2;
-  g.beginPath();
-  g.moveTo(120,75);g.lineTo(116,87);g.lineTo(123,89);
-  g.stroke();
-
-  g.strokeStyle='#713e36';
-  g.beginPath();g.moveTo(111,96);g.quadraticCurveTo(121,101,132,96);g.stroke();
-
-  g.fillStyle=a.hat;
-  g.beginPath();g.ellipse(120,47,51,7,0,0,Math.PI*2);g.fill();
-  g.beginPath();
-  g.moveTo(92,47);g.quadraticCurveTo(94,17,120,17);
-  g.quadraticCurveTo(147,17,149,47);g.fill();
-
-  return c;
-}
-
-function renderAnglers() {
-  const grid=$('anglerGrid');
-  grid.innerHTML='';
-
-  anglers.forEach((a,i)=>{
-    const card=document.createElement('button');
-    card.className='anglerCard'+(i===selected?' selected':'');
-    card.innerHTML=
-      '<canvas class="portrait" width="240" height="150"></canvas>'+
-      '<strong>'+a.name+'</strong>'+
-      '<p><b>'+a.trait+'</b><br>'+a.detail+'</p>';
-
-    const art=makePortrait(a);
-    card.querySelector('canvas').getContext('2d').drawImage(art,0,0);
-
-    card.addEventListener('click',()=>{
-      selected=i;
-      renderAnglers();
-    });
-
-    grid.appendChild(card);
+function makeShoal(){
+ shoal=[];
+ for(let i=0;i<13;i++){
+  const sp=species[Math.floor(Math.random()*species.length)];
+  shoal.push({
+   species:sp,
+   x:Math.random()*W,
+   y:H*(.77+Math.random()*.18),
+   size:(6+Math.random()*9)*sp.size,
+   speed:8+Math.random()*19,
+   dir:Math.random()<.5?-1:1,
+   phase:Math.random()*6.28,
+   depth:.5+Math.random()*.5
   });
+ }
 }
 
-function createAmbientFish() {
-  ambientFish=[];
-  for(let i=0;i<10;i++) {
-    ambientFish.push({
-      x:Math.random()*Math.max(W,1),
-      y:H*(.60+Math.random()*.34),
-      size:4+Math.random()*7,
-      speed:8+Math.random()*16,
-      direction:Math.random()<.5?-1:1,
-      phase:Math.random()*6.28
-    });
-  }
+function portrait(a){
+ const c=document.createElement('canvas');c.width=240;c.height=120;
+ const g=c.getContext('2d');
+ const sky=g.createLinearGradient(0,0,0,120);
+ sky.addColorStop(0,'#85b3bc');sky.addColorStop(1,'#d0d5bb');
+ g.fillStyle=sky;g.fillRect(0,0,240,120);
+ g.fillStyle='#45695c';g.beginPath();g.moveTo(0,85);g.lineTo(50,30);g.lineTo(95,78);g.lineTo(145,18);g.lineTo(205,82);g.lineTo(240,40);g.lineTo(240,120);g.lineTo(0,120);g.fill();
+ g.fillStyle='#347e80';g.fillRect(0,89,240,31);
+ g.fillStyle=a.shirt;g.beginPath();g.moveTo(35,120);g.lineTo(73,82);g.lineTo(166,82);g.lineTo(205,120);g.fill();
+ g.fillStyle=a.skin;g.beginPath();g.ellipse(120,60,31,35,0,0,6.28);g.fill();
+ g.fillStyle=a.hair;g.beginPath();g.ellipse(120,39,32,21,Math.PI,0);g.fill();
+ if(a.name!=='Ryan'){g.fillStyle=a.beard;g.beginPath();g.moveTo(91,65);g.lineTo(99,85);g.lineTo(120,99);g.lineTo(143,84);g.lineTo(150,65);g.lineTo(137,77);g.lineTo(103,77);g.fill();g.fillStyle=a.skin;g.fillRect(108,71,24,8);}
+ g.fillStyle='#fff4dd';g.beginPath();g.ellipse(108,57,7,4,0,0,6.28);g.ellipse(133,57,7,4,0,0,6.28);g.fill();
+ g.fillStyle='#252821';g.beginPath();g.arc(109,57,2.7,0,6.28);g.arc(133,57,2.7,0,6.28);g.fill();
+ g.strokeStyle='#4a352b';g.lineWidth=2;g.beginPath();g.moveTo(99,50);g.lineTo(116,50);g.moveTo(126,50);g.lineTo(143,50);g.stroke();
+ g.strokeStyle='#784638';g.beginPath();g.moveTo(111,75);g.quadraticCurveTo(120,80,131,75);g.stroke();
+ g.fillStyle=a.hat;g.beginPath();g.ellipse(120,37,47,6,0,0,6.28);g.fill();g.beginPath();g.moveTo(95,38);g.quadraticCurveTo(98,10,120,12);g.quadraticCurveTo(143,10,146,38);g.fill();
+ return c;
 }
 
-function startGame() {
-  started=true;
-  $('screenSelect').style.display='none';
-  $('anglerName').textContent=anglers[selected].name;
-  mode='idle';
-  status('Ready to fish. Tap CAST to cast your line.');
-  message('Welcome, '+anglers[selected].name+'!','Tap CAST to start fishing.',2200);
-  updateButtons();
-
-  if(!animationId) animationId=requestAnimationFrame(loop);
+function renderAnglers(){
+ const grid=$('anglerGrid');grid.innerHTML='';
+ anglers.forEach((a,i)=>{
+  const b=document.createElement('button');
+  b.className='angler'+(i===selected?' selected':'');
+  b.innerHTML='<canvas class="portrait" width="240" height="120"></canvas><strong>'+a.name+'</strong><p>'+a.trait+'</p>';
+  b.querySelector('canvas').getContext('2d').drawImage(portrait(a),0,0);
+  b.onclick=()=>{selected=i;renderAnglers()};
+  grid.appendChild(b);
+ });
 }
 
-$('startButton').addEventListener('click',startGame);
+function setMessage(title,body,ms=2000){
+ $('message').innerHTML='<strong>'+title+'</strong>'+body;
+ $('message').classList.remove('hidden');
+ clearTimeout(setMessage.timer);
+ if(ms)setMessage.timer=setTimeout(()=>$('message').classList.add('hidden'),ms);
+}
+function hideMessage(){$('message').classList.add('hidden')}
+function setStatus(t){$('status').textContent=t}
 
-function updateButtons() {
-  $('normalControls').classList.toggle('active',mode==='idle');
-  $('biteControls').classList.toggle('active',mode==='bite');
-  $('fightControls').classList.toggle('active',mode==='fight');
+function updateButtons(){
+ $('normalRow').classList.toggle('active',mode==='idle');
+ $('biteRow').classList.toggle('active',mode==='bite');
+ $('fightRow').classList.toggle('active',mode==='fight');
 }
 
-function cast() {
-  if(!started||mode!=='idle') return;
+$('startButton').onclick=()=>{
+ started=true;
+ $('selectScreen').style.display='none';
+ $('anglerName').textContent=anglers[selected].name;
+ setStatus('Look beneath the boat. Cast when you are ready!');
+ setMessage('WELCOME TO ROSS LAKE','Fish are swimming below you. Tap CAST to begin.',2500);
+ if(!raf)raf=requestAnimationFrame(loop);
+};
 
-  mode='cast';
-  castTimer=0;
-  biteDelay=4+Math.random()*5;
-
-  if(selected===1) biteDelay*=.8;
-
-  tension=0;
-  stamina=0;
-  distance=1;
-  hookedFish=null;
-  reelHeld=false;
-
-  status('Casting your line...');
-  hideMessage();
-  updateButtons();
+function cast(){
+ if(!started||mode!=='idle')return;
+ mode='waiting';waitTime=4+Math.random()*5;
+ if(selected===1)waitTime*=.8;
+ tension=0;stamina=0;distance=1;hooked=null;
+ hideMessage();updateButtons();
+ setStatus('Line cast! Watch the water for a bite.');
 }
 
-$('castButton').addEventListener('click',cast);
+$('castButton').onclick=cast;
 
-function chooseSpecies() {
-  let roll=Math.random()*100;
-  if(selected===2) roll*=.8;
-
-  let sum=0;
-  for(const s of species) {
-    sum+=s.chance;
-    if(roll<=sum) return s;
-  }
-  return species[0];
+function randomSpecies(){
+ let n=Math.random()*100;
+ if(selected===2)n*=.8;
+ let sum=0;
+ for(const s of species){sum+=s.weight;if(n<=sum)return s}
+ return species[0];
 }
 
-function fishBites() {
-  mode='bite';
-  biteTimer=3.5;
-  splashTime=.8;
-  status('A fish is biting! Tap SET HOOK!');
-  message('FISH ON THE BAIT!','Tap SET HOOK! before the fish lets go.',1700);
-  updateButtons();
+function bite(){
+ mode='bite';biteTime=3.5;
+ setStatus('A fish is biting! Tap SET HOOK!');
+ setMessage('FISH ON THE LINE!','Tap SET HOOK! quickly.',1700);
+ updateButtons();
 }
 
-$('hookButton').addEventListener('click',()=>{
-  if(mode!=='bite') return;
+$('hookButton').onclick=()=>{
+ if(mode!=='bite')return;
+ const sp=randomSpecies();
+ const a=anglers[selected];
+ const weight=Math.min(sp.max*a.trophy,sp.min+Math.random()*(sp.max-sp.min));
+ hooked={
+  species:sp,
+  weight:weight,
+  length:Math.round(23+weight*7+Math.random()*15),
+  size:(17+weight*1.25)*sp.size,
+  phase:Math.random()*6.28,
+  dir:Math.random()<.5?-1:1,
+  x:W*.5+(Math.random()-.5)*W*.24,
+  y:H*.83
+ };
+ mode='fight';fightTime=0;distance=1;stamina=100;tension=18;
+ hideMessage();updateButtons();
+ setStatus('Fish hooked! You can see it swimming beneath the boat. Reel it in!');
+ setMessage('HOOK SET!','Watch your fish swim below the boat.',2200);
+};
 
-  const sp=chooseSpecies();
-  const trophyBonus=selected===3?1.25:1;
-  const weight=(sp.min+Math.pow(Math.random(),.75)*(sp.max-sp.min))*trophyBonus;
-
-  hookedFish={
-    species:sp,
-    weight:Math.min(sp.max*trophyBonus,weight),
-    length:Math.round(25+weight*8+Math.random()*12),
-    color:sp.color,
-    back:sp.back,
-    phase:Math.random()*6.28,
-    direction:Math.random()<.5?-1:1,
-    size:Math.min(40,14+weight*1.4)
-  };
-
-  mode='fight';
-  fightTime=0;
-  tension=12;
-  stamina=100;
-  distance=1;
-  reelHeld=false;
-  status('Fish hooked! Tap REEL IN to bring it closer.');
-  message('HOOK SET!','Your fish is visible underwater. Reel in to bring it to the boat!',2400);
-  updateButtons();
-});
-
-function missBite() {
-  mode='idle';
-  status('The fish stole your bait. Cast again!');
-  message('MISSED BITE','Try again. Another fish will come along.',1600);
-  updateButtons();
+function landFish(){
+ if(!hooked)return;
+ const f=hooked;
+ caught++;
+ best=Math.max(best,f.weight);
+ $('caughtCount').textContent=caught;
+ $('bestCatch').textContent=best.toFixed(2)+' lb';
+ const entry={
+  name:f.species.name,
+  weight:f.weight.toFixed(2),
+  length:f.length,
+  angler:anglers[selected].name,
+  color:f.species.body,
+  back:f.species.back,
+  belly:f.species.belly,
+  spot:f.species.spot,
+  size:f.size,
+  time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})
+ };
+ catches.unshift(entry);
+ hooked=null;mode='idle';tension=0;stamina=0;distance=1;
+ updateButtons();
+ showCatchScreen(entry);
 }
 
-function landFish() {
-  if(!hookedFish) return;
+function showCatchScreen(f){
+ $('catchWeightTitle').textContent=f.weight+' LB CATCH!';
+ $('catchSpecies').textContent=f.name;
+ $('catchWeight').textContent=f.weight+' lb';
+ $('catchLength').textContent=f.length+' cm';
+ $('catchAngler').textContent=f.angler;
+ $('catchDescription').textContent='Landed at Ross Lake · '+f.time;
+ drawCatchPicture(f);
+ $('catchScreen').style.display='block';
+ setStatus('Fish landed! Check out your catch.');
+}
 
-  const f=hookedFish;
-  totalCaught++;
+function drawCatchPicture(f){
+ const g=catchCtx,w=catchCanvas.width,h=catchCanvas.height;
+ const sky=g.createLinearGradient(0,0,0,h);
+ sky.addColorStop(0,'#76b4bd');sky.addColorStop(.55,'#347d89');sky.addColorStop(1,'#123b4a');
+ g.fillStyle=sky;g.fillRect(0,0,w,h);
 
-  catches.unshift({
-    species:f.species.name,
-    weight:f.weight.toFixed(2),
-    length:f.length,
-    angler:anglers[selected].name,
-    time:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})
+ // Distant mountains
+ g.fillStyle='#547d76';g.beginPath();g.moveTo(0,125);g.lineTo(95,43);g.lineTo(165,105);g.lineTo(260,24);g.lineTo(365,107);g.lineTo(470,45);g.lineTo(600,120);g.lineTo(600,190);g.lineTo(0,190);g.fill();
+
+ // Lake
+ g.fillStyle='#286e7a';g.fillRect(0,150,w,h-150);
+ for(let i=0;i<12;i++){
+  g.strokeStyle='rgba(230,248,226,.25)';g.lineWidth=2;
+  g.beginPath();g.moveTo(30+i*46,185+i%4*12);g.lineTo(70+i*44,185+i%4*12);g.stroke();
+ }
+
+ // Large portrait of the actual caught species
+ drawFish(g,w*.5,h*.53,f.size*3.2,f);
+
+ // Catch title decoration
+ g.fillStyle='#fff1c5';g.font='bold 20px system-ui';g.textAlign='center';
+ g.fillText('ROSS LAKE TROPHY',w/2,30);
+ g.font='14px system-ui';g.fillStyle='#ffffff';
+ g.fillText(f.name,w/2,h-23);
+}
+
+function drawFish(g,x,y,size,f){
+ g.save();g.translate(x,y);
+ // Drop shadow
+ g.fillStyle='rgba(0,0,0,.22)';
+ g.beginPath();g.ellipse(0,size*.23,size*.98,size*.20,0,0,Math.PI*2);g.fill();
+
+ // Tail
+ g.fillStyle=f.back;
+ g.beginPath();g.moveTo(-size*.55,0);g.lineTo(-size*1.13,-size*.43);g.lineTo(-size*1.04,0);g.lineTo(-size*1.13,size*.43);g.closePath();g.fill();
+
+ // Dorsal fin
+ g.beginPath();g.moveTo(-size*.20,-size*.13);g.lineTo(-size*.05,-size*.43);g.lineTo(size*.24,-size*.16);g.closePath();g.fill();
+
+ // Main body
+ g.fillStyle=f.back;
+ g.beginPath();g.ellipse(0,0,size*.72,size*.37,0,0,Math.PI*2);g.fill();
+ g.fillStyle=f.color;
+ g.beginPath();g.ellipse(size*.04,-size*.04,size*.65,size*.31,-.02,0,Math.PI*2);g.fill();
+
+ // Belly
+ g.fillStyle=f.belly;
+ g.beginPath();g.ellipse(size*.05,size*.16,size*.49,size*.16,0,0,Math.PI);g.fill();
+
+ // Pectoral fin
+ g.fillStyle=f.back;
+ g.beginPath();g.moveTo(-size*.06,size*.05);g.lineTo(size*.25,size*.34);g.lineTo(size*.34,size*.04);g.closePath();g.fill();
+
+ // Individual species spots
+ for(let i=0;i<11;i++){
+  const sx=-size*.35+(i%6)*size*.12;
+  const sy=(i%2===0?-1:1)*size*(.09+(i%3)*.035);
+  g.fillStyle=f.spot;
+  g.beginPath();g.arc(sx,sy,size*.025,0,Math.PI*2);g.fill();
+ }
+
+ // Gills
+ g.strokeStyle='rgba(30,42,35,.65)';g.lineWidth=Math.max(1,size*.012);
+ g.beginPath();g.arc(size*.38,0,size*.17,-1.1,1.1);g.stroke();
+
+ // Eye
+ g.fillStyle='#fff5d9';g.beginPath();g.arc(size*.52,-size*.055,size*.075,0,Math.PI*2);g.fill();
+ g.fillStyle='#16231f';g.beginPath();g.arc(size*.54,-size*.055,size*.04,0,Math.PI*2);g.fill();
+
+ g.restore();
+}
+
+$('continueButton').onclick=()=>{
+ $('catchScreen').style.display='none';
+ setStatus('Ready for another cast. The fish are still swimming below!');
+ setMessage('NICE CATCH!','Tap CAST to try for another fish.',1800);
+};
+
+function showJournal(){
+ const list=$('journalList');list.innerHTML='';
+ if(!catches.length){
+  list.innerHTML='<div class="entry">No catches yet. Cast your line to start your journal.</div>';
+ }else{
+  catches.forEach((f,i)=>{
+   const el=document.createElement('div');el.className='entry';
+   el.innerHTML='<b>#'+(catches.length-i)+' · '+f.name+'</b><br>'+f.weight+' lb · '+f.length+' cm<br><span style="opacity:.7">Caught by '+f.angler+' at '+f.time+'</span>';
+   list.appendChild(el);
   });
-
-  bestCatch=Math.max(bestCatch,f.weight);
-  $('caughtCount').textContent=totalCaught;
-  $('bestCatch').textContent=bestCatch.toFixed(2)+' lb';
-
-  burst(W*.5,H*.69,25);
-
-  mode='idle';
-  hookedFish=null;
-  tension=0;
-  stamina=0;
-  reelHeld=false;
-
-  status('You landed a '+f.species.name+' weighing '+f.weight.toFixed(2)+' lb!');
-  message('FISH LANDED!',f.species.name+'<br><b>'+f.weight.toFixed(2)+' lb · '+f.length+' cm</b>',3200);
-  updateButtons();
+ }
+ $('journalScreen').style.display='block';
 }
+$('journalButton').onclick=showJournal;
+$('journalClose').onclick=()=>$('journalScreen').style.display='none';
 
-function loseFish() {
-  mode='idle';
-  hookedFish=null;
-  tension=0;
-  stamina=0;
-  reelHeld=false;
-  status('The fish escaped. Try another cast!');
-  message('FISH ESCAPED','Keep reeling steadily next time.',2000);
-  updateButtons();
-}
+$('reelButton').onclick=()=>{
+ if(mode!=='fight'||!hooked)return;
+ if(tension>76){
+  setStatus('The fish is pulling hard! Tap LET IT RUN to relax the line.');
+  return;
+ }
+ distance-=.085*anglers[selected].skill;
+ stamina-=7;
+ tension+=5;
+ if(distance<=.04||stamina<=0){landFish();return}
+ setStatus('Reeling in! Your fish is getting closer.');
+};
 
-function updateFight(dt) {
-  if(!hookedFish) return;
+$('letRunButton').onclick=()=>{
+ if(mode!=='fight'||!hooked)return;
+ tension=Math.max(5,tension-25);
+ distance=Math.min(1,distance+.008);
+ stamina=Math.max(0,stamina-2);
+ if(stamina<=0){landFish();return}
+ setStatus('Letting the fish run. The line is relaxing.');
+};
 
+function update(dt){
+ time+=dt;
+
+ for(const f of shoal){
+  f.x+=f.speed*f.dir*dt;
+  f.y+=Math.sin(time*1.4+f.phase)*dt*2;
+  if(f.x<-60)f.x=W+60;
+  if(f.x>W+60)f.x=-60;
+ }
+
+ if(mode==='waiting'){
+  waitTime-=dt;
+  if(waitTime<=0)bite();
+ }else if(mode==='bite'){
+  biteTime-=dt;
+  if(biteTime<=0){
+   mode='idle';updateButtons();
+   setStatus('The fish got away with the bait. Cast again!');
+   setMessage('MISSED BITE','Keep watching for the next bite.',1600);
+  }
+ }else if(mode==='fight'&&hooked){
   fightTime+=dt;
 
-  // The fish makes short runs, but the fight is intentionally forgiving.
-  const pull=(Math.sin(fightTime*1.7+hookedFish.phase)+1)/2;
-  const strongPull=pull>.82;
+  // Fish visibly swims from side to side beneath the boat.
+  hooked.x=W*.5+Math.sin(fightTime*1.45+hooked.phase)*Math.min(W*.29,115)*distance;
+  hooked.y=H*(.82+Math.sin(fightTime*2.3+hooked.phase)*.025);
 
-  if(reelHeld) {
-    // A tap moves the fish a little closer.
-    distance-=dt*.16*anglers[selected].handling;
-    stamina-=dt*4.5;
-    tension+=dt*(strongPull?9:4.0);
-  } else {
-    // Releasing the reel gives the line a chance to relax.
-    tension-=dt*12;
-    stamina-=dt*(strongPull?.15:.55);
-  }
+  // Natural fish runs gently increase tension over time.
+  const pull=(Math.sin(fightTime*1.8+hooked.phase)+1)/2;
+  tension=Math.max(5,Math.min(95,tension+dt*(pull>.83?3: -1)));
 
-  if(strongPull&&!reelHeld) {
-    distance+=dt*.012;
-  }
-
-  // A tired fish is easier to land.
-  if(stamina<45&&reelHeld) {
-    distance-=dt*.05;
-    tension-=dt*2;
-  }
-
-  tension=Math.max(5,Math.min(100,tension));
-  stamina=Math.max(0,Math.min(100,stamina));
-  distance=Math.max(0,Math.min(1.08,distance));
-
-  // Line break is possible, but requires sustained extreme tension.
-  if(tension>=98) {
-    hookedFish.snapTime=(hookedFish.snapTime||0)+dt;
-    if(hookedFish.snapTime>3.5) {
-      loseFish();
-      return;
-    }
-  } else {
-    hookedFish.snapTime=0;
-  }
-
-  // No harsh timeout. A fish only escapes if the player never makes progress.
-  if(fightTime>90&&distance>.85) {
-    loseFish();
-    return;
-  }
-
-  if(distance<=.05||stamina<=0) {
-    landFish();
-    return;
-  }
+  // Gradual safety release: a short pause will never snap the line.
+  if(tension>82)tension-=dt*8;
 
   $('tensionFill').style.width=tension+'%';
   $('tensionText').textContent=Math.round(tension)+'%';
   $('staminaFill').style.width=stamina+'%';
   $('staminaText').textContent=Math.round(stamina)+'%';
-
-  if(tension>78) {
-    status('The fish is pulling hard! Let it run for a moment.');
-  } else if(reelHeld) {
-    status('Reeling in! The fish is getting closer.');
-  } else if(stamina<45) {
-    status('The fish is tiring. Reel it toward the boat!');
-  } else {
-    status('The fish is fighting beneath the boat. Keep steady!');
-  }
+ }
 }
 
-function update(dt) {
-  boatTime+=dt;
+function drawBackground(){
+ const sky=ctx.createLinearGradient(0,0,0,H*.56);
+ sky.addColorStop(0,'#6b9fb3');sky.addColorStop(.7,'#c1d6ca');sky.addColorStop(1,'#e4dcbf');
+ ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
 
-  if(mode==='cast') {
-    castTimer+=dt;
-    if(castTimer>.65) {
-      mode='waiting';
-      status('Your bait is in the water. Waiting for a bite...');
-      updateButtons();
-    }
-  } else if(mode==='waiting') {
-    biteDelay-=dt;
-    if(biteDelay<=0) fishBites();
-  } else if(mode==='bite') {
-    biteTimer-=dt;
-    if(biteTimer<=0) missBite();
-  } else if(mode==='fight') {
-    updateFight(dt);
-  }
+ // Snowy mountain silhouettes
+ ctx.fillStyle='#e3e9df';ctx.beginPath();ctx.moveTo(0,H*.43);
+ for(let x=0;x<=W+10;x+=24)ctx.lineTo(x,H*(.32+Math.sin(x*.015)*.045+Math.sin(x*.035)*.018));
+ ctx.lineTo(W,H*.54);ctx.lineTo(0,H*.54);ctx.fill();
 
-  if(mode!=='fight') {
-    $('tensionFill').style.width='0%';
-    $('tensionText').textContent='No line tension';
-    $('staminaFill').style.width='0%';
-    $('staminaText').textContent='No fish hooked';
-  }
+ ctx.fillStyle='#637f73';ctx.beginPath();ctx.moveTo(0,H*.46);
+ for(let x=0;x<=W+10;x+=18)ctx.lineTo(x,H*(.42+Math.sin(x*.018)*.025));
+ ctx.lineTo(W,H*.60);ctx.lineTo(0,H*.60);ctx.fill();
 
-  for(const p of particles) {
-    p.x+=p.vx*dt;
-    p.y+=p.vy*dt;
-    p.vy+=30*dt;
-    p.life-=dt;
-  }
+ // Shoreline
+ ctx.fillStyle='#173e32';ctx.beginPath();ctx.moveTo(0,H*.51);
+ for(let x=0;x<=W+10;x+=10)ctx.lineTo(x,H*(.50+Math.sin(x*.026)*.012));
+ ctx.lineTo(W,H*.63);ctx.lineTo(0,H*.63);ctx.fill();
 
-  particles=particles.filter(p=>p.life>0);
+ // Lake
+ const water=ctx.createLinearGradient(0,H*.51,0,H);
+ water.addColorStop(0,'#52989b');water.addColorStop(.45,'#276e7c');water.addColorStop(1,'#092f42');
+ ctx.fillStyle=water;ctx.fillRect(0,H*.51,W,H*.49);
 
-  for(const f of ambientFish) {
-    f.x+=f.speed*f.direction*dt;
-    if(f.x<-30) f.x=W+30;
-    if(f.x>W+30) f.x=-30;
-  }
+ // Ripples and underwater light rays
+ for(let i=0;i<55;i++){
+  const y=H*.55+((i*19+time*8)%(H*.43));
+  const x=(i*71+Math.sin(time*.4+i)*18)%W;
+  ctx.strokeStyle='rgba(218,245,229,'+(.06+(i%4)*.025)+')';
+  ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+10+i%7*5,y);ctx.stroke();
+ }
+
+ // Pines on distant shoreline
+ for(let x=3;x<W;x+=22){
+  const y=H*(.51+Math.sin(x*.026)*.012),s=14+(Math.floor(x)%20);
+  ctx.fillStyle='#173c30';ctx.beginPath();ctx.moveTo(x,y-s);ctx.lineTo(x-10,y+2);ctx.lineTo(x+10,y+2);ctx.fill();
+ }
 }
 
-function drawBackground() {
-  const sky=ctx.createLinearGradient(0,0,0,H*.58);
-  sky.addColorStop(0,'#6598ac');
-  sky.addColorStop(.55,'#b8d0c8');
-  sky.addColorStop(1,'#e5d9b8');
-  ctx.fillStyle=sky;
-  ctx.fillRect(0,0,W,H);
+function drawBoat(){
+ const x=W*.5,y=H*.735+Math.sin(time*1.3)*2;
+ ctx.save();ctx.translate(x,y);
 
-  // Mountain range
-  ctx.fillStyle='#dce5df';
-  ctx.beginPath();
-  ctx.moveTo(0,H*.43);
+ // Hull and deck
+ ctx.fillStyle='rgba(0,0,0,.18)';ctx.beginPath();ctx.ellipse(0,24,77,8,0,0,6.28);ctx.fill();
+ ctx.fillStyle='#65452f';ctx.beginPath();ctx.moveTo(-76,0);ctx.lineTo(76,0);ctx.lineTo(55,25);ctx.lineTo(-54,25);ctx.closePath();ctx.fill();
+ ctx.fillStyle='#b48b59';ctx.beginPath();ctx.moveTo(-69,-4);ctx.lineTo(68,-4);ctx.lineTo(53,10);ctx.lineTo(-52,10);ctx.closePath();ctx.fill();
+ ctx.strokeStyle='#e4c68d';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-60,0);ctx.lineTo(59,0);ctx.stroke();
+ ctx.fillStyle='#765336';ctx.fillRect(-30,-14,60,6);
 
-  for(let x=0;x<=W+20;x+=28) {
-    const y=H*(.30+Math.sin(x*.012)*.045+Math.sin(x*.035)*.02);
-    ctx.lineTo(x,y);
-  }
+ const a=anglers[selected];
+ ctx.fillStyle=a.shirt;ctx.beginPath();ctx.ellipse(-3,-29,19,24,0,0,6.28);ctx.fill();
+ ctx.fillStyle=a.skin;ctx.beginPath();ctx.arc(-3,-57,13,0,6.28);ctx.fill();
+ ctx.fillStyle=a.hair;ctx.beginPath();ctx.arc(-3,-61,13,Math.PI,6.2);ctx.fill();
+ if(a.name!=='Ryan'){ctx.fillStyle=a.beard;ctx.beginPath();ctx.moveTo(-15,-54);ctx.lineTo(-12,-43);ctx.lineTo(-3,-39);ctx.lineTo(8,-44);ctx.lineTo(9,-54);ctx.fill()}
+ ctx.fillStyle=a.hat;ctx.beginPath();ctx.ellipse(-3,-63,19,4,0,0,6.28);ctx.fill();ctx.beginPath();ctx.moveTo(-13,-64);ctx.quadraticCurveTo(-10,-77,-2,-77);ctx.quadraticCurveTo(9,-76,10,-64);ctx.fill();
 
-  ctx.lineTo(W,H*.53);
-  ctx.lineTo(0,H*.53);
-  ctx.closePath();
-  ctx.fill();
-
-  // Darker mountain slopes
-  ctx.fillStyle='#657e75';
-  ctx.beginPath();
-  ctx.moveTo(0,H*.43);
-
-  for(let x=0;x<=W+20;x+=24) {
-    ctx.lineTo(x,H*(.40+Math.sin(x*.018)*.04));
-  }
-
-  ctx.lineTo(W,H*.58);
-  ctx.lineTo(0,H*.58);
-  ctx.closePath();
-  ctx.fill();
-
-  // Evergreen shoreline
-  ctx.fillStyle='#1a4538';
-  ctx.beginPath();
-  ctx.moveTo(0,H*.49);
-
-  for(let x=0;x<=W+10;x+=12) {
-    ctx.lineTo(x,H*(.49+Math.sin(x*.03)*.012));
-  }
-
-  ctx.lineTo(W,H*.63);
-  ctx.lineTo(0,H*.63);
-  ctx.closePath();
-  ctx.fill();
-
-  // Lake water
-  const lake=ctx.createLinearGradient(0,H*.51,0,H);
-  lake.addColorStop(0,'#55999b');
-  lake.addColorStop(.35,'#347b82');
-  lake.addColorStop(1,'#0b3948');
-  ctx.fillStyle=lake;
-  ctx.fillRect(0,H*.51,W,H*.49);
-
-  // Reflections and ripples
-  for(let i=0;i<55;i++) {
-    const y=H*.53+((i*17+boatTime*8)%(H*.44));
-    const x=(i*67+Math.sin(boatTime*.3+i)*20)%Math.max(W,1);
-    const width=8+(i%7)*5;
-
-    ctx.strokeStyle='rgba(220,244,224,'+(.07+(i%4)*.018)+')';
-    ctx.lineWidth=1;
-    ctx.beginPath();
-    ctx.moveTo(x,y);
-    ctx.lineTo(x+width,y);
-    ctx.stroke();
-  }
-
-  // Shoreline pines
-  for(let i=0;i<Math.ceil(W/22);i++) {
-    const x=i*22+5;
-    const y=H*(.49+Math.sin(x*.03)*.012);
-    const size=16+(i*17%25);
-
-    ctx.fillStyle='#14382f';
-    ctx.beginPath();
-    ctx.moveTo(x,y-size);
-    ctx.lineTo(x-11,y+3);
-    ctx.lineTo(x+11,y+3);
-    ctx.closePath();
-    ctx.fill();
-  }
+ // Fishing rod
+ ctx.strokeStyle='#3b2a1c';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(15,-39);ctx.lineTo(44,-102);ctx.stroke();
+ ctx.strokeStyle='#e1d0a8';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(44,-102);ctx.quadraticCurveTo(60,-78,55,-49);ctx.stroke();
+ ctx.restore();
 }
 
-function drawFishShape(x,y,size,color,back,rotation=0,alpha=1) {
-  ctx.save();
-  ctx.globalAlpha=alpha;
-  ctx.translate(x,y);
-  ctx.rotate(rotation);
-
-  // Tail
-  ctx.fillStyle=back;
-  ctx.beginPath();
-  ctx.moveTo(-size*.63,0);
-  ctx.lineTo(-size*1.12,-size*.40);
-  ctx.lineTo(-size*1.07,0);
-  ctx.lineTo(-size*1.12,size*.40);
-  ctx.closePath();
-  ctx.fill();
-
-  // Top fin
-  ctx.beginPath();
-  ctx.moveTo(-size*.18,-size*.16);
-  ctx.lineTo(-size*.02,-size*.47);
-  ctx.lineTo(size*.27,-size*.17);
-  ctx.closePath();
-  ctx.fill();
-
-  // Body
-  ctx.fillStyle=back;
-  ctx.beginPath();
-  ctx.ellipse(0,0,size*.68,size*.34,0,0,Math.PI*2);
-  ctx.fill();
-
-  ctx.fillStyle=color;
-  ctx.beginPath();
-  ctx.ellipse(size*.04,-size*.04,size*.58,size*.24,-.03,0,Math.PI*2);
-  ctx.fill();
-
-  // Belly
-  ctx.fillStyle='rgba(235,230,194,.65)';
-  ctx.beginPath();
-  ctx.ellipse(size*.06,size*.12,size*.43,size*.12,0,0,Math.PI);
-  ctx.fill();
-
-  // Pectoral fin
-  ctx.fillStyle=back;
-  ctx.beginPath();
-  ctx.moveTo(-size*.03,size*.05);
-  ctx.lineTo(size*.20,size*.32);
-  ctx.lineTo(size*.30,size*.05);
-  ctx.closePath();
-  ctx.fill();
-
-  // Gills
-  ctx.strokeStyle='rgba(30,43,38,.55)';
-  ctx.lineWidth=Math.max(1,size*.025);
-  ctx.beginPath();
-  ctx.arc(size*.34,0,size*.15,-1.1,1.1);
-  ctx.stroke();
-
-  // Eye
-  ctx.fillStyle='#fff8df';
-  ctx.beginPath();
-  ctx.arc(size*.48,-size*.06,size*.075,0,Math.PI*2);
-  ctx.fill();
-
-  ctx.fillStyle='#14201e';
-  ctx.beginPath();
-  ctx.arc(size*.50,-size*.06,size*.04,0,Math.PI*2);
-  ctx.fill();
-
-  // Scale highlights
-  ctx.strokeStyle='rgba(255,255,255,.22)';
-  ctx.lineWidth=1;
-
-  for(let i=0;i<4;i++) {
-    ctx.beginPath();
-    ctx.arc(-size*.22+i*size*.15,0,size*.10,-.6,.7);
-    ctx.stroke();
-  }
-
-  ctx.restore();
+function drawFishingLine(){
+ if(!['waiting','bite','fight'].includes(mode))return;
+ const sx=W*.5+15,sy=H*.735-39;
+ let ex=W*.56,ey=H*.65;
+ if(mode==='fight'&&hooked){ex=hooked.x;ey=hooked.y-hooked.size*.4}
+ if(mode==='bite'){ex=W*.56+Math.sin(time*18)*4;ey=H*.66+Math.sin(time*18)*3}
+ ctx.strokeStyle=tension>75?'#ffe2a0':'rgba(255,247,216,.85)';
+ ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(sx,sy);ctx.quadraticCurveTo((sx+ex)/2,H*.60,ex,ey);ctx.stroke();
 }
 
-function drawAmbientFish() {
-  ambientFish.forEach(f=>{
-    drawFishShape(
-      f.x,
-      f.y,
-      f.size,
-      '#a6c8b8',
-      '#446f65',
-      Math.sin(boatTime+f.phase)*.04,
-      .24
-    );
-  });
+function drawFishSchool(){
+ // These fish are deliberately placed in the foreground, below the hull.
+ // Their light outlines make them visible against the darker water.
+ for(const f of shoal){
+  drawFish(ctx,f.x,f.y,f.size,{
+   color:f.species.body,back:f.species.back,
+   belly:f.species.belly,spot:f.species.spot
+  },.42);
+ }
 }
 
-function drawUnderwaterFish() {
-  if(!hookedFish) return;
-
-  const f=hookedFish;
-
-  // The hooked fish is ALWAYS drawn in the lake area, below the boat.
-  // As distance decreases, it swims closer to the hull.
-  const waterTop=H*.53;
-  const boatY=H*.735+Math.sin(boatTime*1.4)*2;
-
-  const centerX=W*.5;
-  const spread=Math.min(W*.34,125);
-  const sideOffset=(distance-.05)/1.03*spread;
-
-  const swimmingSide=Math.sin(fightTime*1.6+f.phase)*18;
-  const x=centerX+f.direction*sideOffset+swimmingSide;
-
-  // Fish stays underwater and rises a little when exhausted.
-  const depthFactor=.57+Math.sin(fightTime*2+f.phase)*.055;
-  const tiredLift=(1-stamina/100)*H*.045;
-  const y=Math.max(waterTop+H*.07,boatY+H*depthFactor-tiredLift);
-
-  // Soft shadow gives the fish depth.
-  ctx.save();
-  ctx.globalAlpha=.18;
-  ctx.fillStyle='#031d28';
-  ctx.beginPath();
-  ctx.ellipse(x+4,y+f.size*.35,f.size*1.1,f.size*.30,0,0,Math.PI*2);
-  ctx.fill();
-  ctx.restore();
-
-  // Draw the fish itself, with a little side-to-side swimming motion.
-  drawFishShape(
-    x,y,
-    f.size,
-    f.color,
-    f.back,
-    Math.sin(fightTime*2.1+f.phase)*.12,
-    .92
-  );
-
-  // A subtle underwater shimmer around the hooked fish.
-  if(Math.sin(fightTime*3)>0.7) {
-    ctx.strokeStyle='rgba(214,246,231,.28)';
-    ctx.lineWidth=1.2;
-    ctx.beginPath();
-    ctx.ellipse(x,y+f.size*.15,f.size*1.45,f.size*.55,0,0,Math.PI*2);
-    ctx.stroke();
-  }
+function drawFish(g,x,y,size,f,alpha=1){
+ g.save();g.globalAlpha=alpha;g.translate(x,y);
+ // Tail
+ g.fillStyle=f.back;g.beginPath();g.moveTo(-size*.56,0);g.lineTo(-size*1.08,-size*.43);g.lineTo(-size*1.02,0);g.lineTo(-size*1.08,size*.43);g.closePath();g.fill();
+ // Top fin
+ g.beginPath();g.moveTo(-size*.17,-size*.14);g.lineTo(-size*.04,-size*.44);g.lineTo(size*.24,-size*.15);g.closePath();g.fill();
+ // Body
+ g.beginPath();g.ellipse(0,0,size*.69,size*.35,0,0,6.28);g.fill();
+ g.fillStyle=f.color;g.beginPath();g.ellipse(size*.04,-size*.03,size*.62,size*.28,-.03,0,6.28);g.fill();
+ g.fillStyle=f.belly;g.beginPath();g.ellipse(size*.05,size*.15,size*.45,size*.12,0,0,Math.PI);g.fill();
+ // Pectoral fin
+ g.fillStyle=f.back;g.beginPath();g.moveTo(-size*.02,size*.04);g.lineTo(size*.23,size*.31);g.lineTo(size*.32,size*.03);g.closePath();g.fill();
+ // Spots
+ for(let i=0;i<7;i++){
+  g.fillStyle=f.spot;g.beginPath();g.arc(-size*.28+(i%4)*size*.14,(i%2?1:-1)*size*.1,size*.035,0,6.28);g.fill();
+ }
+ // Gills and eye
+ g.strokeStyle='rgba(20,40,35,.6)';g.lineWidth=Math.max(.7,size*.025);g.beginPath();g.arc(size*.37,0,size*.14,-1.1,1.1);g.stroke();
+ g.fillStyle='#fff5d9';g.beginPath();g.arc(size*.51,-size*.06,size*.08,0,6.28);g.fill();
+ g.fillStyle='#12231f';g.beginPath();g.arc(size*.53,-size*.06,size*.04,0,6.28);g.fill();
+ g.restore();
 }
 
-function drawBoat() {
-  const x=W*.5;
-  const y=H*.735+Math.sin(boatTime*1.4)*2;
+function drawHookedFish(){
+ if(!hooked)return;
+ const f=hooked;
+ // Draw a bright, large fish below the boat, in front of the water.
+ // It is deliberately drawn after the boat so the player can actually see it.
+ const y=Math.max(H*.77,Math.min(H*.91,f.y));
+ const sp=f.species;
+ drawFish(ctx,f.x,y,f.size,{
+  color:sp.body,back:sp.back,belly:sp.belly,spot:sp.spot
+ },1);
 
-  ctx.save();
-  ctx.translate(x,y);
-
-  // Boat shadow on water
-  ctx.fillStyle='rgba(0,0,0,.20)';
-  ctx.beginPath();
-  ctx.ellipse(0,25,78,9,0,0,Math.PI*2);
-  ctx.fill();
-
-  // Hull
-  ctx.fillStyle='#68452f';
-  ctx.beginPath();
-  ctx.moveTo(-78,0);
-  ctx.lineTo(76,0);
-  ctx.lineTo(55,25);
-  ctx.lineTo(-54,25);
-  ctx.closePath();
-  ctx.fill();
-
-  ctx.fillStyle='#b58b5a';
-  ctx.beginPath();
-  ctx.moveTo(-70,-4);
-  ctx.lineTo(69,-4);
-  ctx.lineTo(54,10);
-  ctx.lineTo(-53,10);
-  ctx.closePath();
-  ctx.fill();
-
-  ctx.strokeStyle='#e1bf83';
-  ctx.lineWidth=2;
-  ctx.beginPath();
-  ctx.moveTo(-61,0);
-  ctx.lineTo(58,0);
-  ctx.stroke();
-
-  // Bench
-  ctx.fillStyle='#795438';
-  ctx.fillRect(-30,-14,62,6);
-
-  // Angler body
-  const a=anglers[selected];
-  ctx.fillStyle=a.shirt;
-  ctx.beginPath();
-  ctx.ellipse(-3,-29,19,24,0,0,Math.PI*2);
-  ctx.fill();
-
-  // Head
-  ctx.fillStyle=a.skin;
-  ctx.beginPath();
-  ctx.arc(-3,-57,13,0,Math.PI*2);
-  ctx.fill();
-
-  ctx.fillStyle=a.hair;
-  ctx.beginPath();
-  ctx.arc(-4,-61,13,Math.PI,Math.PI*2);
-  ctx.fill();
-
-  if(a.name!=='Ryan') {
-    ctx.fillStyle=a.beard;
-    ctx.beginPath();
-    ctx.moveTo(-15,-54);
-    ctx.lineTo(-12,-43);
-    ctx.lineTo(-3,-39);
-    ctx.lineTo(7,-44);
-    ctx.lineTo(9,-54);
-    ctx.fill();
-  }
-
-  ctx.fillStyle=a.hat;
-  ctx.beginPath();
-  ctx.ellipse(-3,-63,19,4,0,0,Math.PI*2);
-  ctx.fill();
-
-  ctx.beginPath();
-  ctx.moveTo(-13,-64);
-  ctx.quadraticCurveTo(-10,-77,-2,-77);
-  ctx.quadraticCurveTo(9,-76,10,-64);
-  ctx.fill();
-
-  // Arm
-  ctx.strokeStyle=a.skin;
-  ctx.lineWidth=7;
-  ctx.lineCap='round';
-  ctx.beginPath();
-  ctx.moveTo(7,-32);
-  ctx.lineTo(19,-42);
-  ctx.stroke();
-
-  // Fishing rod
-  ctx.strokeStyle='#3a2b1d';
-  ctx.lineWidth=3;
-  ctx.beginPath();
-  ctx.moveTo(15,-39);
-  ctx.lineTo(44,-103);
-  ctx.stroke();
-
-  // Rod tip
-  ctx.strokeStyle='#d6c7a0';
-  ctx.lineWidth=1.2;
-  ctx.beginPath();
-  ctx.moveTo(44,-103);
-  ctx.quadraticCurveTo(62,-78,55,-48);
-  ctx.stroke();
-
-  ctx.restore();
+ // A light ring helps distinguish the hooked fish from the rest of the school.
+ ctx.strokeStyle='rgba(255,231,156,.8)';ctx.lineWidth=1.4;
+ ctx.beginPath();ctx.ellipse(f.x,y+f.size*.08,f.size*1.3,f.size*.62,0,0,6.28);ctx.stroke();
 }
 
-function drawFishingLine() {
-  if(!['cast','waiting','bite','fight'].includes(mode)) return;
+function draw(){
+ ctx.clearRect(0,0,W,H);
+ drawBackground();
+ drawFishSchool();
+ drawBoat();
+ drawFishingLine();
+ drawHookedFish();
 
-  const startX=W*.5+15;
-  const startY=H*.735-39;
-  let endX=W*.56;
-  let endY=H*.64;
-
-  if(mode==='fight'&&hookedFish) {
-    const spread=Math.min(W*.34,125);
-    endX=W*.5+(distance-.05)/1.03*spread;
-    endY=H*.79+Math.sin(fightTime*2)*3;
-  } else if(mode==='bite') {
-    endX=W*.56+Math.sin(boatTime*18)*4;
-    endY=H*.67+Math.sin(boatTime*18)*4;
-  }
-
-  ctx.strokeStyle=tension>78?'#ffd29b':'rgba(250,244,216,.9)';
-  ctx.lineWidth=1.4;
-  ctx.beginPath();
-  ctx.moveTo(startX,startY);
-  ctx.quadraticCurveTo((startX+endX)/2,H*.61,endX,endY);
-  ctx.stroke();
-
-  if(mode==='cast'||mode==='waiting'||mode==='bite') {
-    ctx.fillStyle='#ffe4a1';
-    ctx.beginPath();
-    ctx.arc(endX,endY,3,0,Math.PI*2);
-    ctx.fill();
-  }
+ // Small catch splashes
+ for(const p of particles){
+  ctx.globalAlpha=Math.max(0,p.life);
+  ctx.fillStyle='#ffdf96';ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,6.28);ctx.fill();
+ }
+ ctx.globalAlpha=1;
 }
 
-function burst(x,y,count) {
-  for(let i=0;i<count;i++) {
-    const angle=Math.random()*Math.PI*2;
-    const speed=25+Math.random()*95;
-    particles.push({
-      x,y,
-      vx:Math.cos(angle)*speed,
-      vy:Math.sin(angle)*speed,
-      life:.6+Math.random()*.8,
-      max:1.4,
-      size:2+Math.random()*3,
-      color:['#ffe5a0','#d8f2e4','#f4c777'][i%3]
-    });
-  }
+function loop(now){
+ raf=requestAnimationFrame(loop);
+ const dt=Math.min(.04,Math.max(0,(now-last)/1000||0));last=now;
+ update(dt);draw();
 }
-
-function drawParticles() {
-  particles.forEach(p=>{
-    ctx.globalAlpha=Math.max(0,p.life/p.max);
-    ctx.fillStyle=p.color;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-    ctx.fill();
-  });
-  ctx.globalAlpha=1;
-}
-
-function draw() {
-  ctx.clearRect(0,0,W,H);
-
-  drawBackground();
-
-  // Small fish swim in the lake even when no fish is hooked.
-  drawAmbientFish();
-
-  // Draw the hooked fish BEFORE the boat so it appears beneath the hull.
-  drawUnderwaterFish();
-
-  // The boat and angler appear above the underwater fish.
-  drawBoat();
-
-  drawFishingLine();
-  drawParticles();
-}
-
-function loop(now) {
-  animationId=requestAnimationFrame(loop);
-
-  const dt=Math.min(.04,Math.max(0,(now-lastFrame)/1000||0));
-  lastFrame=now;
-
-  update(dt);
-  draw();
-}
-
-function reelIn() {
-  if(mode!=='fight'||!hookedFish) return;
-
-  // Each tap advances the fight a little, making this work on phones.
-  // If the line is very tight, allow it to relax instead of breaking.
-  if(tension>82) {
-    status('The fish is pulling hard. Let it run briefly!');
-    return;
-  }
-
-  distance-=.075*anglers[selected].handling;
-  stamina-=4.5;
-  tension+=4.5;
-
-  distance=Math.max(0,distance);
-  stamina=Math.max(0,stamina);
-  tension=Math.min(100,tension);
-
-  if(distance<=.05||stamina<=0) {
-    landFish();
-    return;
-  }
-
-  status('Good! The fish is closer to your boat.');
-}
-
-$('reelButton').addEventListener('click',reelIn);
-
-$('letRunButton').addEventListener('click',()=>{
-  if(mode!=='fight') return;
-
-  tension=Math.max(5,tension-20);
-  distance=Math.min(1.08,distance+.015);
-  stamina=Math.max(0,stamina-1);
-
-  status('You let the fish run. Line tension is dropping.');
-
-  if(stamina<=0||distance<=.05) landFish();
-});
-
-$('journalButton').addEventListener('click',()=>{
-  const list=$('journalList');
-  list.innerHTML='';
-
-  if(!catches.length) {
-    list.innerHTML='<div class="catchEntry">No catches yet. Head out onto the lake and cast your line!</div>';
-  } else {
-    catches.forEach((f,i)=>{
-      const entry=document.createElement('div');
-      entry.className='catchEntry';
-      entry.innerHTML=
-        '<b>#'+(catches.length-i)+' — '+f.species+'</b><br>'+
-        f.weight+' lb · '+f.length+' cm<br>'+
-        '<span style="opacity:.7">Caught by '+f.angler+' at '+f.time+'</span>';
-      list.appendChild(entry);
-    });
-  }
-
-  $('journalScreen').style.display='block';
-});
-
-$('closeJournal').addEventListener('click',()=>{
-  $('journalScreen').style.display='none';
-});
 
 resize();
 renderAnglers();
-updateButtons();
 draw();
 })();
 </script>
