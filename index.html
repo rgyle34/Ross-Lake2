@@ -55,4 +55,317 @@
         .characters {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .character-card {
+            background: rgba(30, 58, 95, 0.7);
+            border: 2px solid #334155;
+            border-radius: 16px;
+            padding: 18px 10px;
+            cursor: pointer;
+            user-select: none;
+            transition: 0.2s;
+        }
+
+        .character-card.selected {
+            border-color: #22d3ee;
+            background: rgba(8, 47, 73, 0.95);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+            transform: scale(1.03);
+        }
+
+        .avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .clay { background: linear-gradient(135deg, #64748b, #475569); }
+        .ryan { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+        .justin { background: linear-gradient(135deg, #22c55e, #16a34a); }
+        .bob { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+        .name { font-size: 1.2rem; font-weight: 600; }
+        .age { font-size: 0.85rem; color: #94a3b8; margin-top: 2px; }
+
+        #startBtn {
+            background: linear-gradient(90deg, #0ea5e9, #22d3ee);
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0f172a;
+            border-radius: 50px;
+            width: 100%;
+            max-width: 260px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        #startBtn.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .selected-info {
+            margin-top: 18px;
+            color: #7dd3fc;
+            font-size: 1rem;
+            min-height: 24px;
+        }
+
+        /* ===== GAME SCREEN ===== */
+        #game-screen {
+            display: none;
+            flex-direction: column;
+            height: 100vh;
+            width: 100%;
+        }
+
+        #top-bar {
+            background: rgba(13, 27, 42, 0.9);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+            z-index: 10;
+        }
+
+        #player-name {
+            font-weight: 600;
+            color: #7dd3fc;
+        }
+
+        canvas {
+            flex: 1;
+            width: 100%;
+            background: #0c4a6e;
+            display: block;
+        }
+
+        #controls {
+            background: #0f172a;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .game-btn {
+            background: linear-gradient(90deg, #0ea5e9, #22d3ee);
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f172a;
+            border-radius: 50px;
+            min-width: 160px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .game-btn:active {
+            transform: scale(0.96);
+        }
+
+        #status {
+            text-align: center;
+            padding: 8px;
+            background: rgba(0,0,0,0.3);
+            font-size: 0.95rem;
+            color: #e0f2fe;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SELECTION SCREEN -->
+    <div id="selection-screen">
+        <div class="container">
+            <h1>ROSS LAKE</h1>
+            <div class="subtitle">Choose your angler</div>
+
+            <div class="characters">
+                <div class="character-card" data-name="Clay" data-age="Early 60s">
+                    <div class="avatar clay">C</div>
+                    <div class="name">Clay</div>
+                    <div class="age">Early 60s</div>
+                </div>
+                <div class="character-card" data-name="Ryan" data-age="40 years old">
+                    <div class="avatar ryan">R</div>
+                    <div class="name">Ryan</div>
+                    <div class="age">40 years old</div>
+                </div>
+                <div class="character-card" data-name="Justin" data-age="29 years old">
+                    <div class="avatar justin">J</div>
+                    <div class="name">Justin</div>
+                    <div class="age">29 years old</div>
+                </div>
+                <div class="character-card" data-name="Bob" data-age="79 years old">
+                    <div class="avatar bob">B</div>
+                    <div class="name">Bob</div>
+                    <div class="age">79 years old</div>
+                </div>
+            </div>
+
+            <button id="startBtn">Start Fishing</button>
+            <div class="selected-info" id="selectedInfo"></div>
+        </div>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="game-screen">
+        <div id="top-bar">
+            <div id="player-name">Player</div>
+            <div>Ross Lake</div>
+        </div>
+        <div id="status">Tap CAST to drop your line</div>
+        <canvas id="gameCanvas"></canvas>
+        <div id="controls">
+            <button class="game-btn" id="castBtn">CAST</button>
+        </div>
+    </div>
+
+    <script>
+        // ========== SELECTION ==========
+        let selectedPlayer = null;
+        const cards = document.querySelectorAll('.character-card');
+        const startBtn = document.getElementById('startBtn');
+        const selectedInfo = document.getElementById('selectedInfo');
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                cards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                selectedPlayer = {
+                    name: card.dataset.name,
+                    age: card.dataset.age
+                };
+                selectedInfo.textContent = `Selected: ${selectedPlayer.name}`;
+                startBtn.classList.add('active');
+            });
+        });
+
+        startBtn.addEventListener('click', () => {
+            if (selectedPlayer) {
+                document.getElementById('selection-screen').style.display = 'none';
+                document.getElementById('game-screen').style.display = 'flex';
+                document.getElementById('player-name').textContent = selectedPlayer.name;
+                initGame();
+            }
+        });
+
+        // ========== GAME ==========
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const statusText = document.getElementById('status');
+        const castBtn = document.getElementById('castBtn');
+
+        let width, height;
+        let fish = [];
+        let lineY = 0;
+        let isCasting = false;
+        let boatX;
+
+        const fishTypes = [
+            { name: "Rainbow Trout", color: "#4ade80", size: 28 },
+            { name: "Brown Trout", color: "#a16207", size: 26 },
+            { name: "Tin Can", color: "#94a3b8", size: 18 },
+            { name: "Old Boot", color: "#78716c", size: 22 },
+            { name: "Small Shark", color: "#64748b", size: 32 }
+        ];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight - 140; // leave space for top + controls
+            boatX = width / 2;
+        }
+
+        function createFish() {
+            fish = [];
+            for (let i = 0; i < 8; i++) {
+                const type = fishTypes[Math.floor(Math.random() * fishTypes.length)];
+                fish.push({
+                    x: Math.random() * width,
+                    y: height * 0.45 + Math.random() * (height * 0.45),
+                    speed: (Math.random() * 0.8 + 0.3) * (Math.random() < 0.5 ? 1 : -1),
+                    type: type,
+                    wobble: Math.random() * Math.PI * 2
+                });
+            }
+        }
+
+        function drawBoat() {
+            // Boat body
+            ctx.fillStyle = "#7c2d12";
+            ctx.beginPath();
+            ctx.moveTo(boatX - 55, height * 0.32);
+            ctx.lineTo(boatX + 55, height * 0.32);
+            ctx.lineTo(boatX + 40, height * 0.38);
+            ctx.lineTo(boatX - 40, height * 0.38);
+            ctx.closePath();
+            ctx.fill();
+
+            // Boat outline
+            ctx.strokeStyle = "#431407";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Simple person in boat
+            ctx.fillStyle = "#fcd34d";
+            ctx.beginPath();
+            ctx.arc(boatX, height * 0.28, 12, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawWater() {
+            // Water gradient
+            const gradient = ctx.createLinearGradient(0, height * 0.3, 0, height);
+            gradient.addColorStop(0, "#0c4a6e");
+            gradient.addColorStop(0.5, "#0369a1");
+            gradient.addColorStop(1, "#0c4a6e");
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, height * 0.3, width, height * 0.7);
+
+            // Simple waves
+            ctx.strokeStyle = "rgba(125, 211, 252, 0.25)";
+            ctx.lineWidth = 2;
+            for (let i = 0; i < 5; i++) {
+                ctx.beginPath();
+                ctx.moveTo(0, height * 0.35 + i * 25);
+                for (let x = 0; x < width; x += 30) {
+                    ctx.lineTo(x, height * 0.35 + i * 25 + Math.sin(x * 0.03 + Date.now() * 0.002) * 4);
+                }
+                ctx.stroke();
+            }
+        }
+
+        function drawFish() {
+            fish.forEach(f => {
+                f.x += f.speed;
+                f.wobble += 0.08;
+                f.y += Math.sin(f.wobble) * 0.4;
+
+                // Wrap around
+                if (f.x > width + 40) f.x = -40;
+                if (f.x < -40) f.x = width + 40;
+
+                // Draw fish body
+                ctx.fillStyle = f.type.color;
+                ctx.beginPath();
+                ctx.ellipse(f.x, f.y, f.type.size, f.type.size * 0.45, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Tail
+                ctx.beginPath();
+                ctx.moveTo(f.x - f.type.size * 0.8, f.y);
+                ctx.lineTo(f.x - f.type.size * 1.4, f.y -​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
