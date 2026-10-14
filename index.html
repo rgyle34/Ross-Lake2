@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ross Lake</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #1a3a5c, #0d1b2a);
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 20px 10px;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 6px;
+            background: linear-gradient(90deg, #7dd3fc, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 35px;
+        }
+
+        .characters {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .character-card {
+            background: rgba(30, 58, 95, 0.7);
+            border: 2px solid #334155;
+            border-radius: 16px;
+            padding: 20px 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .character-card.selected {
+            border-color: #22d3ee;
+            background: rgba(8, 47, 73, 0.95);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+            transform: scale(1.03);
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.9rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .clay { background: linear-gradient(135deg, #64748b, #475569); }
+        .ryan { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+        .justin { background: linear-gradient(135deg, #22c55e, #16a34a); }
+        .bob { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+        .name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .age {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        #startBtn {
+            background: linear-gradient(90deg, #0ea5e9, #22d3ee);
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0f172a;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 280px;
+            opacity: 0.4;
+            pointer-events: none;
+            transition: all 0.25s ease;
+            -webkit-appearance: none;
+        }
+
+        #startBtn.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #startBtn.active:active {
+            transform: scale(0.97);
+        }
+
+        .selected-info {
+            margin-top: 20px;
+            font-size: 1.05rem;
+            color: #7dd3fc;
+            min-height: 28px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ROSS LAKE</h1>
+        <div class="subtitle">Choose your angler</div>
+
+        <div class="characters">
+            <div class="character-card" data-name="Clay" data-age="Early 60s">
+                <div class="avatar clay">C</div>
+                <div class="name">Clay</div>
+                <div class="age">Early 60s</div>
+            </div>
+
+            <div class="character-card" data-name="Ryan" data-age="40 years old">
+                <div class="avatar ryan">R</div>
+                <div class="name">Ryan</div>
+                <div class="age">40 years old</div>
+            </div>
+
+            <div class="character-card" data-name="Justin" data-age="29 years old">
+                <div class="avatar justin">J</div>
+                <div class="name">Justin</div>
+                <div class="age">29 years old</div>
+            </div>
+
+            <div class="character-card" data-name="Bob" data-age="79 years old">
+                <div class="avatar bob">B</div>
+                <div class="name">Bob</div>
+                <div class="age">79 years old</div>
+            </div>
+        </div>
+
+        <button id="startBtn">Start Fishing</button>
+        <div class="selected-info" id="selectedInfo"></div>
+    </div>
+
+    <script>
+        let selectedPlayer = null;
+
+        const cards = document.querySelectorAll('.character-card');
+        const startBtn = document.getElementById('startBtn');
+        const selectedInfo = document.getElementById('selectedInfo');
+
+        // Handle both click and touch
+        function selectCharacter(card) {
+            cards.forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+
+            selectedPlayer = {
+                name: card.dataset.name,
+                age: card.dataset.age
+            };
+
+            selectedInfo.textContent = `Selected: ${selectedPlayer.name}`;
+            startBtn.classList.add('active');
+        }
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => selectCharacter(card));
+        });
+
+        startBtn.addEventListener('click', () => {
+            if (selectedPlayer) {
+                alert(`You selected ${selectedPlayer.name}!\n\nThis is still Phase 1.\nPhase 2 (the actual fishing) will be added next.`);
+            }
+        });
+    </script>
+</body>
+</html>
