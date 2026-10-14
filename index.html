@@ -3,135 +3,354 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#082638">
 <title>Ross Lake — Wilderness Fishing Adventure</title>
 <style>
-:root{color-scheme:dark;--ink:#eaf7ff;--muted:#9bb9c9;--blue:#38c7ed;--green:#74e2a1}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#061724;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-button{font:inherit;touch-action:manipulation}
-#selection{height:100dvh;display:grid;place-items:center;padding:18px;background:radial-gradient(ellipse at 50% 10%,#1b6c85 0,transparent 52%),linear-gradient(#09283a,#06131d)}
-.panel{width:min(100%,480px);text-align:center}
-.eyebrow{font-size:.72rem;letter-spacing:.3em;color:#8de8fa;font-weight:800;text-transform:uppercase}
-h1{font-size:clamp(2.7rem,11vw,4.5rem);line-height:1;margin:10px 0 6px;letter-spacing:.04em;text-shadow:0 4px #075985,0 0 32px #38bdf866}
-.tagline{color:#b5d7e6;letter-spacing:.16em;font-size:.75rem;margin-bottom:25px}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:17px}
-.card{border:1px solid #356277;border-radius:17px;background:linear-gradient(145deg,#173d50,#0a2231);color:white;padding:14px 8px;cursor:pointer}
-.card.selected{border:2px solid #63e4ff;background:linear-gradient(145deg,#17607b,#103349);box-shadow:0 0 22px #38bdf844}
-.avatar{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;margin:0 auto 8px;font-size:1.5rem;font-weight:900;border:2px solid #ffffff50}
-.clay{background:linear-gradient(145deg,#a6b6c5,#475569)}
-.ryan{background:linear-gradient(145deg,#5bd8f5,#075985)}
-.justin{background:linear-gradient(145deg,#86efac,#166534)}
-.bob{background:linear-gradient(145deg,#fcd34d,#92400e)}
-.card strong,.card small{display:block}
-.card small{color:#b5ceda;margin-top:3px;font-size:.7rem}
-.primary{border:0;border-radius:14px;background:linear-gradient(100deg,#38bdf8,#67e8f9);color:#052436;font-weight:950;padding:14px 18px;box-shadow:0 4px #0e7490;cursor:pointer}
-#start{width:min(100%,300px);opacity:.45}
-#start:enabled{opacity:1}
-#selectedInfo{color:#b5dced;font-size:.86rem;margin-top:13px}
-#game{display:none;flex-direction:column;width:100%;height:100dvh}
-#top{min-height:47px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 11px;background:linear-gradient(#102d3e,#071a27);border-bottom:1px solid #214457;font-size:.78rem}
-#angler{font-weight:850;color:#7dd3fc}
-#place{font-weight:950;letter-spacing:.1em}
-#count{color:#a5f3fc;font-weight:800;white-space:nowrap}
-#status{min-height:39px;display:grid;place-items:center;text-align:center;padding:6px 10px;background:#0c2637;color:#d9f4ff;font-size:.82rem;font-weight:650;border-bottom:1px solid #1c4054}
-#scene{display:block;width:100%;flex:1;min-height:0;background:#0b5269}
-#controls{display:flex;align-items:stretch;justify-content:center;gap:8px;padding:9px 9px calc(9px + env(safe-area-inset-bottom));background:#071722;border-top:1px solid #1c4054;flex-wrap:wrap}
-.action{flex:1;min-width:70px;max-width:160px;min-height:48px;border:0;border-radius:13px;padding:9px 7px;font-weight:950;font-size:.84rem;color:#052436;background:linear-gradient(145deg,#38bdf8,#67e8f9);box-shadow:0 4px #0e7490;cursor:pointer}
-.action:active{transform:translateY(2px);box-shadow:0 1px #0e7490}
-.action:disabled{opacity:.3;box-shadow:none}
-#reel{display:none;background:linear-gradient(145deg,#86efac,#4ade80);box-shadow:0 4px #166534}
-#up,#down{display:none;max-width:52px;background:linear-gradient(145deg,#94a3b8,#475569);box-shadow:0 4px #1e293b}
-#continue{display:none;background:linear-gradient(145deg,#fde047,#fb923c);box-shadow:0 4px #9a3412}
-#log{max-width:52px;background:linear-gradient(145deg,#64748b,#475569);box-shadow:0 4px #1e293b}
-#sound{border:0;background:transparent;color:#bcefff;font-size:1rem;padding:5px}
-#volume{width:58px;accent-color:#38bdf8}
-.overlay{display:none;position:fixed;z-index:10;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92%,380px);max-height:86dvh;overflow:auto;padding:22px 19px;text-align:center;border:2px solid #67e8f9;border-radius:20px;background:linear-gradient(160deg,#16465c,#071827);box-shadow:0 0 0 100vmax #000b,0 0 40px #38bdf844}
-.overlay h2{color:#a5f3fc;margin:0 0 5px}
-.bigfish{font-size:3.6rem;margin:8px}
-.details{line-height:1.8;color:#d8edf7;font-size:.9rem;margin:10px 0 17px}
-.overlay button{width:100%}
-#logbox{border-color:#71869a}
-#logbox h2{color:#d2e2ee}
-@media(max-height:650px){
-.tagline{margin-bottom:12px}
-.card{padding:8px}
-.avatar{width:44px;height:44px}
-.cards{gap:7px;margin-bottom:10px}
-.panel h1{font-size:2.8rem}
-#controls{gap:6px;padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom))}
-.action{min-height:43px}
+:root {
+  --ink: #f0faff;
+  --muted: #a9c7d6;
+  --cyan: #62e4f5;
+  --green: #76efad;
+  --panel: #0a2535;
+}
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+html,body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #061925;
+  color: var(--ink);
+  font-family: system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+button {
+  font: inherit;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+#selection {
+  height: 100dvh;
+  overflow-y: auto;
+  display: grid;
+  place-items: center;
+  padding: 20px 15px;
+  background:
+    radial-gradient(ellipse at 50% 5%,#287d91 0,transparent 48%),
+    linear-gradient(#0c3040,#06131e);
+}
+.panel {
+  width: min(100%,500px);
+  text-align: center;
+  margin: auto;
+}
+.eyebrow {
+  color: #8feafa;
+  font-size: .7rem;
+  letter-spacing: .25em;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+h1 {
+  font-size: clamp(2.8rem,12vw,4.8rem);
+  letter-spacing: .035em;
+  line-height: .95;
+  margin: 12px 0 8px;
+  color: #f0fcff;
+  text-shadow: 0 4px #075985,0 0 30px #38bdf866;
+}
+.tagline {
+  font-size: .73rem;
+  letter-spacing: .16em;
+  color: #b8dce8;
+  margin-bottom: 22px;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 11px;
+  margin-bottom: 17px;
+}
+.card {
+  min-width: 0;
+  color: white;
+  border: 1px solid #356477;
+  border-radius: 17px;
+  background: linear-gradient(145deg,#194455,#0b2331);
+  padding: 13px 8px;
+  transition: transform .15s,border-color .15s;
+}
+.card:active { transform: scale(.98); }
+.card.selected {
+  border: 2px solid var(--cyan);
+  padding: 12px 7px;
+  background: linear-gradient(145deg,#17627a,#103044);
+  box-shadow: 0 0 23px #38bdf844;
+}
+.portrait {
+  width: 100%;
+  max-width: 155px;
+  height: 112px;
+  display: block;
+  margin: 0 auto 9px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #225064;
+}
+.card strong,.card small { display:block; }
+.card strong { font-size: 1.02rem; }
+.card small {
+  color: #b5d1dd;
+  font-size: .72rem;
+  margin-top: 4px;
+}
+.perk {
+  color: #83edbb !important;
+  font-size: .67rem !important;
+}
+.primary {
+  width: min(100%,320px);
+  border: 0;
+  border-radius: 13px;
+  padding: 14px 18px;
+  background: linear-gradient(100deg,#38bdf8,#67e8f9);
+  color: #052436;
+  font-weight: 950;
+  box-shadow: 0 4px #0e7490;
+}
+.primary:disabled { opacity:.4; }
+#selectedInfo {
+  margin-top: 13px;
+  color: #b8dce8;
+  font-size: .83rem;
+}
+#game {
+  display:none;
+  flex-direction:column;
+  width:100%;
+  height:100dvh;
+  height:100svh;
+  min-height:0;
+}
+#top {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:6px;
+  padding:8px 10px;
+  background:linear-gradient(#123748,#071a27);
+  border-bottom:1px solid #285163;
+  font-size:.77rem;
+}
+#angler { font-weight:900;color:#8be5ff; }
+#place { font-weight:950;letter-spacing:.08em; }
+#count { color:#8ef2bd;font-weight:850; }
+#sound {
+  border:0;
+  background:transparent;
+  color:white;
+  padding:5px;
+}
+#volume { width:52px;accent-color:#38bdf8; }
+#status {
+  min-height:43px;
+  display:grid;
+  place-items:center;
+  padding:6px 9px;
+  text-align:center;
+  background:#0b2939;
+  color:#e3f7ff;
+  font-size:.8rem;
+  font-weight:700;
+  border-bottom:1px solid #25485b;
+}
+#scene {
+  display:block;
+  width:100%;
+  flex:1;
+  min-height:0;
+  background:#0a5268;
+}
+#controls {
+  flex-shrink:0;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  padding:9px 9px calc(10px + env(safe-area-inset-bottom));
+  background:#071722;
+  border-top:1px solid #234657;
+}
+.action {
+  flex:1;
+  min-width:75px;
+  max-width:180px;
+  min-height:47px;
+  padding:9px 6px;
+  border:0;
+  border-radius:12px;
+  color:#052436;
+  background:linear-gradient(145deg,#38bdf8,#67e8f9);
+  box-shadow:0 4px #0e7490;
+  font-size:.8rem;
+  font-weight:950;
+}
+.action:active { transform:translateY(2px); }
+.action:disabled { opacity:.32;box-shadow:none; }
+#reel { background:linear-gradient(145deg,#86efac,#4ade80);box-shadow:0 4px #166534; }
+#hook { background:linear-gradient(145deg,#fde047,#fb923c);box-shadow:0 4px #9a3412; }
+#up,#down { display:none;max-width:52px;background:linear-gradient(145deg,#cbd5e1,#64748b); }
+#continue { display:none;background:linear-gradient(145deg,#fde047,#fb923c);box-shadow:0 4px #9a3412; }
+#journal { max-width:60px;background:linear-gradient(145deg,#94a3b8,#64748b);box-shadow:0 4px #334155; }
+.overlay {
+  display:none;
+  position:fixed;
+  z-index:10;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:min(92%,390px);
+  max-height:85dvh;
+  overflow-y:auto;
+  padding:22px 18px;
+  text-align:center;
+  border:2px solid #67e8f9;
+  border-radius:20px;
+  background:linear-gradient(160deg,#16465c,#071827);
+  box-shadow:0 0 0 100vmax #000b,0 0 35px #38bdf844;
+}
+.overlay h2 { color:#a5f3fc;margin:0 0 8px; }
+.bigfish { font-size:3.5rem;margin:8px; }
+.details { color:#d8edf7;font-size:.9rem;line-height:1.85;margin:10px 0 17px; }
+.overlay button { width:100%; }
+#logbox { border-color:#8ba4b7; }
+#logbox h2 { color:#e2edf5; }
+#tensionWrap {
+  position:absolute;
+  top:92px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(65%,260px);
+  height:11px;
+  border:1px solid #d4efff;
+  border-radius:20px;
+  overflow:hidden;
+  background:#142d3b;
+  display:none;
+  pointer-events:none;
+}
+#tensionBar {
+  width:0;
+  height:100%;
+  background:#72efa8;
+  transition:width .08s;
+}
+#tip {
+  color:#8ee8fa;
+  font-size:.77rem;
+}
+@media(max-height:680px) {
+  #selection { padding:10px; }
+  .tagline { margin-bottom:10px; }
+  .portrait { height:82px;max-width:125px; }
+  .card { padding:8px; }
+  .card.selected { padding:7px; }
+  #controls { gap:6px;padding-top:6px;padding-bottom:calc(7px + env(safe-area-inset-bottom)); }
+  .action { min-height:42px;font-size:.75rem; }
+  #top { padding:5px 7px; }
 }
 </style>
 </head>
 <body>
 
 <section id="selection">
- <div class="panel">
-  <div class="eyebrow">Pacific Northwest • Since sunrise</div>
-  <h1>ROSS LAKE</h1>
-  <div class="tagline">WILDERNESS FISHING ADVENTURE</div>
+  <div class="panel">
+    <div class="eyebrow">Pacific Northwest • Wilderness Series</div>
+    <h1>ROSS LAKE</h1>
+    <div class="tagline">WILDERNESS FISHING ADVENTURE</div>
 
-  <div class="cards">
-   <button class="card" data-name="Clay">
-    <span class="avatar clay">C</span>
-    <strong>Clay</strong>
-    <small>Steady &amp; patient</small>
-   </button>
-   <button class="card" data-name="Ryan">
-    <span class="avatar ryan">R</span>
-    <strong>Ryan</strong>
-    <small>Fast caster</small>
-   </button>
-   <button class="card" data-name="Justin">
-    <span class="avatar justin">J</span>
-    <strong>Justin</strong>
-    <small>Lucky angler</small>
-   </button>
-   <button class="card" data-name="Bob">
-    <span class="avatar bob">B</span>
-    <strong>Bob</strong>
-    <small>Trophy hunter</small>
-   </button>
+    <div class="cards">
+
+      <button class="card" data-name="Clay">
+        <canvas class="portrait" id="faceClay" width="240" height="170"></canvas>
+        <strong>Clay</strong>
+        <small>Steady &amp; patient</small>
+        <small class="perk">LESS LINE TENSION</small>
+      </button>
+
+      <button class="card" data-name="Ryan">
+        <canvas class="portrait" id="faceRyan" width="240" height="170"></canvas>
+        <strong>Ryan</strong>
+        <small>Fast caster</small>
+        <small class="perk">LONGER CASTS</small>
+      </button>
+
+      <button class="card" data-name="Justin">
+        <canvas class="portrait" id="faceJustin" width="240" height="170"></canvas>
+        <strong>Justin</strong>
+        <small>Lucky angler</small>
+        <small class="perk">MORE BITES</small>
+      </button>
+
+      <button class="card" data-name="Bob">
+        <canvas class="portrait" id="faceBob" width="240" height="170"></canvas>
+        <strong>Bob</strong>
+        <small>Trophy hunter</small>
+        <small class="perk">BIGGER FISH</small>
+      </button>
+
+    </div>
+
+    <button id="start" class="primary" disabled>START FISHING</button>
+    <div id="selectedInfo">Choose your angler to begin.</div>
+    <p id="tip">Cast far. Watch the bobber. Fight smart. Land a trophy.</p>
   </div>
-
-  <button id="start" class="primary" disabled>START FISHING</button>
-  <div id="selectedInfo">Choose your angler to begin.</div>
- </div>
 </section>
 
 <section id="game">
- <header id="top">
-  <span id="angler">🎣 Angler</span>
-  <span id="place">ROSS LAKE</span>
-  <span id="count">Catches: 0</span>
-  <button id="sound" aria-label="Toggle sound">🔊</button>
-  <input id="volume" aria-label="Volume" type="range" min="0" max="1" step=".05" value=".55">
- </header>
+  <header id="top">
+    <span id="angler">🎣 Angler</span>
+    <span id="place">ROSS LAKE</span>
+    <span id="count">Catches: 0</span>
+    <button id="sound" aria-label="Toggle sound">🔊</button>
+    <input id="volume" aria-label="Volume" type="range" min="0" max="1" step=".05" value=".5">
+  </header>
 
- <div id="status">Tap CAST to send your line into the lake.</div>
- <canvas id="scene" aria-label="Animated fishing lake"></canvas>
+  <div id="status">Welcome to Ross Lake.</div>
 
- <nav id="controls">
-  <button id="up" class="action" aria-label="Raise bait">▲</button>
-  <button id="cast" class="action">🎣 CAST</button>
-  <button id="down" class="action" aria-label="Lower bait">▼</button>
-  <button id="reel" class="action">⬆ HOLD TO REEL</button>
-  <button id="continue" class="action">CONTINUE</button>
-  <button id="log" class="action">📊</button>
- </nav>
+  <canvas id="scene" aria-label="Animated fishing lake"></canvas>
+
+  <div id="tensionWrap"><div id="tensionBar"></div></div>
+
+  <nav id="controls">
+    <button id="cast" class="action">🎣 CAST</button>
+    <button id="hook" class="action" style="display:none">⚡ SET HOOK!</button>
+    <button id="reel" class="action" disabled>⬆ HOLD TO REEL</button>
+    <button id="up" class="action" aria-label="Raise rod">▲</button>
+    <button id="down" class="action" aria-label="Lower rod">▼</button>
+    <button id="continue" class="action">CONTINUE</button>
+    <button id="journal" class="action">📖</button>
+  </nav>
 </section>
 
 <div id="catchbox" class="overlay">
- <h2 id="catchTitle">FISH CAUGHT!</h2>
- <div class="bigfish" id="fishEmoji">🐟</div>
- <div class="details" id="catchDetails"></div>
- <button id="keep" class="primary">KEEP FISHING</button>
+  <h2 id="catchTitle">FISH CAUGHT!</h2>
+  <div class="bigfish" id="fishEmoji">🐟</div>
+  <div class="details" id="catchDetails"></div>
+  <button id="keep" class="primary">KEEP FISHING</button>
 </div>
 
 <div id="logbox" class="overlay">
- <h2>Fishing Journal</h2>
- <div class="details" id="logDetails"></div>
- <button id="closeLog" class="primary">CLOSE</button>
+  <h2>🎣 Fishing Journal</h2>
+  <div class="details" id="logDetails"></div>
+  <button id="closeLog" class="primary">CLOSE JOURNAL</button>
 </div>
 
 <script>
@@ -139,71 +358,69 @@ h1{font-size:clamp(2.7rem,11vw,4.5rem);line-height:1;margin:10px 0 6px;letter-sp
 'use strict';
 
 const $=id=>document.getElementById(id);
-const selection=$('selection');
-const game=$('game');
 const canvas=$('scene');
 const ctx=canvas.getContext('2d');
-const status=$('status');
-const castBtn=$('cast');
-const reelBtn=$('reel');
-const upBtn=$('up');
-const downBtn=$('down');
-const continueBtn=$('continue');
-const catchbox=$('catchbox');
-const logbox=$('logbox');
 
 const anglers={
- Clay:{tension:.78,dist:1,luck:1,size:1,label:'Steady & patient'},
- Ryan:{tension:1.02,dist:1.2,luck:1,size:.98,label:'Fast caster'},
- Justin:{tension:1,dist:1,luck:1.45,size:1.03,label:'Lucky angler'},
- Bob:{tension:1.08,dist:1.05,luck:1.08,size:1.22,label:'Trophy hunter'}
+ Clay:{dist:1,luck:1,size:1,tension:.77,label:'Steady & patient'},
+ Ryan:{dist:1.24,luck:1,size:1,tension:1,label:'Fast caster'},
+ Justin:{dist:1,luck:1.48,size:1.02,tension:1,label:'Lucky angler'},
+ Bob:{dist:1.04,luck:1.12,size:1.25,tension:1.05,label:'Trophy hunter'}
 };
 
 const species=[
- {name:'Rainbow Trout',color:'#6cae76',belly:'#f3dfc3',min:9,max:23,weight:1.25,rarity:.95,fight:1,emoji:'🐟'},
- {name:'Kokanee Salmon',color:'#d87567',belly:'#f5d8c7',min:9,max:18,weight:1.1,rarity:.66,fight:1.05,emoji:'🐟'},
- {name:'Lake Trout',color:'#607b86',belly:'#d2dfdf',min:15,max:40,weight:1.9,rarity:.38,fight:1.5,emoji:'🐟'},
- {name:'Bull Trout',color:'#527989',belly:'#d8e4e8',min:12,max:32,weight:1.65,rarity:.25,fight:1.55,emoji:'🐟'},
- {name:'Mountain Whitefish',color:'#a3a69a',belly:'#e8e5d8',min:7,max:16,weight:.82,rarity:.58,fight:.72,emoji:'🐟'},
- {name:'Burbot',color:'#8b795e',belly:'#d5c7a9',min:12,max:30,weight:1.6,rarity:.28,fight:1.2,emoji:'🐟'}
+ {name:'Rainbow Trout',color:'#79ae81',belly:'#f4dfc1',min:9,max:23,weight:1.25,rarity:1,fight:1,emoji:'🐟'},
+ {name:'Kokanee Salmon',color:'#d87567',belly:'#f5d8c7',min:9,max:18,weight:1.1,rarity:.72,fight:1.08,emoji:'🐟'},
+ {name:'Lake Trout',color:'#657e91',belly:'#d2dfdf',min:15,max:40,weight:1.9,rarity:.40,fight:1.5,emoji:'🐟'},
+ {name:'Bull Trout',color:'#527989',belly:'#d8e4e8',min:12,max:32,weight:1.65,rarity:.27,fight:1.55,emoji:'🐟'},
+ {name:'Mountain Whitefish',color:'#aaa99b',belly:'#e8e5d8',min:7,max:16,weight:.82,rarity:.62,fight:.72,emoji:'🐟'},
+ {name:'Burbot',color:'#8b795e',belly:'#d5c7a9',min:12,max:30,weight:1.6,rarity:.29,fight:1.2,emoji:'🐟'}
 ];
 
 let player='';
 let perk=anglers.Clay;
 let w=0,h=0,dpr=1;
-let boatX=0,boatY=0,elapsed=0,last=0,raf=0;
-let state='idle',hookX=0,hookY=0,targetFish=null;
-let fish=[],clouds=[],sparkles=[],particles=[];
-let castPower=0,isReeling=false,progress=0,tension=0,stamina=100,perfect=false;
-let biteTimer=0,escapeTimer=0,nibbleTimer=0,runTimer=0,runDir=0;
-let weather='clear',weatherClock=0,day=.35;
-let volume=.55,muted=false,audio=null;
-let sessionCatches=0,sessionWeight=0,history=[];
+let elapsed=0,last=0,raf=0;
+let state='idle';
+let boatX=0,boatY=0,hookX=0,hookY=0;
+let fish=[],clouds=[],sparkles=[],particles=[],ripples=[];
+let targetFish=null;
+let castPower=0,castDistance=0;
+let isReeling=false,progress=0,tension=0,stamina=100;
+let biteTimer=0,nibbleTimer=0,runTimer=0,runDir=0;
+let weatherClock=0,day=.35;
+let volume=.5,muted=false,audio=null;
+let sessionCatches=0;
+let history=[];
+let lastCatch=null;
+
 let totals={
- catches:0,
- weight:0,
+ catches:0,weight:0,
  best:{name:'None',inches:0,pounds:0},
  history:[]
 };
 
-try{
+try {
  const saved=JSON.parse(localStorage.getItem('rossLakeStats')||'{}');
  totals={...totals,...saved};
  totals.best=totals.best||{name:'None',inches:0,pounds:0};
-}catch(e){}
+ totals.history=totals.history||[];
+} catch(e){}
 
 const rnd=(a,b)=>a+Math.random()*(b-a);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 
 function save(){
- try{
+ try {
   localStorage.setItem('rossLakeStats',JSON.stringify(totals));
- }catch(e){}
+ } catch(e){}
 }
 
-function sound(f=440,d=.08,type='sine',v=.07){
+function sound(f=440,d=.08,type='sine',v=.06){
  if(muted||!volume)return;
- try{
+ try {
   audio=audio||new(window.AudioContext||window.webkitAudioContext)();
+  if(audio.state==='suspended')audio.resume();
   const o=audio.createOscillator();
   const g=audio.createGain();
   o.type=type;
@@ -214,86 +431,304 @@ function sound(f=440,d=.08,type='sine',v=.07){
   g.connect(audio.destination);
   o.start();
   o.stop(audio.currentTime+d);
- }catch(e){}
+ } catch(e){}
 }
 
-function setStatus(s){
- status.textContent=s;
+function setStatus(s){$('status').textContent=s;}
+
+function roundedRect(c,x,y,width,height,r){
+ c.beginPath();
+ c.roundRect(x,y,width,height,r);
 }
+
+function drawFace(id,name){
+ const c=$(id);
+ const g=c.getContext('2d');
+ const cw=c.width,ch=c.height;
+
+ const data={
+  Clay:{
+   skin:'#d9a27d',hair:'#49372c',shirt:'#667c79',
+   bg:'#315765',eye:'#302b29',beard:true,
+   hat:'#7c8a82',style:0
+  },
+  Ryan:{
+   skin:'#e8b58f',hair:'#403029',shirt:'#167a99',
+   bg:'#23647a',eye:'#263c4a',beard:false,
+   hat:'#24556b',style:1
+  },
+  Justin:{
+   skin:'#c98f68',hair:'#302923',shirt:'#24784c',
+   bg:'#275d49',eye:'#31231f',beard:true,
+   hat:'#31593d',style:2
+  },
+  Bob:{
+   skin:'#d7ad8c',hair:'#b9b6aa',shirt:'#a96025',
+   bg:'#765331',eye:'#4a382e',beard:true,
+   hat:'#ad762f',style:3
+  }
+ }[name];
+
+ g.clearRect(0,0,cw,ch);
+
+ const bg=g.createLinearGradient(0,0,0,ch);
+ bg.addColorStop(0,data.bg);
+ bg.addColorStop(1,'#092332');
+ g.fillStyle=bg;
+ g.fillRect(0,0,cw,ch);
+
+ // Mountain silhouettes
+ g.fillStyle='#d1e5e4';
+ g.beginPath();
+ g.moveTo(0,80);g.lineTo(40,25);g.lineTo(74,72);
+ g.lineTo(120,12);g.lineTo(167,75);g.lineTo(204,34);
+ g.lineTo(240,76);g.lineTo(240,170);g.lineTo(0,170);
+ g.fill();
+
+ g.fillStyle='#24584f';
+ g.fillRect(0,91,cw,79);
+ for(let i=0;i<20;i++){
+  const x=i*14;
+  g.fillStyle=i%2?'#154b40':'#1e6550';
+  g.beginPath();
+  g.moveTo(x,85);g.lineTo(x-11,112);g.lineTo(x+11,112);
+  g.fill();
+ }
+
+ // Shoulders and torso
+ g.fillStyle=data.shirt;
+ g.beginPath();
+ g.moveTo(48,170);g.lineTo(60,121);
+ g.quadraticCurveTo(120,103,180,121);
+ g.lineTo(195,170);g.closePath();g.fill();
+
+ // Neck
+ g.fillStyle=data.skin;
+ g.fillRect(103,99,34,31);
+
+ // Ears
+ g.beginPath();g.ellipse(76,75,10,17,0,0,7);
+ g.ellipse(164,75,10,17,0,0,7);g.fill();
+
+ // Face
+ g.fillStyle=data.skin;
+ g.beginPath();
+ g.moveTo(79,45);
+ g.quadraticCurveTo(120,24,161,45);
+ g.lineTo(157,88);
+ g.quadraticCurveTo(145,116,120,119);
+ g.quadraticCurveTo(95,115,83,88);
+ g.closePath();g.fill();
+
+ // Hair / hat silhouette
+ if(data.style===3){
+  g.fillStyle=data.hair;
+  g.beginPath();
+  g.ellipse(120,43,43,26,0,Math.PI,Math.PI*2);
+  g.fill();
+  g.fillStyle=data.hat;
+  g.beginPath();
+  g.ellipse(120,39,66,9,0,Math.PI,Math.PI*2);
+  g.fill();
+  g.fillRect(94,29,52,10);
+ }else if(data.style===0){
+  g.fillStyle=data.hair;
+  g.beginPath();
+  g.moveTo(78,64);g.lineTo(76,39);
+  g.quadraticCurveTo(120,2,163,39);
+  g.lineTo(163,64);g.lineTo(150,49);
+  g.lineTo(91,51);g.closePath();g.fill();
+ }else{
+  g.fillStyle=data.hair;
+  g.beginPath();
+  g.moveTo(79,60);g.lineTo(78,37);
+  g.quadraticCurveTo(120,9,162,37);
+  g.lineTo(157,57);
+  g.lineTo(145,44);g.lineTo(96,48);
+  g.closePath();g.fill();
+  if(data.style===2){
+   g.beginPath();
+   g.moveTo(85,38);g.lineTo(98,22);
+   g.lineTo(113,36);g.lineTo(131,20);
+   g.lineTo(151,37);g.closePath();g.fill();
+  }
+ }
+
+ // Eyebrows
+ g.strokeStyle=data.hair;
+ g.lineWidth=5;
+ g.lineCap='round';
+ g.beginPath();
+ g.moveTo(94,64);g.lineTo(108,62);
+ g.moveTo(132,62);g.lineTo(146,64);
+ g.stroke();
+
+ // Eyes
+ g.fillStyle='#fff4e7';
+ g.beginPath();
+ g.ellipse(102,72,7,4,0,0,7);
+ g.ellipse(138,72,7,4,0,0,7);
+ g.fill();
+
+ g.fillStyle=data.eye;
+ g.beginPath();
+ g.arc(103,72,3,0,7);g.arc(137,72,3,0,7);g.fill();
+
+ // Nose
+ g.strokeStyle='#ad795e';
+ g.lineWidth=2;
+ g.beginPath();
+ g.moveTo(120,72);g.lineTo(116,87);g.lineTo(123,89);
+ g.stroke();
+
+ // Mouth
+ g.strokeStyle='#814e43';
+ g.lineWidth=2.5;
+ g.beginPath();
+ g.moveTo(108,98);g.quadraticCurveTo(120,102,133,97);
+ g.stroke();
+
+ // Individual facial hair
+ if(data.beard){
+  g.fillStyle=data.style===3?'#77796f':data.hair;
+  g.beginPath();
+  g.moveTo(85,84);
+  g.quadraticCurveTo(89,112,120,120);
+  g.quadraticCurveTo(151,112,155,84);
+  g.lineTo(143,95);
+  g.lineTo(135,105);
+  g.lineTo(120,110);
+  g.lineTo(105,105);
+  g.lineTo(96,95);
+  g.closePath();
+  g.fill();
+
+  // Mouth remains visible over beard
+  g.strokeStyle=data.skin;
+  g.lineWidth=3;
+  g.beginPath();
+  g.moveTo(109,98);g.quadraticCurveTo(120,101,132,98);
+  g.stroke();
+ }else{
+  g.fillStyle=data.hair;
+  g.beginPath();
+  g.moveTo(79,76);g.lineTo(88,89);
+  g.lineTo(94,93);g.lineTo(90,76);
+  g.closePath();g.fill();
+ }
+
+ // Highlight
+ g.fillStyle='#ffffff18';
+ g.beginPath();
+ g.ellipse(106,58,18,7,-.4,0,7);g.fill();
+
+ // Name plate
+ g.fillStyle='#061c29dd';
+ g.fillRect(0,145,cw,25);
+ g.fillStyle='#e9faff';
+ g.font='bold 12px system-ui';
+ g.textAlign='center';
+ g.fillText(name.toUpperCase(),120,162);
+}
+
+['Clay','Ryan','Justin','Bob'].forEach(n=>{
+ drawFace('face'+n,n);
+});
 
 document.querySelectorAll('.card').forEach(b=>{
  b.addEventListener('click',()=>{
-  document.querySelectorAll('.card').forEach(c=>c.classList.toggle('selected',c===b));
+  document.querySelectorAll('.card').forEach(c=>
+   c.classList.toggle('selected',c===b)
+  );
   player=b.dataset.name;
   perk=anglers[player];
   $('start').disabled=false;
-  $('selectedInfo').textContent=player+' is ready to fish.';
+  $('selectedInfo').textContent=player+' is ready to fish. '+perk.label+'.';
+  sound(480,.06);
  });
 });
 
 $('start').addEventListener('click',()=>{
  if(!player)return;
- sound(520,.08);
- selection.style.display='none';
- game.style.display='flex';
+ sound(600,.09);
+ $('selection').style.display='none';
+ $('game').style.display='flex';
  resize();
- startLoop();
  resetControls();
- setStatus('Tap CAST to cast. Wait for a bite, then hold REEL.');
+ setStatus('Cast your line into the lake. Watch for a bite!');
+ if(!raf)startLoop();
 });
 
 function resize(){
  const r=canvas.getBoundingClientRect();
  if(!r.width||!r.height)return;
- dpr=Math.min(devicePixelRatio||1,2);
- w=r.width;
- h=r.height;
+
+ dpr=Math.min(window.devicePixelRatio||1,2);
+ w=r.width;h=r.height;
  canvas.width=Math.round(w*dpr);
  canvas.height=Math.round(h*dpr);
  ctx.setTransform(dpr,0,0,dpr,0,0);
+
  boatX=w*.5;
- boatY=h*.255;
- hookX=boatX+60;
- hookY=h*.62;
+ boatY=h*.28;
+
+ if(state==='idle'){
+  hookX=w*.73;
+  hookY=h*.66;
+ }
+
  createFish();
+
  clouds=Array.from({length:7},()=>({
-  x:rnd(-30,w),y:rnd(8,h*.14),s:rnd(18,42),v:rnd(2,7)
+  x:rnd(-40,w),y:rnd(8,h*.14),s:rnd(18,42),v:rnd(2,7)
  }));
- sparkles=Array.from({length:35},()=>({
-  x:rnd(0,w),y:rnd(h*.42,h),s:rnd(.6,2.2),p:rnd(0,7)
+
+ sparkles=Array.from({length:55},()=>({
+  x:rnd(0,w),y:rnd(h*.42,h),s:rnd(.6,2),p:rnd(0,7)
  }));
 }
+window.addEventListener('resize',resize);
 
 function createFish(){
- fish=Array.from({length:18},()=>({
-  x:rnd(0,w),y:rnd(h*.48,h*.91),
+ fish=Array.from({length:22},()=>({
+  x:rnd(0,w),
+  y:rnd(h*.49,h*.91),
   dir:Math.random()<.5?-1:1,
-  speed:rnd(8,24),phase:rnd(0,7),scale:rnd(.55,1),
+  speed:rnd(8,26),
+  phase:rnd(0,7),
+  scale:rnd(.55,1.1),
   type:species[Math.floor(Math.random()*species.length)],
-  caught:false,hooked:false
+  caught:false,
+  hooked:false
  }));
 }
 
 function drawSky(){
- let night=day<.18||day>.85;
- let top=night?'#101a31':day<.3||day>.72?'#f29b77':'#54a5d0';
- let mid=night?'#273d5b':day<.3||day>.72?'#ffd09a':'#b5e2eb';
- let g=ctx.createLinearGradient(0,0,0,h*.48);
+ const night=day<.17||day>.85;
+ const sunrise=day<.3||day>.72;
+
+ const top=night?'#101a31':sunrise?'#e58e77':'#4e9fc9';
+ const mid=night?'#273d5b':sunrise?'#ffcc9c':'#b8e3ed';
+
+ const g=ctx.createLinearGradient(0,0,0,h*.48);
  g.addColorStop(0,top);
  g.addColorStop(1,mid);
  ctx.fillStyle=g;
  ctx.fillRect(0,0,w,h);
 
- const sx=w*.78,sy=h*.1;
+ const sx=w*.79,sy=h*.11;
  ctx.fillStyle=night?'#e7efff':'#fff4ca';
+ ctx.shadowColor=night?'#d5e5ff':'#ffe9a5';
+ ctx.shadowBlur=20;
  ctx.beginPath();
- ctx.arc(sx,sy,night?10:17,0,Math.PI*2);
+ ctx.arc(sx,sy,night?9:16,0,Math.PI*2);
  ctx.fill();
+ ctx.shadowBlur=0;
 
  clouds.forEach(c=>{
   c.x+=c.v*.009;
   if(c.x>w+80)c.x=-80;
-  ctx.fillStyle=night?'#9eafc866':'#ffffff99';
+  ctx.fillStyle=night?'#9eafc855':'#ffffff85';
   ctx.beginPath();
   ctx.ellipse(c.x,c.y,c.s,c.s*.3,0,0,Math.PI*2);
   ctx.ellipse(c.x-c.s*.45,c.y+4,c.s*.5,c.s*.24,0,0,Math.PI*2);
@@ -314,35 +749,39 @@ function mountain(points,color){
 }
 
 function drawMountains(){
+ // Distant mountain range
  mountain([
-  [0,.3],[.1,.12],[.2,.27],[.33,.055],[.48,.28],
-  [.61,.1],[.75,.27],[.87,.13],[1,.3]
- ],'#698a91');
+  [0,.30],[.08,.18],[.16,.29],[.32,.045],
+  [.45,.28],[.60,.075],[.74,.27],[.86,.12],[1,.29]
+ ],'#738f9b');
 
- ctx.fillStyle='#edf7f4';
-
- [[.33,.055,.045],[.61,.1,.035],[.1,.12,.03],[.87,.13,.025]]
+ // Snow caps
+ [[.32,.045,.045],[.60,.075,.04],[.08,.18,.025],[.86,.12,.025]]
  .forEach(([x,y,s])=>{
+  ctx.fillStyle='#f1f8f4';
   ctx.beginPath();
   ctx.moveTo(w*x,h*y);
   ctx.lineTo(w*(x-s),h*(y+s*1.5));
-  ctx.lineTo(w*(x-s*.2),h*(y+s));
+  ctx.lineTo(w*(x-s*.18),h*(y+s*.95));
   ctx.lineTo(w*x,h*(y+s*1.25));
-  ctx.lineTo(w*(x+s*.2),h*(y+s*.9));
+  ctx.lineTo(w*(x+s*.2),h*(y+s*.95));
   ctx.lineTo(w*(x+s),h*(y+s*1.5));
   ctx.closePath();
   ctx.fill();
  });
 
+ // Mid-range peaks
  mountain([
-  [0,.37],[.12,.25],[.22,.34],[.34,.2],[.49,.36],
-  [.63,.23],[.78,.35],[.9,.24],[1,.34]
- ],'#2b5b4b');
+  [0,.36],[.12,.25],[.22,.34],[.34,.20],
+  [.49,.36],[.63,.23],[.78,.35],[.90,.24],[1,.34]
+ ],'#2a5b4b');
 
- for(let i=0;i<Math.ceil(w/18);i++){
-  let x=i*18+5;
-  let base=h*(.405+Math.sin(i*1.6)*.009);
-  let ht=14+(i%5)*4;
+ // Forest
+ for(let i=0;i<Math.ceil(w/15);i++){
+  const x=i*15+5;
+  const base=h*(.405+Math.sin(i*1.6)*.009);
+  const ht=15+(i%5)*4;
+
   ctx.fillStyle=['#123e38','#185342','#1c604c'][i%3];
   ctx.beginPath();
   ctx.moveTo(x,base-ht);
@@ -351,49 +790,87 @@ function drawMountains(){
   ctx.closePath();
   ctx.fill();
  }
+
+ // Distant shoreline
+ ctx.fillStyle='#163e37';
+ ctx.beginPath();
+ ctx.moveTo(0,h*.415);
+ ctx.quadraticCurveTo(w*.2,h*.39,w*.4,h*.42);
+ ctx.quadraticCurveTo(w*.65,h*.39,w,h*.415);
+ ctx.lineTo(w,h*.46);
+ ctx.lineTo(0,h*.46);
+ ctx.fill();
 }
 
 function drawWater(){
- let top=h*.405;
- let g=ctx.createLinearGradient(0,top,0,h);
- g.addColorStop(0,'#48aeb0');
- g.addColorStop(.15,'#167e96');
- g.addColorStop(.52,'#07516f');
- g.addColorStop(1,'#031f36');
+ const top=h*.415;
+
+ const g=ctx.createLinearGradient(0,top,0,h);
+ g.addColorStop(0,'#5bc0bd');
+ g.addColorStop(.12,'#16879b');
+ g.addColorStop(.5,'#07516f');
+ g.addColorStop(1,'#031c31');
  ctx.fillStyle=g;
  ctx.fillRect(0,top,w,h-top);
 
- for(let i=0;i<13;i++){
-  let y=top+8+i*h*.05;
-  ctx.strokeStyle=`rgba(207,249,255,${.07+(i%3)*.025})`;
+ // Distant light reflection
+ const reflection=ctx.createRadialGradient(
+  w*.76,h*.45,1,w*.76,h*.45,w*.45
+ );
+ reflection.addColorStop(0,'#fff2bc2b');
+ reflection.addColorStop(1,'#fff2bc00');
+ ctx.fillStyle=reflection;
+ ctx.fillRect(0,top,w,h-top);
+
+ // Animated wavelets
+ for(let i=0;i<18;i++){
+  const y=top+8+i*h*.032;
+  ctx.strokeStyle=`rgba(211,250,255,${.05+(i%4)*.025})`;
   ctx.lineWidth=1;
+
   ctx.beginPath();
-  for(let x=0;x<w;x+=8){
-   let yy=y+Math.sin(x*.025+elapsed*1.2+i)*2.1;
+  for(let x=0;x<w;x+=7){
+   const yy=y+Math.sin(x*.024+elapsed*1.3+i)*2.2;
    if(x===0)ctx.moveTo(x,yy);
    else ctx.lineTo(x,yy);
   }
   ctx.stroke();
  }
 
+ // Sunlight sparkles
  sparkles.forEach(s=>{
-  ctx.globalAlpha=.15+(.5+.5*Math.sin(elapsed*1.8+s.p))*.38;
+  ctx.globalAlpha=.1+(.5+.5*Math.sin(elapsed*1.8+s.p))*.35;
   ctx.fillStyle='#e2ffff';
-  ctx.fillRect(s.x,s.y,s.s*2.8,1.1);
+  ctx.fillRect(s.x,s.y,s.s*3,1);
  });
  ctx.globalAlpha=1;
+
+ // Ripples from the bobber and fish
+ ripples=ripples.filter(r=>r.life>0);
+ ripples.forEach(r=>{
+  r.life-=.016;
+  r.radius+=.3;
+  ctx.globalAlpha=Math.max(0,r.life);
+  ctx.strokeStyle='#c6f8ff';
+  ctx.lineWidth=1;
+  ctx.beginPath();
+  ctx.ellipse(r.x,r.y,r.radius,r.radius*.28,0,0,Math.PI*2);
+  ctx.stroke();
+ });
+ ctx.globalAlpha=1;
+}
+
+function addRipple(x,y){
+ ripples.push({x,y,radius:3,life:1});
 }
 
 function drawFish(f){
  if(f.caught)return;
 
  if(f.hooked&&targetFish===f){
-  f.x+=(hookX-f.x)*.07;
-  f.y+=(hookY-f.y)*.07;
-  if(state==='fight'&&runDir){
-   f.x+=runDir*1.4;
-   hookX+=runDir*.8;
-  }
+  const pull=state==='fight'&&runDir?runDir*1.3:0;
+  f.x+=(hookX-f.x)*.06+pull;
+  f.y+=(hookY-f.y)*.06;
  }else{
   f.x+=f.dir*f.speed*.018;
   f.y+=Math.sin(elapsed+f.phase)*.09;
@@ -401,11 +878,12 @@ function drawFish(f){
   if(f.x< -50)f.x=w+50;
  }
 
- const s=14*f.scale;
+ const s=15*f.scale;
  ctx.save();
  ctx.translate(f.x,f.y);
  ctx.scale(f.dir,1);
 
+ // Tail
  ctx.fillStyle=f.type.color;
  ctx.beginPath();
  ctx.moveTo(-s*.5,0);
@@ -415,51 +893,71 @@ function drawFish(f){
  ctx.closePath();
  ctx.fill();
 
- let g=ctx.createLinearGradient(0,-s*.4,0,s*.4);
- g.addColorStop(0,'#ffffff88');
- g.addColorStop(.25,f.type.color);
- g.addColorStop(.75,f.type.color);
+ // Body gradient
+ const g=ctx.createLinearGradient(0,-s*.4,0,s*.4);
+ g.addColorStop(0,'#ffffff66');
+ g.addColorStop(.28,f.type.color);
+ g.addColorStop(.7,f.type.color);
  g.addColorStop(1,f.type.belly);
+
  ctx.fillStyle=g;
  ctx.beginPath();
- ctx.ellipse(0,0,s,s*.4,0,0,Math.PI*2);
+ ctx.ellipse(0,0,s,s*.39,0,0,Math.PI*2);
  ctx.fill();
 
+ // Dorsal fin
  ctx.fillStyle=f.type.color;
  ctx.beginPath();
- ctx.moveTo(-s*.2,-s*.25);
- ctx.lineTo(s*.1,-s*.6);
- ctx.lineTo(s*.48,-s*.25);
+ ctx.moveTo(-s*.3,-s*.2);
+ ctx.lineTo(0,-s*.63);
+ ctx.lineTo(s*.35,-s*.24);
  ctx.closePath();
  ctx.fill();
 
+ // Gill
+ ctx.strokeStyle='#253d4655';
+ ctx.lineWidth=1;
+ ctx.beginPath();
+ ctx.arc(s*.25,0,s*.22,-1.2,1.2);
+ ctx.stroke();
+
+ // Scales
+ ctx.fillStyle='#ffffff55';
+ for(let i=0;i<3;i++){
+  ctx.beginPath();
+  ctx.arc(-s*.12+i*s*.25,-s*.03,s*.055,0,Math.PI*2);
+  ctx.fill();
+ }
+
+ // Eye
  ctx.fillStyle='white';
  ctx.beginPath();
- ctx.arc(s*.63,-s*.05,s*.105,0,Math.PI*2);
+ ctx.arc(s*.65,-s*.04,s*.105,0,Math.PI*2);
  ctx.fill();
 
  ctx.fillStyle='#102030';
  ctx.beginPath();
- ctx.arc(s*.66,-s*.05,s*.05,0,Math.PI*2);
+ ctx.arc(s*.67,-s*.04,s*.05,0,Math.PI*2);
  ctx.fill();
 
  ctx.restore();
 }
 
 function drawBoat(){
- let x=boatX,y=boatY+Math.sin(elapsed*1.3)*2;
+ const x=boatX,y=boatY+Math.sin(elapsed*1.3)*2;
 
  ctx.fillStyle='#06283c88';
  ctx.beginPath();
  ctx.ellipse(x,y+29,67,8,0,0,Math.PI*2);
  ctx.fill();
 
- let g=ctx.createLinearGradient(x,y,x,y+35);
- g.addColorStop(0,'#e6bd86');
- g.addColorStop(.4,'#a86c3c');
- g.addColorStop(1,'#4c2a1b');
+ // Hull
+ const hull=ctx.createLinearGradient(x,y,x,y+35);
+ hull.addColorStop(0,'#e6bd86');
+ hull.addColorStop(.4,'#a86c3c');
+ hull.addColorStop(1,'#4c2a1b');
 
- ctx.fillStyle=g;
+ ctx.fillStyle=hull;
  ctx.beginPath();
  ctx.moveTo(x-63,y);
  ctx.lineTo(x+63,y);
@@ -472,55 +970,121 @@ function drawBoat(){
  ctx.lineWidth=2;
  ctx.stroke();
 
- ctx.fillStyle=player==='Ryan'?'#087da0':
-  player==='Clay'?'#64748b':
-  player==='Justin'?'#15803d':'#b45309';
+ // Wooden seat
+ ctx.fillStyle='#e2bd84';
+ ctx.fillRect(x-26,y-5,52,5);
 
+ // Angler clothing
+ const shirt={
+  Ryan:'#087da0',
+  Clay:'#647b77',
+  Justin:'#15803d',
+  Bob:'#b45309'
+ }[player]||'#176a87';
+
+ ctx.fillStyle=shirt;
  ctx.beginPath();
- ctx.roundRect(x-12,y-38,24,31,5);
+ ctx.roundRect(x-15,y-39,30,34,6);
  ctx.fill();
 
- ctx.fillStyle='#e9b88a';
+ // Neck
+ ctx.fillStyle={
+  Ryan:'#e8b58f',Clay:'#d9a27d',
+  Justin:'#c98f68',Bob:'#d7ad8c'
+ }[player]||'#d9a27d';
+ ctx.fillRect(x-5,y-48,10,13);
+
+ // Head
+ ctx.fillStyle={
+  Ryan:'#e8b58f',Clay:'#d9a27d',
+  Justin:'#c98f68',Bob:'#d7ad8c'
+ }[player]||'#d9a27d';
+
  ctx.beginPath();
- ctx.ellipse(x,y-53,11,13,0,0,Math.PI*2);
+ ctx.ellipse(x,y-58,12,15,0,0,Math.PI*2);
  ctx.fill();
 
- ctx.fillStyle=player==='Bob'||player==='Clay'?'#e5e7eb':'#48372b';
+ // Hair
+ const hair={
+  Ryan:'#403029',Clay:'#49372c',
+  Justin:'#302923',Bob:'#b9b6aa'
+ }[player]||'#403029';
+
+ ctx.fillStyle=hair;
  ctx.beginPath();
- ctx.arc(x,y-58,11,Math.PI,Math.PI*2);
+ ctx.arc(x,y-63,12,Math.PI,Math.PI*2);
  ctx.fill();
 
+ if(player==='Bob'){
+  ctx.beginPath();
+  ctx.ellipse(x,y-63,17,4,0,Math.PI,Math.PI*2);
+  ctx.fill();
+ }
+
+ // Face details
+ ctx.fillStyle='#fff1df';
  ctx.beginPath();
- ctx.ellipse(x,y-63,14,4,0,Math.PI,Math.PI*2);
+ ctx.arc(x+4,y-58,1.7,0,Math.PI*2);
  ctx.fill();
+
+ ctx.strokeStyle='#57392e';
+ ctx.lineWidth=1.4;
+ ctx.beginPath();
+ ctx.moveTo(x+2,y-52);
+ ctx.lineTo(x+7,y-51);
+ ctx.stroke();
+
+ if(player==='Clay'||player==='Justin'||player==='Bob'){
+  ctx.fillStyle=hair;
+  ctx.beginPath();
+  ctx.moveTo(x-10,y-52);
+  ctx.lineTo(x-8,y-46);
+  ctx.lineTo(x,y-43);
+  ctx.lineTo(x+8,y-47);
+  ctx.lineTo(x+10,y-53);
+  ctx.closePath();
+  ctx.fill();
+ }
+
+ // Fishing rod
+ ctx.strokeStyle='#30251c';
+ ctx.lineWidth=3;
+ ctx.beginPath();
+ ctx.moveTo(x+10,y-27);
+ ctx.quadraticCurveTo(x+27,y-57,x+47,y-78);
+ ctx.stroke();
 
  ctx.strokeStyle='#e7d2a0';
- ctx.lineWidth=2;
+ ctx.lineWidth=1.4;
  ctx.beginPath();
- ctx.moveTo(x+10,y-25);
- ctx.quadraticCurveTo(x+28,y-64,x+45,y-70);
+ ctx.moveTo(x+10,y-27);
+ ctx.quadraticCurveTo(x+27,y-57,x+47,y-78);
  ctx.stroke();
 }
 
 function drawLine(){
- if(state==='idle'||state==='caught')return;
+ if(state==='idle'||state==='caught'||state==='lost')return;
 
- let sx=boatX+28;
- let sy=boatY-25;
- let wiggle=state==='fight'
-  ?Math.sin(elapsed*16)*(5+tension*.15)
+ const sx=boatX+28;
+ const sy=boatY-25;
+
+ const wiggle=state==='fight'
+  ?Math.sin(elapsed*16)*(5+tension*.1)
   :state==='bite'
   ?Math.sin(elapsed*20)*7
   :Math.sin(elapsed*3)*2;
 
  ctx.strokeStyle=tension>75?'#ffb1a8':'#f4ffff';
  ctx.lineWidth=1.4;
+
  ctx.beginPath();
  ctx.moveTo(sx,sy);
  ctx.quadraticCurveTo((sx+hookX)/2+wiggle,(sy+hookY)/2,hookX,hookY);
  ctx.stroke();
 
- let bob=hookY-7+(state==='bite'?Math.sin(elapsed*17)*5:Math.sin(elapsed*2)*1.5);
+ // Bobber
+ const bob=hookY-7+(state==='bite'?Math.sin(elapsed*17)*5:Math.sin(elapsed*2)*1.5);
+
  ctx.fillStyle='#ef4444';
  ctx.beginPath();
  ctx.arc(hookX,bob,5.3,0,Math.PI*2);
@@ -557,6 +1121,7 @@ function drawParticles(dt){
   p.y+=p.vy*dt;
   p.vy+=200*dt;
   p.life-=dt;
+
   ctx.globalAlpha=Math.max(0,p.life/p.max);
   ctx.fillStyle='#e7ffff';
   ctx.beginPath();
@@ -569,42 +1134,38 @@ function drawParticles(dt){
 function drawHUD(){
  if(state!=='fight')return;
 
- let bw=Math.min(w*.7,270);
- let x=(w-bw)/2;
- let y=12;
-
- ctx.fillStyle='#071827df';
- ctx.beginPath();
- ctx.roundRect(x-10,y-3,bw+20,82,12);
+ ctx.save();
+ ctx.fillStyle='#001622bb';
+ roundedRect(ctx,10,10,125,39,8);
  ctx.fill();
 
- ctx.font='bold 9px system-ui';
- ctx.textAlign='center';
+ ctx.fillStyle='#e8faff';
+ ctx.font='bold 11px system-ui';
+ ctx.textAlign='left';
+ ctx.fillText('FISH STAMINA',19,24);
 
- [
-  ['PROGRESS',progress,'#4ade80',y+13],
-  ['LINE TENSION',tension,'#f59e0b',y+38],
-  ['FISH ENERGY',stamina,'#a78bfa',y+63]
- ].forEach(([label,val,col,yy])=>{
-  ctx.fillStyle='#e4f5ff';
-  ctx.fillText(label,w/2,yy);
-  ctx.fillStyle='#263b4b';
-  ctx.fillRect(x,yy+4,bw,6);
-  ctx.fillStyle=col;
-  ctx.fillRect(x,yy+4,bw*Math.max(0,Math.min(1,val/100)),6);
- });
+ ctx.fillStyle='#173d4b';
+ roundedRect(ctx,19,29,106,10,5);
+ ctx.fill();
 
- if(tension>78){
-  ctx.fillStyle='#ffb3a8';
-  ctx.fillText('EASE OFF — LINE UNDER PRESSURE',w/2,y+96);
- }
+ ctx.fillStyle=stamina<30?'#f87171':'#72efa8';
+ roundedRect(ctx,19,29,106*clamp(stamina/100,0,1),10,5);
+ ctx.fill();
+
+ ctx.restore();
 }
 
-function render(dt){
- ctx.clearRect(0,0,w,h);
+function drawScene(dt){
+ if(!w||!h)return;
+
+ elapsed+=dt;
+ weatherClock+=dt;
+ day=(.35+weatherClock*.003)%1;
+
  drawSky();
  drawMountains();
  drawWater();
+
  fish.forEach(drawFish);
  drawBoat();
  drawLine();
@@ -612,361 +1173,465 @@ function render(dt){
  drawHUD();
 }
 
-function loop(ts){
- if(game.style.display==='none')return;
-
- const dt=Math.min(.05,last?(ts-last)/1000:.016);
- last=ts;
- elapsed+=dt;
- day=(day+.000025)%1;
- weatherClock+=dt;
-
- if(weatherClock>90){
-  weatherClock=0;
-  weather=['clear','clear','cloudy','rain'][Math.floor(Math.random()*4)];
- }
-
- if(state==='fight'&&targetFish){
-  let strength=targetFish.type.fight*targetFish.scale;
-
-  stamina=Math.max(10,stamina-dt*(2.4+strength));
-  tension=Math.max(0,tension-dt*(isReeling?0:24));
-
-  if(isReeling){
-   tension+=dt*(10+strength*6)*(1+(100-stamina)/120)*perk.tension;
-   progress=Math.min(100,progress+dt*(17+5/strength)*(0.8+stamina/300));
-  }else{
-   progress=Math.max(0,progress-dt*(1.1+strength));
-  }
-
-  runTimer-=dt;
-
-  if(runTimer<=0){
-   if(Math.random()<.35+strength*.08){
-    runDir=(Math.random()<.5?-1:1)*(1+strength*.4)*(stamina/100);
-    tension+=6+strength*5;
-    setStatus('The fish is making a run! Ease off the reel to protect your line.');
-   }else{
-    runDir=0;
-   }
-   runTimer=rnd(.6,1.5);
-  }
-
-  if(tension>=100){
-   loseFish('The line snapped! Let tension fall before reeling.');
-  }else if(progress>=100){
-   landFish();
-  }
- }
-
- render(dt);
- raf=requestAnimationFrame(loop);
+function pickFish(){
+ let pool=species.filter(s=>Math.random()<s.rarity);
+ if(!pool.length)pool=species;
+ return pool[Math.floor(Math.random()*pool.length)];
 }
 
-function startLoop(){
- if(raf)cancelAnimationFrame(raf);
- last=0;
- raf=requestAnimationFrame(loop);
+function chooseTarget(){
+ const nearby=fish.filter(f=>!f.caught&&!f.hooked);
+ if(!nearby.length)return null;
+
+ const preferred=nearby.filter(f=>
+  Math.abs(f.x-hookX)<Math.max(120,w*.32)
+ );
+ const options=preferred.length?preferred:nearby;
+ return options[Math.floor(Math.random()*options.length)];
 }
 
 function resetControls(){
- state='idle';
- targetFish=null;
- isReeling=false;
- progress=0;
- tension=0;
- stamina=100;
-
- clearTimeout(biteTimer);
- clearTimeout(nibbleTimer);
- clearTimeout(escapeTimer);
-
- castBtn.style.display='block';
- castBtn.disabled=false;
- castBtn.textContent='🎣 CAST';
-
- reelBtn.style.display='none';
- upBtn.style.display='none';
- downBtn.style.display='none';
- continueBtn.style.display='none';
+ $('cast').style.display='block';
+ $('cast').disabled=false;
+ $('hook').style.display='none';
+ $('reel').style.display='block';
+ $('reel').disabled=true;
+ $('up').style.display='none';
+ $('down').style.display='none';
+ $('continue').style.display='none';
+ $('tensionWrap').style.display='none';
 }
 
 function cast(){
  if(state!=='idle')return;
 
- sound(210,.12,'triangle');
  state='casting';
- castBtn.disabled=true;
- castPower=100;
+ castPower=0;
+ castDistance=rnd(.45,.9)*perk.dist;
+ hookX=boatX+30;
+ hookY=boatY+30;
 
- hookX=Math.max(w*.16,Math.min(w*.84,boatX+w*rnd(-.23,.23)*perk.dist));
- hookY=h*rnd(.57,.72);
+ $('cast').disabled=true;
+ $('reel').disabled=true;
+ $('up').style.display='block';
+ $('down').style.display='block';
 
- splash(hookX,hookY,12);
- setStatus('Line cast! Watch the bobber…');
+ setStatus('Casting your line...');
+ sound(330,.12,'triangle');
 
- setTimeout(()=>{
+ const targetX=clamp(
+  boatX+w*.35*perk.dist,
+  w*.58,w*.96
+ );
+ const targetY=h*.67;
+
+ const duration=700;
+ const start=performance.now();
+ const fromX=hookX,fromY=hookY;
+
+ function animate(now){
   if(state!=='casting')return;
 
-  state='waiting';
-  castBtn.style.display='none';
-  upBtn.style.display='block';
-  downBtn.style.display='block';
+  const t=clamp((now-start)/duration,0,1);
+  const ease=1-Math.pow(1-t,2);
 
-  setStatus('Bait is in the water. A bite could come any moment.');
+  hookX=fromX+(targetX-fromX)*ease;
+  hookY=fromY+(targetY-fromY)*ease-Math.sin(t*Math.PI)*h*.18;
 
-  const wait=rnd(3500,7600)/perk.luck;
-
-  biteTimer=setTimeout(()=>{
-   if(state!=='waiting')return;
-
-   state='nibble';
-   setStatus('A fish is investigating your bait…');
-   sound(280,.07);
-
-   nibbleTimer=setTimeout(()=>{
-    if(state!=='nibble')return;
-
-    const candidates=fish.filter(f=>!f.caught&&!f.hooked);
-
-    if(!candidates.length)createFish();
-
-    const pool=fish.filter(f=>!f.caught&&!f.hooked);
-
-    pool.sort((a,b)=>
-     Math.hypot(a.x-hookX,(a.y-hookY)*.7)-
-     Math.hypot(b.x-hookX,(b.y-hookY)*.7)
-    );
-
-    targetFish=pool[0]||fish[0];
-
-    if(!targetFish)return;
-
-    targetFish.hooked=true;
-    targetFish.x=hookX+rnd(-8,8);
-    targetFish.y=hookY+4;
-
-    state='bite';
-    perfect=true;
-    stamina=100;
-
-    splash(hookX,hookY,22);
-    sound(380,.09,'square');
-
-    setStatus('FISH ON! Hold REEL now to set the hook!');
-
-    upBtn.style.display='none';
-    downBtn.style.display='none';
-    reelBtn.style.display='block';
-
-    escapeTimer=setTimeout(()=>{
-     if(state==='bite'){
-      loseFish('Too slow! The fish escaped. Cast again.');
-     }
-    },3200);
-
-   },rnd(900,1800));
-
-  },wait);
-
- },1200);
-}
-
-function shiftDepth(amount){
- if(state!=='waiting'&&state!=='nibble')return;
-
- hookY=Math.max(h*.47,Math.min(h*.89,hookY+amount*h));
-
- setStatus(amount<0
-  ?'You raised the bait a little.'
-  :'You dropped the bait deeper.'
- );
-}
-
-function beginReel(e){
- e.preventDefault();
-
- if(state==='bite'){
-  clearTimeout(escapeTimer);
-  state='fight';
-  progress=perfect?24:12;
-  tension=perfect?8:14;
-  setStatus('Fight the fish! Hold to reel; release to ease line tension.');
+  if(t<1){
+   requestAnimationFrame(animate);
+  }else{
+   hookX=targetX;
+   hookY=targetY;
+   state='waiting';
+   addRipple(hookX,hookY);
+   sound(520,.07,'sine');
+   setStatus('Line in the water. Watch the bobber for movement.');
+   biteTimer=rnd(4,10)/perk.luck;
+   targetFish=null;
+  }
  }
 
+ requestAnimationFrame(animate);
+}
+
+function startBite(){
+ state='bite';
+ nibbleTimer=0;
+ biteTimer=0;
+ $('hook').style.display='block';
+ $('cast').style.display='none';
+
+ setStatus('🐟 FISH ON THE BAIT! TAP SET HOOK NOW!');
+ sound(850,.08,'square');
+ setTimeout(()=>sound(1000,.12,'square'),100);
+
+ splash(hookX,hookY,12);
+}
+
+function setHook(){
+ if(state!=='bite')return;
+
+ if(nibbleTimer>7){
+  missBite();
+  return;
+ }
+
+ const chance=clamp(.90-nibbleTimer*.035,.48,.90);
+
+ if(Math.random()>chance){
+  missBite();
+  return;
+ }
+
+ state='fight';
+ $('hook').style.display='none';
+ $('reel').disabled=false;
+ $('tensionWrap').style.display='block';
+
+ targetFish=chooseTarget();
+
+ if(!targetFish){
+  targetFish={
+   x:hookX,y:hookY,dir:-1,speed:18,
+   scale:1,type:pickFish(),caught:false,hooked:true
+  };
+  fish.push(targetFish);
+ }else{
+  targetFish.hooked=true;
+ }
+
+ targetFish.type=pickFish();
+ targetFish.fightPower=targetFish.type.fight;
+ targetFish.length=rnd(targetFish.type.min,targetFish.type.max)*perk.size;
+ targetFish.weight=Math.pow(targetFish.length/12,2)*targetFish.type.weight*rnd(.7,1.3);
+
+ progress=5;
+ tension=22;
+ stamina=100;
+ runTimer=rnd(1.5,3.5);
+ runDir=Math.random()<.5?-1:1;
+
+ sound(640,.12,'triangle');
+ splash(hookX,hookY,20);
+
+ setStatus('HOOK SET! Reel carefully. Ease off when the line gets tight!');
+}
+
+function missBite(){
+ state='idle';
+ $('hook').style.display='none';
+ $('cast').style.display='block';
+ $('cast').disabled=false;
+ $('reel').disabled=true;
+ $('up').style.display='none';
+ $('down').style.display='none';
+
+ if(targetFish)targetFish.hooked=false;
+ targetFish=null;
+
+ setStatus('The fish stole your bait! Cast again and try to set the hook sooner.');
+ sound(180,.2,'sawtooth');
+}
+
+function loseFish(reason){
+ state='lost';
+
+ if(targetFish)targetFish.hooked=false;
+
+ $('reel').disabled=true;
+ $('up').style.display='none';
+ $('down').style.display='none';
+ $('continue').style.display='block';
+ $('tensionWrap').style.display='none';
+
+ splash(hookX,hookY,25);
+ sound(120,.3,'sawtooth');
+
+ setStatus(reason);
+}
+
+function fightUpdate(dt){
+ if(state!=='fight'||!targetFish)return;
+
+ const f=targetFish;
+
+ // Fish tires naturally as the player makes progress.
+ const tiredness=(100-stamina)/100;
+ const aggression=f.fightPower||1;
+
+ runTimer-=dt;
+
+ if(runTimer<=0){
+  runDir=Math.random()<.5?-1:1;
+  runTimer=rnd(1.1,2.8);
+ }
+
+ const fishPull=isReeling?aggression*11:aggression*5;
+ const handling=perk.tension;
+
+ tension+=fishPull*dt*1.3;
+ if(isReeling)tension+=aggression*9*dt*handling;
+ else tension-=12*dt;
+
+ tension=clamp(tension,0,100);
+
+ // Reel only while the line remains reasonably safe.
+ if(isReeling&&tension<88){
+  progress+=dt*(7.5-aggression*1.1)*(1-tiredness*.22);
+  stamina-=dt*(4+aggression*2);
+ }else{
+  stamina+=dt*(3+aggression);
+ }
+
+ // Tired fish are easier to bring in.
+ if(stamina<30){
+  progress+=dt*2.2;
+ }
+
+ stamina=clamp(stamina,0,100);
+ progress=clamp(progress,0,100);
+
+ $('tensionBar').style.width=tension+'%';
+ $('tensionBar').style.background=
+  tension>78?'#f87171':tension>55?'#fbbf24':'#72efa8';
+
+ if(tension>=100){
+  loseFish('💔 LINE SNAPPED! The fish escaped. Try easing off the reel next time.');
+  return;
+ }
+
+ if(progress>=100){
+  landFish();
+  return;
+ }
+
+ // Fish movement and changing direction
+ hookX+=runDir*aggression*(isReeling?-.4:1.2);
+ hookX=clamp(hookX,w*.40,w*.96);
+
+ hookY+=(h*.68-hookY)*.02;
+
+ if(Math.random()<dt*.8){
+  addRipple(hookX,hookY);
+ }
+
+ if(tension>85){
+  setStatus('⚠️ LINE DANGER! RELEASE REEL TO REDUCE TENSION!');
+ }else if(stamina<30){
+  setStatus('The fish is tiring! Reel it in now!');
+ }else if(isReeling){
+  setStatus('Reeling in! Watch the tension meter!');
+ }else{
+  setStatus('Fish fighting hard! Reel in short bursts.');
+ }
+}
+
+function landFish(){
+ if(!targetFish)return;
+
+ state='caught';
+ const f=targetFish;
+
+ f.caught=true;
+ f.hooked=false;
+
+ const inches=Math.round(f.length*10)/10;
+ const pounds=Math.round(f.weight*10)/10;
+ const trophy=inches>=25||pounds>=6;
+
+ const record={
+  name:f.type.name,
+  inches,pounds,
+  angler:player,
+  trophy,
+  date:new Date().toLocaleDateString()
+ };
+
+ totals.catches++;
+ totals.weight+=pounds;
+ totals.history.unshift(record);
+ totals.history=totals.history.slice(0,50);
+
+ if(inches>totals.best.inches){
+  totals.best={name:f.type.name,inches,pounds,angler:player};
+ }
+
+ history.unshift(record);
+ sessionCatches++;
+ lastCatch=record;
+ save();
+
+ $('count').textContent='Catches: '+sessionCatches;
+ $('catchTitle').textContent=trophy?'🏆 TROPHY FISH!':'FISH LANDED!';
+ $('fishEmoji').textContent=trophy?'🏆':'🐟';
+
+ $('catchDetails').innerHTML=
+  '<strong>'+escapeHTML(f.type.name)+'</strong><br>'+
+  'Length: <strong>'+inches+' inches</strong><br>'+
+  'Weight: <strong>'+pounds+' lbs</strong><br>'+
+  'Angler: '+escapeHTML(player)+'<br>'+
+  (trophy?'<span style="color:#fde68a;font-weight:900">PERSONAL TROPHY CATCH!</span><br>':'')+
+  'Total catches this trip: '+sessionCatches;
+
+ $('catchbox').style.display='block';
+
+ $('reel').disabled=true;
+ $('up').style.display='none';
+ $('down').style.display='none';
+ $('tensionWrap').style.display='none';
+
+ setStatus(trophy?'INCREDIBLE CATCH! A Ross Lake trophy!':'Fish landed! Nice work!');
+ splash(hookX,hookY,35);
+
+ sound(trophy?900:680,.22,'triangle',.08);
+ setTimeout(()=>sound(trophy?1100:820,.25,'triangle',.08),170);
+}
+
+function escapeHTML(s){
+ return String(s).replace(/[&<>"']/g,c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;',
+  '"':'&quot;',"'":'&#39;'
+ }[c]));
+}
+
+$('keep').addEventListener('click',()=>{
+ $('catchbox').style.display='none';
+ targetFish=null;
+ state='idle';
+ resetControls();
+ hookX=boatX+w*.25;
+ hookY=h*.66;
+ setStatus('Ready for another cast?');
+});
+
+$('cast').addEventListener('click',cast);
+$('hook').addEventListener('click',setHook);
+
+$('reel').addEventListener('pointerdown',e=>{
+ e.preventDefault();
  if(state==='fight'){
   isReeling=true;
-  sound(150,.04,'triangle',.035);
+  try{$('reel').setPointerCapture(e.pointerId);}catch(err){}
  }
-}
+});
 
 function stopReel(){
  isReeling=false;
 }
+$('reel').addEventListener('pointerup',stopReel);
+$('reel').addEventListener('pointercancel',stopReel);
+$('reel').addEventListener('lostpointercapture',stopReel);
+window.addEventListener('pointerup',stopReel);
+window.addEventListener('blur',stopReel);
 
-function landFish(){
- if(state!=='fight'||!targetFish)return;
-
- state='caught';
- isReeling=false;
- clearTimeout(escapeTimer);
-
- const f=targetFish;
- f.caught=true;
- f.hooked=false;
-
- splash(boatX,boatY,28);
- sound(440,.1);
- setTimeout(()=>sound(560,.1),80);
- setTimeout(()=>sound(680,.16),160);
-
- let inches=Math.round(rnd(f.type.min,f.type.max)*perk.size);
- let pounds=Math.max(.2,Math.pow(inches/12,3)*f.type.weight*rnd(.78,1.2));
-
- totals.catches++;
- totals.weight+=pounds;
- sessionCatches++;
- sessionWeight+=pounds;
-
- if(inches>totals.best.inches){
-  totals.best={name:f.type.name,inches,pounds};
+$('up').addEventListener('click',()=>{
+ if(state==='waiting'||state==='bite'){
+  hookY=Math.max(h*.49,hookY-12);
+  sound(350,.04);
  }
-
- let rarity=inches>=28||f.type.rarity<.28
-  ?'Legendary'
-  :inches>=22||f.type.rarity<.48
-  ?'Trophy'
-  :f.type.rarity<.7
-  ?'Rare'
-  :'Common';
-
- history.unshift({
-  name:f.type.name,inches,pounds,rarity
- });
-
- totals.history=history.concat(totals.history||[]).slice(0,15);
- save();
-
- $('count').textContent='Catches: '+totals.catches;
-
- let title=rarity==='Legendary'
-  ?'LEGENDARY CATCH!'
-  :rarity==='Trophy'
-  ?'TROPHY FISH!'
-  :'FISH CAUGHT!';
-
- $('catchTitle').textContent=title;
- $('fishEmoji').textContent=f.type.emoji;
-
- $('catchDetails').innerHTML=
-  '<b>Species:</b> '+f.type.name+
-  '<br><b>Length:</b> '+inches+' inches'+
-  '<br><b>Estimated weight:</b> '+pounds.toFixed(1)+' lb'+
-  '<br><b>Rarity:</b> '+rarity+
-  '<br><b>Angler:</b> '+player+' — '+perk.label+
-  '<br><b>All-time catches:</b> '+totals.catches+
-  '<br><b>Total weight:</b> '+totals.weight.toFixed(1)+' lb';
-
- catchbox.style.display='block';
- castBtn.style.display='none';
- reelBtn.style.display='none';
- continueBtn.style.display='block';
-
- setStatus('Nice work! Fish landed.');
-}
-
-function loseFish(message){
- clearTimeout(biteTimer);
- clearTimeout(nibbleTimer);
- clearTimeout(escapeTimer);
-
- if(targetFish)targetFish.hooked=false;
-
- targetFish=null;
- resetControls();
- setStatus(message);
-}
-
-function closeCatch(){
- catchbox.style.display='none';
-
- if(targetFish){
-  targetFish.caught=true;
-  targetFish.hooked=false;
- }
-
- targetFish=null;
-
- if(fish.filter(f=>!f.caught).length<7){
-  createFish();
- }
-
- resetControls();
- setStatus('Ready for another cast. Tap CAST to fish again.');
-}
-
-castBtn.addEventListener('click',cast);
-
-upBtn.addEventListener('click',()=>shiftDepth(-.045));
-downBtn.addEventListener('click',()=>shiftDepth(.045));
-
-reelBtn.addEventListener('pointerdown',beginReel);
-
-['pointerup','pointercancel','pointerleave'].forEach(ev=>{
- reelBtn.addEventListener(ev,stopReel);
 });
 
-window.addEventListener('pointerup',stopReel);
+$('down').addEventListener('click',()=>{
+ if(state==='waiting'||state==='bite'){
+  hookY=Math.min(h*.85,hookY+12);
+  sound(300,.04);
+ }
+});
 
-$('keep').addEventListener('click',closeCatch);
-continueBtn.addEventListener('click',closeCatch);
+$('continue').addEventListener('click',()=>{
+ targetFish=null;
+ state='idle';
+ resetControls();
+ hookX=boatX+w*.25;
+ hookY=h*.66;
+ setStatus('Cast again when you are ready.');
+});
 
-$('log').addEventListener('click',()=>{
- let recent=(totals.history||[]).slice(0,5).map(c=>
-  `${c.name}: ${c.inches} in / ${Number(c.pounds).toFixed(1)} lb (${c.rarity})`
- ).join('<br>')||'No fish caught yet.';
+$('journal').addEventListener('click',()=>{
+ const all=totals.history||[];
 
  $('logDetails').innerHTML=
-  '<b>Total catches:</b> '+totals.catches+
-  '<br><b>Total weight:</b> '+Number(totals.weight||0).toFixed(1)+' lb'+
-  '<br><b>Personal best:</b> '+totals.best.name+
-  '<br>'+(totals.best.inches
-   ?totals.best.inches+' in / '+Number(totals.best.pounds).toFixed(1)+' lb'
-   :'—')+
-  '<br><br><b>Recent catches</b><br>'+recent;
+  '<strong>CAREER STATISTICS</strong><br>'+
+  'Total fish caught: '+totals.catches+'<br>'+
+  'Total weight: '+Math.round(totals.weight*10)/10+' lbs<br>'+
+  'Personal best: '+escapeHTML(totals.best.name||'None')+'<br>'+
+  (totals.best.inches?totals.best.inches+' inches / '+totals.best.pounds+' lbs<br>':'')+
+  '<br><strong>RECENT CATCHES</strong><br>'+
+  (all.length?all.slice(0,12).map(f=>
+   escapeHTML(f.name)+' — '+f.inches+'" / '+f.pounds+' lbs'+
+   (f.trophy?' 🏆':'')+'<br><small>'+escapeHTML(f.date||'')+'</small><br>'
+  ).join(''):'No catches yet. Your fishing adventure starts now!');
 
- logbox.style.display='block';
+ $('logbox').style.display='block';
 });
 
 $('closeLog').addEventListener('click',()=>{
- logbox.style.display='none';
-});
-
-$('volume').addEventListener('input',e=>{
- volume=Number(e.target.value);
- muted=volume===0;
- $('sound').textContent=muted?'🔇':'🔊';
+ $('logbox').style.display='none';
 });
 
 $('sound').addEventListener('click',()=>{
  muted=!muted;
  $('sound').textContent=muted?'🔇':'🔊';
+ if(!muted)sound(500,.07);
+});
 
- if(!muted&&volume===0){
-  volume=.55;
-  $('volume').value='.55';
+$('volume').addEventListener('input',()=>{
+ volume=Number($('volume').value);
+});
+
+function update(dt){
+ if(state==='waiting'){
+  biteTimer-=dt;
+
+  // Random nibbles can warn the player before the real strike.
+  if(biteTimer<1.4&&Math.random()<dt*1.5){
+   addRipple(hookX,hookY);
+  }
+
+  if(biteTimer<=0){
+   if(Math.random()<.92*perk.luck){
+    startBite();
+   }else{
+    biteTimer=rnd(2,5);
+   }
+  }
  }
-});
 
-window.addEventListener('resize',()=>{
- if(game.style.display==='flex')resize();
-});
+ if(state==='bite'){
+  nibbleTimer+=dt;
 
-document.addEventListener('visibilitychange',()=>{
- if(document.hidden)stopReel();
-});
+  if(nibbleTimer>7){
+   missBite();
+  }
+ }
 
-$('count').textContent='Catches: '+totals.catches;
+ fightUpdate(dt);
+}
+
+function startLoop(){
+ if(raf)return;
+
+ function frame(now){
+  if(!$('game').style.display||$('game').style.display==='none'){
+   raf=0;
+   return;
+  }
+
+  const dt=last?Math.min((now-last)/1000,.05):.016;
+  last=now;
+
+  update(dt);
+  drawScene(dt);
+
+  raf=requestAnimationFrame(frame);
+ }
+
+ raf=requestAnimationFrame(frame);
+}
+
+// Touch and mouse interaction are handled by on-screen buttons.
+// No keyboard controls are required.
 
 })();
 </script>
