@@ -36,19 +36,15 @@ body{background:#031018;color:#f0f9ff;font-family:-apple-system,BlinkMacSystemFo
 #reelBtn{display:none;background:linear-gradient(145deg,#4ade80,#a3e635);box-shadow:0 4px 0 #166534}
 #releaseBtn{display:none;background:linear-gradient(145deg,#fbbf24,#fb923c);box-shadow:0 4px 0 #9a3412}
 #depthUp,#depthDown{display:none;max-width:54px;background:linear-gradient(145deg,#64748b,#475569);box-shadow:0 4px 0 #1e293b;font-size:1.05rem}
-
 #volume-control{display:flex;align-items:center;gap:4px;font-size:.7rem;color:#a5f3fc}
 #volume-control input{width:60px;accent-color:#38bdf8}
 #muteBtn{background:none;border:none;color:#a5f3fc;font-size:1rem;cursor:pointer;padding:2px}
-
 #logBtn{flex:0 0 auto;max-width:50px;background:linear-gradient(145deg,#64748b,#475569);box-shadow:0 4px 0 #1e293b;font-size:.78rem}
-
 #catch-card{display:none;position:fixed;z-index:20;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92%,370px);max-height:88dvh;overflow-y:auto;padding:24px 20px;border:2px solid #67e8f9;border-radius:20px;text-align:center;background:linear-gradient(160deg,#123c53,#071827);box-shadow:0 0 0 100vmax #000a,0 0 50px #38bdf866}
 #catch-card h2{font-size:1.45rem;margin-bottom:4px;color:#a5f3fc}
 #catch-emoji{font-size:3.6rem;margin:8px 0}
 #catch-details{color:#dbeafe;line-height:1.7;margin:10px 0 16px;font-size:.88rem}
 #catch-card button{width:100%;border:none;padding:13px;border-radius:12px;font-size:1rem;font-weight:900;background:linear-gradient(90deg,#38bdf8,#67e8f9);color:#082f49;cursor:pointer;box-shadow:0 3px 0 #0e7490}
-
 #log-modal{display:none;position:fixed;z-index:25;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92%,340px);padding:20px;border:2px solid #64748b;border-radius:16px;background:linear-gradient(160deg,#1e293b,#0f172a);box-shadow:0 0 0 100vmax #000a;text-align:center}
 #log-modal h3{color:#94a3b8;margin-bottom:10px}
 #log-content{color:#e2e8f0;line-height:1.75;font-size:.88rem;margin-bottom:14px}
@@ -56,7 +52,6 @@ body{background:#031018;color:#f0f9ff;font-family:-apple-system,BlinkMacSystemFo
 </style>
 </head>
 <body>
-
 <div id="selection-screen">
   <div class="container">
     <div class="logo">ROSS LAKE</div>
@@ -71,7 +66,6 @@ body{background:#031018;color:#f0f9ff;font-family:-apple-system,BlinkMacSystemFo
     <div id="selectedInfo">Choose your angler to begin.</div>
   </div>
 </div>
-
 <div id="game-screen">
   <div id="top-bar">
     <div id="player-name">Angler</div>
@@ -93,20 +87,17 @@ body{background:#031018;color:#f0f9ff;font-family:-apple-system,BlinkMacSystemFo
     <button id="logBtn" class="game-btn">📊</button>
   </div>
 </div>
-
 <div id="catch-card">
   <h2 id="catch-title">FISH CAUGHT!</h2>
   <div id="catch-emoji">🐟</div>
   <div id="catch-details"></div>
   <button id="keepFishingBtn">KEEP FISHING</button>
 </div>
-
 <div id="log-modal">
   <h3>Session Stats</h3>
   <div id="log-content"></div>
   <button id="closeLogBtn">CLOSE</button>
 </div>
-
 <script>
 (function(){
 const $ = id => document.getElementById(id);
@@ -133,18 +124,14 @@ const closeLogBtn = $("closeLogBtn");
 const canvas = $("gameCanvas");
 const ctx = canvas.getContext("2d");
 const cards = [...document.querySelectorAll(".character-card")];
-
 let selectedPlayer = null;
 let audioCtx = null;
-
-// Angler bonuses
 const anglerStats = {
   Clay:   { tensionMul: 0.78, castSpeed: 1.0,  castDist: 1.0,  luck: 1.0,  sizeMul: 1.0,  label: "Steady" },
   Ryan:   { tensionMul: 1.05, castSpeed: 1.55, castDist: 1.22, luck: 0.95, sizeMul: 0.98, label: "Fast Caster" },
   Justin: { tensionMul: 1.0,  castSpeed: 1.05, castDist: 1.0,  luck: 1.45, sizeMul: 1.05, label: "Lucky" },
   Bob:    { tensionMul: 1.08, castSpeed: 0.95, castDist: 1.05, luck: 1.1,  sizeMul: 1.28, label: "Trophy" }
 };
-
 const species = [
   {name:"Rainbow Trout",color:"#5a9e6a",belly:"#e8d8b8",size:1.00,min:9,max:23,weight:1.30,rarity:1.00,emoji:"🐟",fight:1.0,style:"surface"},
   {name:"Eastern Brook Trout",color:"#6b8e23",belly:"#f0e68c",size:1.05,min:8,max:20,weight:1.20,rarity:0.90,emoji:"🐟",fight:1.05,style:"surface"},
@@ -154,7 +141,6 @@ const species = [
   {name:"Bull Trout",color:"#4a6a7a",belly:"#d7e0e5",size:1.30,min:12,max:32,weight:1.70,rarity:0.24,emoji:"🐟",fight:1.60,style:"deep"},
   {name:"Mountain Whitefish",color:"#9a9d90",belly:"#e4e2d5",size:0.82,min:7,max:16,weight:0.85,rarity:0.55,emoji:"🐟",fight:0.75,style:"gentle"}
 ];
-
 let width=0,height=0,dpr=1;
 let fish=[],particles=[],clouds=[],birds=[],sparkles=[],trees=[];
 let boatX=0,boatY=0;
@@ -170,14 +156,13 @@ let catchHistory = [];
 let pointerStartX=0;
 let volume = 0.7;
 let muted = false;
-let timeOfDay = 0.35; // 0=midnight, 0.25=dawn, 0.5=noon, 0.75=dusk
-let weather = "clear"; // clear, cloudy, rain
+let timeOfDay = 0.35;
+let weather = "clear";
 let weatherTimer = 0;
 let rainParticles = [];
 let perfectHookWindow = false;
 let hookWindowTimer = 0;
 let stats = anglerStats.Clay;
-
 try{
   const s=JSON.parse(localStorage.getItem("rossLakeStats")||"{}");
   if(s.totalCatches) catches=s.totalCatches;
@@ -195,7 +180,6 @@ function loadStats(){
   }catch(e){}
 }
 loadStats();
-
 function initAudio(){if(audioCtx)return;try{audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}
 function playTone(f,d,t="sine",v=0.12){
   if(!audioCtx || muted)return;
@@ -214,7 +198,6 @@ function sfxReel(){playTone(140+Math.random()*40,0.04,"triangle",0.05);}
 function sfxSuccess(){playTone(440,0.09,"sine",0.1);setTimeout(()=>playTone(554,0.09,"sine",0.1),80);setTimeout(()=>playTone(659,0.2,"sine",0.1),160);}
 function sfxSnap(){playTone(170,0.14,"sawtooth",0.11);playTone(80,0.22,"triangle",0.09);}
 function sfxEscape(){playTone(180,0.16,"sawtooth",0.08);playTone(120,0.2,"triangle",0.06);}
-
 cards.forEach(c=>{
   c.addEventListener("click",()=>{
     cards.forEach(o=>o.classList.toggle("selected",o===c));
@@ -232,17 +215,24 @@ startBtn.addEventListener("click",()=>{
   playerNameEl.textContent="🎣 "+selectedPlayer;
   startGame();
 });
-
 function resize(){
-  const r=canvas.getBoundingClientRect();
-  if(r.width<1||r.height<1)return;
-  dpr=Math.min(window.devicePixelRatio||1,2);
-  width=r.width;height=r.height;
-  canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  boatX=width*0.5;boatY=height*0.255;
-  hookX=boatX+38;
-  createFish();createClouds();createBirds();createSparkles();createTrees();
+  const r = canvas.getBoundingClientRect();
+  if(r.width < 1 || r.height < 1) return false;
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  width = r.width;
+  height = r.height;
+  canvas.width = Math.round(width * dpr);
+  canvas.height = Math.round(height * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  boatX = width * 0.5;
+  boatY = height * 0.255;
+  hookX = boatX + 38;
+  createFish();
+  createClouds();
+  createBirds();
+  createSparkles();
+  createTrees();
+  return true;
 }
 
 function createFish(){
@@ -276,7 +266,8 @@ function drawSky(){
   if(weather === "cloudy" || weather === "rain"){
     skyTop = skyTop.replace(/#/, "#") ; // darken slightly
     skyMid="#5a6a7a"; skyBot="#3a4a5a";
-  }   const g=ctx.createLinearGradient(0,0,0,height*0.44);
+  }
+  const g=ctx.createLinearGradient(0,0,0,height*0.44);
   g.addColorStop(0,skyTop);
   g.addColorStop(0.35,skyMid);
   g.addColorStop(0.7,skyBot);
@@ -448,7 +439,7 @@ function drawOneFish(f,t){
   ctx.beginPath();
   ctx.moveTo(-size*0.18, -size*0.26);
   ctx.lineTo(size*0.14, -size*0.62);
-  ctx.lineTo(size*0.48, -size*0.25);
+  ctx.lineT(size*0.48, -size*0.25);
   ctx.closePath();
   ctx.fill();
 
@@ -558,7 +549,8 @@ function drawBoat(){
   // rod tip
   ctx.strokeStyle = "#e8c98a";
   ctx.lineWidth = 2.2;
-  ctx.beginPath();   ctx.moveTo(x+13, y-23);
+  ctx.beginPath();
+  ctx.moveTo(x+13, y-23);
   ctx.quadraticCurveTo(x+25, y-62, x+44, y-68);
   ctx.stroke();
 }
@@ -640,7 +632,6 @@ function drawParticles(dt){
   });
   ctx.globalAlpha = 1;
 }
-
 
 function drawRain(){
   if(weather !== "rain") return;
@@ -802,7 +793,6 @@ function gameLoop(ts){
 
 function startGame(){
   clearAllTimers();
-  resize();
   state = "idle";
   targetFish = null;
   reelProgress = 0; tension = 0; castPower = 0; charging = false; isReeling = false;
@@ -813,7 +803,14 @@ function startGame(){
   statusText.textContent = "Hold CAST, drag left/right to aim, release to cast";
   if(animationFrame) cancelAnimationFrame(animationFrame);
   lastTime = 0; elapsed = 0;
-  animationFrame = requestAnimationFrame(gameLoop);
+
+  // Wait one frame so the canvas has real dimensions
+  requestAnimationFrame(() => {
+    if(!resize()){
+      setTimeout(() => resize(), 50);
+    }
+    animationFrame = requestAnimationFrame(gameLoop);
+  });
 }
 
 function clearAllTimers(){
@@ -840,7 +837,8 @@ castBtn.addEventListener("pointerdown", e => {
   castPower = 10;
   aimOffset = 0;
   pointerStartX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
-  castBtn.textContent = "AIM + POWER"; });
+  castBtn.textContent = "AIM + POWER";
+});
 castBtn.addEventListener("pointermove", e => {
   if(!charging || state !== "idle") return;
   const cx = e.clientX || (e.touches && e.touches[0].clientX) || pointerStartX;
