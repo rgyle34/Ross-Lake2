@@ -276,7 +276,7 @@ function drawSky(){
   if(weather === "cloudy" || weather === "rain"){
     skyTop = skyTop.replace(/#/, "#") ; // darken slightly
     skyMid="#5a6a7a"; skyBot="#3a4a5a";
-  }  const g=ctx.createLinearGradient(0,0,0,height*0.44);
+  }   const g=ctx.createLinearGradient(0,0,0,height*0.44);
   g.addColorStop(0,skyTop);
   g.addColorStop(0.35,skyMid);
   g.addColorStop(0.7,skyBot);
@@ -558,7 +558,7 @@ function drawBoat(){
   // rod tip
   ctx.strokeStyle = "#e8c98a";
   ctx.lineWidth = 2.2;
-  ctx.beginPath();  ctx.moveTo(x+13, y-23);
+  ctx.beginPath();   ctx.moveTo(x+13, y-23);
   ctx.quadraticCurveTo(x+25, y-62, x+44, y-68);
   ctx.stroke();
 }
