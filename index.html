@@ -2,56 +2,70 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Ross Lake</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Ross Lake Fishing</title>
 
 <style>
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 }
 
+:root {
+    --blue: #38bdf8;
+    --deep: #071827;
+    --panel: #102b40;
+    --white: #f0f9ff;
+}
+
 body {
-    background: #0d1b2a;
-    min-height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    color: white;
+    background: var(--deep);
+    color: var(--white);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     overflow: hidden;
     touch-action: manipulation;
 }
 
+/* CHARACTER SELECTION */
+
 #selection-screen {
-    min-height: 100vh;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 10px;
-    background: linear-gradient(to bottom, #1a3a5c, #0d1b2a);
-    overflow-y: auto;
+    padding: 24px 16px;
+    background:
+        radial-gradient(ellipse at 50% 25%, #1d6380 0%, transparent 55%),
+        linear-gradient(#102e46, #071827);
 }
 
 .container {
-    text-align: center;
     width: 100%;
-    max-width: 500px;
+    max-width: 470px;
+    text-align: center;
 }
 
-h1 {
-    font-size: 2.8rem;
-    margin-bottom: 6px;
-    background: linear-gradient(90deg, #7dd3fc, #38bdf8);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 2px;
+.logo {
+    font-size: clamp(2.5rem, 9vw, 4rem);
+    font-weight: 950;
+    letter-spacing: 4px;
+    line-height: 1.05;
+    color: #f0f9ff;
+    text-shadow: 0 3px 0 #0369a1, 0 0 28px #38bdf855;
 }
 
 .subtitle {
-    font-size: 1.1rem;
-    color: #94a3b8;
-    margin-bottom: 24px;
+    color: #9ec9df;
+    margin-top: 10px;
+    margin-bottom: 28px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
 }
 
 .characters {
@@ -62,80 +76,62 @@ h1 {
 }
 
 .character-card {
-    appearance: none;
-    width: 100%;
-    font: inherit;
     color: white;
-    background: rgba(30, 58, 95, 0.7);
-    border: 2px solid #334155;
-    border-radius: 16px;
-    padding: 18px 10px;
+    font: inherit;
+    appearance: none;
+    background: linear-gradient(145deg, #173c55, #0d2639);
+    border: 2px solid #31536a;
+    border-radius: 18px;
+    padding: 20px 10px;
     cursor: pointer;
-    user-select: none;
-    touch-action: manipulation;
     transition: 0.2s;
 }
 
 .character-card.selected {
-    border-color: #22d3ee;
-    background: rgba(8, 47, 73, 0.95);
-    box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
-    transform: scale(1.03);
+    border-color: #38bdf8;
+    background: linear-gradient(145deg, #15516e, #103248);
+    box-shadow: 0 0 24px #38bdf833;
+    transform: translateY(-3px);
 }
 
 .avatar {
-    width: 65px;
-    height: 65px;
+    width: 74px;
+    height: 74px;
     border-radius: 50%;
-    margin: 0 auto 10px;
+    margin: 0 auto 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
-    font-weight: bold;
+    font-size: 2rem;
+    font-weight: 900;
+    color: white;
+    border: 3px solid #ffffff35;
+    box-shadow: inset 0 -8px 18px #0003;
 }
 
-.clay {
-    background: linear-gradient(135deg, #64748b, #475569);
-}
-
-.ryan {
-    background: linear-gradient(135deg, #0ea5e9, #0284c7);
-}
-
-.justin {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-}
-
-.bob {
-    background: linear-gradient(135deg, #f59e0b, #d97706);
-}
+.clay { background: linear-gradient(135deg, #94a3b8, #475569); }
+.ryan { background: linear-gradient(135deg, #38bdf8, #075985); }
+.justin { background: linear-gradient(135deg, #4ade80, #166534); }
+.bob { background: linear-gradient(135deg, #fbbf24, #92400e); }
 
 .name {
+    display: block;
     font-size: 1.2rem;
-    font-weight: 600;
-}
-
-.age {
-    font-size: 0.85rem;
-    color: #cbd5e1;
-    margin-top: 2px;
+    font-weight: 800;
 }
 
 #startBtn {
-    appearance: none;
-    background: linear-gradient(90deg, #0ea5e9, #22d3ee);
-    border: none;
-    padding: 16px 40px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #0f172a;
-    border-radius: 50px;
     width: 100%;
-    max-width: 260px;
-    opacity: 0.45;
+    max-width: 290px;
+    border: none;
+    border-radius: 40px;
+    padding: 17px;
+    font-size: 1.1rem;
+    font-weight: 900;
+    background: linear-gradient(90deg, #38bdf8, #67e8f9);
+    color: #062033;
+    opacity: 0.4;
     cursor: not-allowed;
-    touch-action: manipulation;
 }
 
 #startBtn.active {
@@ -143,12 +139,14 @@ h1 {
     cursor: pointer;
 }
 
-.selected-info {
+#selectedInfo {
+    color: #bae6fd;
     margin-top: 18px;
-    color: #7dd3fc;
-    font-size: 1rem;
-    min-height: 24px;
+    min-height: 22px;
+    font-size: 0.9rem;
 }
+
+/* GAME INTERFACE */
 
 #game-screen {
     display: none;
@@ -156,89 +154,172 @@ h1 {
     height: 100vh;
     height: 100dvh;
     width: 100%;
+    background: #071827;
 }
 
 #top-bar {
-    background: rgba(13, 27, 42, 0.9);
-    padding: 12px 16px;
+    flex-shrink: 0;
+    min-height: 55px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    font-size: 1rem;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #091b2b;
+    border-bottom: 1px solid #28475b;
 }
 
 #player-name {
-    font-weight: 600;
     color: #7dd3fc;
+    font-weight: 800;
+    font-size: 0.92rem;
 }
 
-canvas {
-    flex: 1;
-    width: 100%;
-    min-height: 0;
-    background: #0c4a6e;
-    display: block;
+#location-name {
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    font-size: 0.95rem;
 }
 
-#controls {
-    background: #0f172a;
-    padding: 12px 16px;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-}
-
-.game-btn {
-    background: linear-gradient(90deg, #0ea5e9, #22d3ee);
-    border: none;
-    padding: 16px 32px;
-    font-size: 1.2rem;
+#fish-counter {
+    color: #a5f3fc;
+    font-size: 0.8rem;
     font-weight: 700;
-    color: #0f172a;
-    border-radius: 50px;
-    min-width: 160px;
-    cursor: pointer;
-    user-select: none;
-    touch-action: manipulation;
-}
-
-.game-btn:active {
-    transform: scale(0.96);
 }
 
 #status {
+    flex-shrink: 0;
+    min-height: 47px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px;
     text-align: center;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.3);
-    font-size: 0.95rem;
+    background: #102b40;
     color: #e0f2fe;
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+#gameCanvas {
+    display: block;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    background: #0c4a6e;
+}
+
+#controls {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    background: #081827;
+    border-top: 1px solid #244358;
+}
+
+.game-btn {
+    flex: 1;
+    max-width: 220px;
+    min-height: 55px;
+    border: none;
+    border-radius: 15px;
+    padding: 14px 12px;
+    font-size: 1rem;
+    font-weight: 950;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #38bdf8, #22d3ee);
+    color: #052033;
+    cursor: pointer;
+    touch-action: manipulation;
+    box-shadow: 0 4px 0 #075985;
+}
+
+.game-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #075985;
+}
+
+.game-btn:disabled {
+    opacity: 0.35;
+    box-shadow: none;
+    cursor: default;
+}
+
+#reelBtn {
+    display: none;
+    background: linear-gradient(135deg, #4ade80, #a3e635);
+    box-shadow: 0 4px 0 #166534;
+}
+
+#releaseBtn {
+    display: none;
+    background: linear-gradient(135deg, #fbbf24, #fb923c);
+    box-shadow: 0 4px 0 #9a3412;
+}
+
+#catch-card {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(90%, 360px);
+    max-height: 85dvh;
+    overflow-y: auto;
+    padding: 24px;
+    border: 2px solid #67e8f9;
+    border-radius: 24px;
+    text-align: center;
+    background: linear-gradient(145deg, #123c53, #071827);
+    box-shadow: 0 0 0 100vmax #0009, 0 0 45px #38bdf855;
+}
+
+#catch-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    color: #a5f3fc;
+}
+
+#catch-emoji {
+    font-size: 4rem;
+    margin: 12px 0;
+}
+
+#catch-details {
+    color: #dbeafe;
+    line-height: 1.9;
+    margin: 12px 0 18px;
+}
+
+#catch-card button {
+    width: 100%;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 900;
+    background: linear-gradient(90deg, #38bdf8, #67e8f9);
+    color: #082f49;
 }
 
 @media (max-height: 650px) {
-    h1 {
-        font-size: 2.2rem;
-    }
+    .container { max-width: 400px; }
+    .logo { font-size: 2.3rem; }
+    .subtitle { margin-bottom: 14px; }
+    .character-card { padding: 10px; }
+    .avatar { width: 48px; height: 48px; font-size: 1.4rem; }
+    .characters { gap: 9px; margin-bottom: 14px; }
+    #controls { padding-top: 7px; padding-bottom: 7px; }
+    .game-btn { min-height: 46px; padding: 10px; }
+}
 
-    .subtitle {
-        margin-bottom: 14px;
-    }
-
-    .character-card {
-        padding: 10px 8px;
-    }
-
-    .avatar {
-        width: 48px;
-        height: 48px;
-        font-size: 1.4rem;
-        margin-bottom: 6px;
-    }
-
-    .characters {
-        gap: 9px;
-        margin-bottom: 14px;
-    }
+@media (prefers-reduced-motion: reduce) {
+    .character-card { transition: none; }
 }
 </style>
 </head>
@@ -246,589 +327,1466 @@ canvas {
 <body>
 
 <!-- ANGLER SELECTION -->
+
 <div id="selection-screen">
     <div class="container">
 
-        <h1>ROSS LAKE</h1>
-        <div class="subtitle">Choose your angler</div>
+        <div class="logo">ROSS LAKE</div>
+        <div class="subtitle">Wilderness Fishing Adventure</div>
 
         <div class="characters">
 
-            <button type="button"
-                    class="character-card"
+            <button class="character-card"
                     data-name="Clay"
-                    data-age="Early 60s"
                     aria-pressed="false">
                 <span class="avatar clay">C</span>
                 <span class="name">Clay</span>
-                <span class="age" style="display:block">Early 60s</span>
             </button>
 
-            <button type="button"
-                    class="character-card"
+            <button class="character-card"
                     data-name="Ryan"
-                    data-age="40 years old"
                     aria-pressed="false">
                 <span class="avatar ryan">R</span>
                 <span class="name">Ryan</span>
-                <span class="age" style="display:block">40 years old</span>
             </button>
 
-            <button type="button"
-                    class="character-card"
+            <button class="character-card"
                     data-name="Justin"
-                    data-age="29 years old"
                     aria-pressed="false">
                 <span class="avatar justin">J</span>
                 <span class="name">Justin</span>
-                <span class="age" style="display:block">29 years old</span>
             </button>
 
-            <button type="button"
-                    class="character-card"
+            <button class="character-card"
                     data-name="Bob"
-                    data-age="79 years old"
                     aria-pressed="false">
                 <span class="avatar bob">B</span>
                 <span class="name">Bob</span>
-                <span class="age" style="display:block">79 years old</span>
             </button>
 
         </div>
 
-        <button id="startBtn" type="button" disabled>
-            Start Fishing
-        </button>
+        <button id="startBtn" disabled>START FISHING</button>
 
-        <div class="selected-info" id="selectedInfo" aria-live="polite">
-            Tap an angler to select them.
+        <div id="selectedInfo" aria-live="polite">
+            Choose your angler to begin.
         </div>
 
     </div>
 </div>
 
+
 <!-- GAME SCREEN -->
+
 <div id="game-screen">
 
     <div id="top-bar">
-        <div id="player-name">Player</div>
-        <div>Ross Lake</div>
+        <div id="player-name">Angler</div>
+        <div id="location-name">ROSS LAKE</div>
+        <div id="fish-counter">Catches: 0</div>
     </div>
 
     <div id="status" aria-live="polite">
-        Tap CAST to drop your line
+        Cast your line into the lake!
     </div>
 
-    <canvas id="gameCanvas" aria-label="Fishing game scene"></canvas>
+    <canvas id="gameCanvas" aria-label="Animated fishing game"></canvas>
 
     <div id="controls">
-        <button class="game-btn" id="castBtn" type="button">
-            CAST
-        </button>
+        <button id="castBtn" class="game-btn">🎣 CAST</button>
+        <button id="reelBtn" class="game-btn">⬆ REEL IN!</button>
+        <button id="releaseBtn" class="game-btn">CONTINUE</button>
     </div>
 
 </div>
 
+
+<!-- CATCH RESULTS -->
+
+<div id="catch-card" role="dialog" aria-modal="true" aria-labelledby="catch-title">
+    <h2 id="catch-title">FISH CAUGHT!</h2>
+    <div id="catch-emoji">🐟</div>
+    <div id="catch-details"></div>
+    <button id="keepFishingBtn">KEEP FISHING</button>
+</div>
+
+
 <script>
 (() => {
+"use strict";
 
-    // ==========================================
-    // ANGLER SELECTION
-    // ==========================================
+// ================================================
+// ELEMENTS
+// ================================================
 
-    let selectedPlayer = null;
+const selectionScreen = document.getElementById("selection-screen");
+const gameScreen = document.getElementById("game-screen");
+const startBtn = document.getElementById("startBtn");
+const selectedInfo = document.getElementById("selectedInfo");
+const playerName = document.getElementById("player-name");
+const fishCounter = document.getElementById("fish-counter");
+const statusText = document.getElementById("status");
 
-    const cards = Array.from(
-        document.querySelectorAll('.character-card')
-    );
+const castBtn = document.getElementById("castBtn");
+const reelBtn = document.getElementById("reelBtn");
+const releaseBtn = document.getElementById("releaseBtn");
 
-    const startBtn = document.getElementById('startBtn');
-    const selectedInfo = document.getElementById('selectedInfo');
-    const selectionScreen = document.getElementById('selection-screen');
-    const gameScreen = document.getElementById('game-screen');
+const catchCard = document.getElementById("catch-card");
+const catchEmoji = document.getElementById("catch-emoji");
+const catchDetails = document.getElementById("catch-details");
+const keepFishingBtn = document.getElementById("keepFishingBtn");
 
-    function selectAngler(card) {
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
-        cards.forEach(item => {
+const cards = [...document.querySelectorAll(".character-card")];
 
-            const selected = item === card;
+let selectedPlayer = null;
 
-            item.classList.toggle('selected', selected);
+// ================================================
+// FISH SPECIES
+// Approximate fictional catch measurements.
+// ================================================
 
-            item.setAttribute(
-                'aria-pressed',
-                String(selected)
-            );
+const species = [
+    {
+        name: "Rainbow Trout",
+        color: "#65a875",
+        belly: "#e6d6b4",
+        size: 1.0,
+        min: 9,
+        max: 23,
+        weight: 1.3,
+        rarity: 1.0,
+        emoji: "🐟"
+    },
+    {
+        name: "Brown Trout",
+        color: "#926448",
+        belly: "#e5c9a5",
+        size: 1.08,
+        min: 10,
+        max: 28,
+        weight: 1.45,
+        rarity: 0.85,
+        emoji: "🐟"
+    },
+    {
+        name: "Lake Trout",
+        color: "#647b83",
+        belly: "#c5d4d4",
+        size: 1.5,
+        min: 15,
+        max: 40,
+        weight: 1.9,
+        rarity: 0.48,
+        emoji: "🐟"
+    },
+    {
+        name: "Kokanee Salmon",
+        color: "#e87965",
+        belly: "#f4d6c6",
+        size: 1.05,
+        min: 9,
+        max: 18,
+        weight: 1.15,
+        rarity: 0.72,
+        emoji: "🐟"
+    },
+    {
+        name: "Bull Trout",
+        color: "#607b90",
+        belly: "#d7e0e5",
+        size: 1.3,
+        min: 12,
+        max: 32,
+        weight: 1.7,
+        rarity: 0.3,
+        emoji: "🐟"
+    },
+    {
+        name: "Mountain Whitefish",
+        color: "#a6a99b",
+        belly: "#e4e2d5",
+        size: 0.82,
+        min: 7,
+        max: 16,
+        weight: 0.85,
+        rarity: 0.62,
+        emoji: "🐟"
+    }
+];
 
+// ================================================
+// GAME STATE
+// ================================================
+
+let width = 0;
+let height = 0;
+let dpr = 1;
+
+let fish = [];
+let particles = [];
+let clouds = [];
+
+let boatX = 0;
+let boatY = 0;
+
+let state = "idle";
+
+let hookX = 0;
+let hookY = 0;
+let hookDepth = 0;
+
+let targetFish = null;
+let biteTimer = null;
+let fightTimer = null;
+let escapeTimer = null;
+
+let reelProgress = 0;
+let catches = 0;
+let totalWeight = 0;
+
+let animationFrame = null;
+let lastTime = 0;
+let elapsed = 0;
+
+let bobberPhase = 0;
+let notificationFlash = 0;
+
+// ================================================
+// SELECT ANGLER
+// ================================================
+
+cards.forEach(card => {
+    card.addEventListener("click", () => {
+
+        cards.forEach(other => {
+            const selected = other === card;
+
+            other.classList.toggle("selected", selected);
+            other.setAttribute("aria-pressed", String(selected));
         });
 
-        selectedPlayer = {
-            name: card.dataset.name,
-            age: card.dataset.age
-        };
+        selectedPlayer = card.dataset.name;
 
         selectedInfo.textContent =
-            `Selected: ${selectedPlayer.name} — ready to fish!`;
+            `${selectedPlayer} is ready to hit the water!`;
 
         startBtn.disabled = false;
-        startBtn.classList.add('active');
+        startBtn.classList.add("active");
+    });
+});
 
-    }
+startBtn.addEventListener("click", () => {
 
-    cards.forEach(card => {
+    if (!selectedPlayer) return;
 
-        card.addEventListener('click', () => {
-            selectAngler(card);
+    selectionScreen.style.display = "none";
+    gameScreen.style.display = "flex";
+
+    playerName.textContent = "🎣 " + selectedPlayer;
+
+    startGame();
+});
+
+// ================================================
+// RESIZE CANVAS
+// ================================================
+
+function resize() {
+
+    const rect = canvas.getBoundingClientRect();
+
+    if (rect.width < 1 || rect.height < 1) return;
+
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    width = rect.width;
+    height = rect.height;
+
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    boatX = width * 0.5;
+    boatY = height * 0.30;
+
+    hookX = boatX + 35;
+
+    createFish();
+    createClouds();
+}
+
+// ================================================
+// CREATE FISH
+// ================================================
+
+function createFish() {
+
+    fish = [];
+
+    for (let i = 0; i < 13; i++) {
+
+        const type = species[
+            Math.floor(Math.random() * species.length)
+        ];
+
+        fish.push({
+            x: Math.random() * Math.max(width, 1),
+            y: height * (0.53 + Math.random() * 0.40),
+            speed: 10 + Math.random() * 24,
+            direction: Math.random() < 0.5 ? -1 : 1,
+            type,
+            phase: Math.random() * Math.PI * 2,
+            scale: 0.65 + Math.random() * 0.45,
+            caught: false,
+            hooked: false
         });
-
-    });
-
-    startBtn.addEventListener('click', () => {
-
-        if (!selectedPlayer) {
-            selectedInfo.textContent =
-                'Please choose an angler first.';
-            return;
-        }
-
-        selectionScreen.style.display = 'none';
-        gameScreen.style.display = 'flex';
-
-        document.getElementById('player-name').textContent =
-            `${selectedPlayer.name} is fishing`;
-
-        initGame();
-
-    });
-
-    // ==========================================
-    // GAME SETUP
-    // ==========================================
-
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-
-    const statusText = document.getElementById('status');
-    const castBtn = document.getElementById('castBtn');
-
-    let width = 0;
-    let height = 0;
-    let fish = [];
-    let lineY = 0;
-    let isCasting = false;
-    let boatX = 0;
-
-    let animationFrame = null;
-    let castTimer = null;
-
-    const fishTypes = [
-        {
-            name: 'Rainbow Trout',
-            color: '#4ade80',
-            size: 28
-        },
-        {
-            name: 'Brown Trout',
-            color: '#a16207',
-            size: 26
-        },
-        {
-            name: 'Tin Can',
-            color: '#94a3b8',
-            size: 18
-        },
-        {
-            name: 'Old Boot',
-            color: '#78716c',
-            size: 22
-        },
-        {
-            name: 'Small Shark',
-            color: '#64748b',
-            size: 32
-        }
-    ];
-
-    function resize() {
-
-        const rect = canvas.getBoundingClientRect();
-
-        const dpr = Math.max(
-            1,
-            Math.min(window.devicePixelRatio || 1, 2)
-        );
-
-        width = Math.max(1, rect.width);
-        height = Math.max(1, rect.height);
-
-        canvas.width = Math.round(width * dpr);
-        canvas.height = Math.round(height * dpr);
-
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-        boatX = width / 2;
-
     }
+}
 
-    function createFish() {
+// ================================================
+// SCENERY
+// ================================================
 
-        fish = [];
+function createClouds() {
 
-        for (let i = 0; i < 8; i++) {
+    clouds = [];
 
-            const type =
-                fishTypes[
-                    Math.floor(Math.random() * fishTypes.length)
-                ];
-
-            fish.push({
-                x: Math.random() * width,
-                y: height * 0.45 +
-                   Math.random() * (height * 0.45),
-                speed: (Math.random() * 0.8 + 0.3) *
-                       (Math.random() < 0.5 ? 1 : -1),
-                type: type,
-                wobble: Math.random() * Math.PI * 2
-            });
-
-        }
-
+    for (let i = 0; i < 5; i++) {
+        clouds.push({
+            x: Math.random() * Math.max(width, 1),
+            y: 15 + Math.random() * height * 0.10,
+            size: 15 + Math.random() * 25,
+            speed: 2 + Math.random() * 5
+        });
     }
+}
 
-    // ==========================================
-    // DRAW THE BOAT AND ANGLER
-    // ==========================================
+function drawSky() {
 
-    function drawBoat() {
+    const sky = ctx.createLinearGradient(0, 0, 0, height * 0.55);
 
-        // Boat body
-        ctx.fillStyle = '#7c2d12';
+    sky.addColorStop(0, "#65b9e8");
+    sky.addColorStop(0.6, "#b7e2ed");
+    sky.addColorStop(1, "#e5f3e8");
+
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, width, height);
+
+    // Sun
+    const sunX = width * 0.79;
+    const sunY = height * 0.105;
+
+    const glow = ctx.createRadialGradient(
+        sunX, sunY, 3,
+        sunX, sunY, Math.min(width * 0.16, 85)
+    );
+
+    glow.addColorStop(0, "#fff9cfcc");
+    glow.addColorStop(1, "#fff9cf00");
+
+    ctx.fillStyle = glow;
+    ctx.fillRect(
+        sunX - 90, sunY - 90, 180, 180
+    );
+
+    ctx.fillStyle = "#fff4c2";
+    ctx.beginPath();
+    ctx.arc(sunX, sunY, 19, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Clouds
+    clouds.forEach(cloud => {
+
+        cloud.x += cloud.speed * 0.003;
+
+        if (cloud.x > width + 100) cloud.x = -100;
+
+        ctx.fillStyle = "#ffffff70";
 
         ctx.beginPath();
-        ctx.moveTo(boatX - 55, height * 0.32);
-        ctx.lineTo(boatX + 55, height * 0.32);
-        ctx.lineTo(boatX + 40, height * 0.38);
-        ctx.lineTo(boatX - 40, height * 0.38);
+        ctx.ellipse(
+            cloud.x,
+            cloud.y,
+            cloud.size,
+            cloud.size * 0.32,
+            0, 0, Math.PI * 2
+        );
+
+        ctx.ellipse(
+            cloud.x - cloud.size * 0.45,
+            cloud.y + 3,
+            cloud.size * 0.5,
+            cloud.size * 0.25,
+            0, 0, Math.PI * 2
+        );
+
+        ctx.ellipse(
+            cloud.x + cloud.size * 0.42,
+            cloud.y + 3,
+            cloud.size * 0.48,
+            cloud.size * 0.24,
+            0, 0, Math.PI * 2
+        );
+
+        ctx.fill();
+    });
+}
+
+function drawMountain(points, color) {
+
+    ctx.beginPath();
+
+    ctx.moveTo(0, height * 0.38);
+
+    points.forEach(p => {
+        ctx.lineTo(width * p[0], height * p[1]);
+    });
+
+    ctx.lineTo(width, height * 0.42);
+    ctx.lineTo(width, height * 0.53);
+    ctx.lineTo(0, height * 0.53);
+
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+}
+
+function drawMountains() {
+
+    drawMountain([
+        [0.00, 0.33],
+        [0.13, 0.16],
+        [0.21, 0.28],
+        [0.34, 0.10],
+        [0.48, 0.31],
+        [0.61, 0.13],
+        [0.75, 0.30],
+        [0.88, 0.17],
+        [1.00, 0.34]
+    ], "#829fa7");
+
+    // Snow caps
+    ctx.fillStyle = "#edf5f2";
+
+    function snowPeak(x, y, s) {
+
+        ctx.beginPath();
+        ctx.moveTo(width * x, height * y);
+        ctx.lineTo(width * (x - s), height * (y + s * 1.5));
+        ctx.lineTo(width * (x - s * 0.2), height * (y + s * 1.0));
+        ctx.lineTo(width * x, height * (y + s * 1.2));
+        ctx.lineTo(width * (x + s * 0.15), height * (y + s * 0.9));
+        ctx.lineTo(width * (x + s), height * (y + s * 1.5));
         ctx.closePath();
         ctx.fill();
+    }
 
-        // Boat outline
-        ctx.strokeStyle = '#431407';
-        ctx.lineWidth = 3;
-        ctx.stroke();
+    snowPeak(0.34, 0.10, 0.055);
+    snowPeak(0.61, 0.13, 0.045);
+    snowPeak(0.13, 0.16, 0.04);
+    snowPeak(0.88, 0.17, 0.035);
 
-        // Angler's head
-        ctx.fillStyle = '#fcd34d';
+    drawMountain([
+        [0.00, 0.40],
+        [0.10, 0.30],
+        [0.19, 0.38],
+        [0.31, 0.25],
+        [0.43, 0.39],
+        [0.58, 0.29],
+        [0.72, 0.39],
+        [0.86, 0.28],
+        [1.00, 0.39]
+    ], "#315f55");
+
+    // Evergreen trees on shoreline
+    for (let i = 0; i < 24; i++) {
+
+        const x = i * width / 23;
+        const y = height * (0.39 + Math.sin(i * 2) * 0.018);
+        const size = 9 + (i % 4) * 3;
+
+        ctx.fillStyle = i % 2 ? "#164e45" : "#1e5949";
 
         ctx.beginPath();
-        ctx.arc(
-            boatX,
-            height * 0.28,
-            12,
-            0,
-            Math.PI * 2
-        );
-
+        ctx.moveTo(x, y - size);
+        ctx.lineTo(x - size * 0.65, y + size * 0.8);
+        ctx.lineTo(x + size * 0.65, y + size * 0.8);
+        ctx.closePath();
         ctx.fill();
+    }
+}
 
-        // Angler's body
-        ctx.fillStyle = '#0f172a';
+// ================================================
+// WATER
+// ================================================
 
-        ctx.fillRect(
-            boatX - 10,
-            height * 0.292,
-            20,
-            20
-        );
+function drawWater() {
 
+    const waterTop = height * 0.43;
+
+    const gradient = ctx.createLinearGradient(
+        0, waterTop, 0, height
+    );
+
+    gradient.addColorStop(0, "#3c9fa7");
+    gradient.addColorStop(0.2, "#167d98");
+    gradient.addColorStop(0.55, "#075579");
+    gradient.addColorStop(1, "#032e50");
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, waterTop, width, height - waterTop);
+
+    // Reflections
+    for (let i = 0; i < 28; i++) {
+
+        const y = waterTop + i * (height * 0.55 / 28);
+        const x = ((i * 79 + elapsed * 10) % (width + 100)) - 50;
+        const length = 15 + (i % 5) * 9;
+
+        ctx.strokeStyle =
+            i % 3 === 0 ? "#d7fbf955" : "#a5f3fc25";
+
+        ctx.lineWidth = 1 + (i % 3) * 0.5;
+
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + length, y);
+        ctx.stroke();
     }
 
-    // ==========================================
-    // DRAW THE WATER
-    // ==========================================
+    // Animated waves
+    for (let i = 0; i < 7; i++) {
 
-    function drawWater() {
+        ctx.beginPath();
 
-        const gradient = ctx.createLinearGradient(
-            0,
-            height * 0.3,
-            0,
-            height
-        );
+        const y = waterTop + 8 + i * height * 0.085;
 
-        gradient.addColorStop(0, '#0c4a6e');
-        gradient.addColorStop(0.5, '#0369a1');
-        gradient.addColorStop(1, '#0c4a6e');
+        for (let x = 0; x <= width; x += 12) {
 
-        ctx.fillStyle = gradient;
+            const waveY =
+                y + Math.sin(x * 0.025 + elapsed * 1.3 + i) * 2.5;
 
-        ctx.fillRect(
-            0,
-            height * 0.3,
-            width,
-            height * 0.7
-        );
-
-        // Waves
-        ctx.strokeStyle = 'rgba(125, 211, 252, 0.25)';
-        ctx.lineWidth = 2;
-
-        for (let i = 0; i < 5; i++) {
-
-            ctx.beginPath();
-
-            ctx.moveTo(
-                0,
-                height * 0.35 + i * 25
-            );
-
-            for (let x = 0; x <= width; x += 30) {
-
-                ctx.lineTo(
-                    x,
-                    height * 0.35 +
-                    i * 25 +
-                    Math.sin(x * 0.03 + Date.now() * 0.002) * 4
-                );
-
-            }
-
-            ctx.stroke();
-
+            if (x === 0) ctx.moveTo(x, waveY);
+            else ctx.lineTo(x, waveY);
         }
 
+        ctx.strokeStyle = "#c4f1f72b";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+    }
+}
+
+// ================================================
+// FISH DRAWING
+// ================================================
+
+function drawOneFish(f, time) {
+
+    const size = f.type.size * f.scale * 16;
+    const facing = f.direction;
+
+    ctx.save();
+    ctx.translate(f.x, f.y);
+    ctx.scale(facing, 1);
+
+    const wiggle = Math.sin(time * 8 + f.phase) * size * 0.15;
+
+    // Tail
+    ctx.fillStyle = f.type.color;
+
+    ctx.beginPath();
+    ctx.moveTo(-size * 0.6, 0);
+    ctx.lineTo(-size * 1.25, -size * 0.48 + wiggle);
+    ctx.lineTo(-size * 1.12, wiggle);
+    ctx.lineTo(-size * 1.25, size * 0.48 + wiggle);
+    ctx.closePath();
+    ctx.fill();
+
+    // Body gradient
+    const bodyGradient = ctx.createLinearGradient(
+        0, -size * 0.4, 0, size * 0.4
+    );
+
+    bodyGradient.addColorStop(0, "#ffffff");
+    bodyGradient.addColorStop(0.15, f.type.color);
+    bodyGradient.addColorStop(0.7, f.type.color);
+    bodyGradient.addColorStop(1, f.type.belly);
+
+    ctx.fillStyle = bodyGradient;
+
+    ctx.beginPath();
+    ctx.ellipse(0, 0, size, size * 0.43, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Upper fin
+    ctx.fillStyle = f.type.color;
+
+    ctx.beginPath();
+    ctx.moveTo(-size * 0.25, -size * 0.27);
+    ctx.lineTo(size * 0.1, -size * 0.66);
+    ctx.lineTo(size * 0.52, -size * 0.27);
+    ctx.closePath();
+    ctx.fill();
+
+    // Lower fin
+    ctx.beginPath();
+    ctx.moveTo(-size * 0.15, size * 0.27);
+    ctx.lineTo(size * 0.25, size * 0.54);
+    ctx.lineTo(size * 0.52, size * 0.27);
+    ctx.closePath();
+    ctx.fill();
+
+    // Gills
+    ctx.strokeStyle = "#243d46aa";
+    ctx.lineWidth = 1.2;
+
+    ctx.beginPath();
+    ctx.arc(size * 0.48, 0, size * 0.19, -1.1, 1.1);
+    ctx.stroke();
+
+    // Scales
+    ctx.strokeStyle = "#ffffff30";
+    ctx.lineWidth = 0.8;
+
+    for (let i = -1; i <= 1; i++) {
+        ctx.beginPath();
+        ctx.arc(
+            -size * 0.05 + i * size * 0.23,
+            0,
+            size * 0.17,
+            -0.8, 0.8
+        );
+        ctx.stroke();
     }
 
-    // ==========================================
-    // DRAW THE FISH
-    // ==========================================
+    // Eye
+    ctx.fillStyle = "#f8fafc";
+    ctx.beginPath();
+    ctx.arc(size * 0.68, -size * 0.08, size * 0.10, 0, Math.PI * 2);
+    ctx.fill();
 
-    function drawFish() {
+    ctx.fillStyle = "#0f172a";
+    ctx.beginPath();
+    ctx.arc(size * 0.71, -size * 0.08, size * 0.05, 0, Math.PI * 2);
+    ctx.fill();
 
-        fish.forEach(f => {
+    ctx.restore();
+}
 
-            f.x += f.speed;
-            f.wobble += 0.08;
-            f.y += Math.sin(f.wobble) * 0.4;
+function drawFish() {
 
-            // Wrap around screen
-            if (f.x > width + 40) {
-                f.x = -40;
+    fish.forEach(f => {
+
+        if (f.caught) return;
+
+        if (f.hooked && targetFish === f) {
+
+            f.x += (hookX - f.x) * 0.035;
+            f.y += (hookY - f.y) * 0.035;
+
+        } else if (state === "waiting" && !f.hooked) {
+
+            const dx = hookX - f.x;
+            const dy = hookY - f.y;
+
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 115 && Math.random() < 0.025) {
+                f.x += Math.sign(dx) * 1.5;
+                f.y += Math.sign(dy) * 0.6;
+            } else {
+                f.x += f.direction * f.speed * 0.025;
+                f.y += Math.sin(elapsed * 1.2 + f.phase) * 0.12;
             }
 
-            if (f.x < -40) {
-                f.x = width + 40;
-            }
+        } else {
 
-            // Fish body
-            ctx.fillStyle = f.type.color;
+            f.x += f.direction * f.speed * 0.025;
+            f.y += Math.sin(elapsed * 1.2 + f.phase) * 0.12;
+        }
+
+        if (f.x > width + 60) f.x = -60;
+        if (f.x < -60) f.x = width + 60;
+
+        // Face the direction of travel
+        if (!f.hooked && Math.random() < 0.005) {
+            f.direction *= -1;
+        }
+
+        drawOneFish(f, elapsed);
+    });
+}
+
+// ================================================
+// BOAT AND ANGLER
+// ================================================
+
+function drawBoat() {
+
+    const x = boatX;
+    const y = boatY + Math.sin(elapsed * 1.4) * 2;
+
+    // Boat shadow
+    ctx.fillStyle = "#052f46aa";
+
+    ctx.beginPath();
+    ctx.ellipse(x, y + 31, 69, 8, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Boat hull
+    const hull = ctx.createLinearGradient(x, y, x, y + 37);
+
+    hull.addColorStop(0, "#d5a36a");
+    hull.addColorStop(0.4, "#9a6037");
+    hull.addColorStop(1, "#60351f");
+
+    ctx.fillStyle = hull;
+
+    ctx.beginPath();
+    ctx.moveTo(x - 65, y);
+    ctx.lineTo(x + 65, y);
+    ctx.lineTo(x + 46, y + 28);
+    ctx.quadraticCurveTo(x, y + 42, x - 46, y + 28);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = "#492817";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // Boat trim
+    ctx.strokeStyle = "#f3d3a0";
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    ctx.moveTo(x - 54, y + 8);
+    ctx.lineTo(x + 54, y + 8);
+    ctx.stroke();
+
+    // Seats
+    ctx.fillStyle = "#d4b18a";
+    ctx.fillRect(x - 25, y + 7, 50, 5);
+
+    // Angler legs
+    ctx.strokeStyle = "#25364a";
+    ctx.lineWidth = 8;
+    ctx.lineCap = "round";
+
+    ctx.beginPath();
+    ctx.moveTo(x - 4, y - 10);
+    ctx.lineTo(x - 13, y + 5);
+    ctx.moveTo(x + 4, y - 10);
+    ctx.lineTo(x + 13, y + 5);
+    ctx.stroke();
+
+    // Torso
+    ctx.fillStyle = selectedPlayer === "Ryan" ? "#0e7490" :
+                    selectedPlayer === "Clay" ? "#64748b" :
+                    selectedPlayer === "Justin" ? "#15803d" : "#b45309";
+
+    ctx.beginPath();
+    ctx.roundRect(x - 13, y - 39, 26, 31, 7);
+    ctx.fill();
+
+    // Arms
+    ctx.strokeStyle = "#d5a16b";
+    ctx.lineWidth = 6;
+
+    ctx.beginPath();
+    ctx.moveTo(x - 10, y - 32);
+    ctx.lineTo(x + 13, y - 22);
+    ctx.lineTo(x + 29, y - 24);
+    ctx.stroke();
+
+    // Neck
+    ctx.fillStyle = "#d5a16b";
+    ctx.fillRect(x - 5, y - 48, 10, 11);
+
+    // Head
+    ctx.fillStyle = "#e7b887";
+    ctx.beginPath();
+    ctx.ellipse(x, y - 55, 12, 15, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Hair
+    ctx.fillStyle = selectedPlayer === "Bob" ||
+                    selectedPlayer === "Clay" ? "#e5e7eb" : "#43352e";
+
+    ctx.beginPath();
+    ctx.arc(x, y - 61, 12, Math.PI, Math.PI * 2);
+    ctx.fill();
+
+    // Fishing cap
+    ctx.fillStyle = "#14532d";
+    ctx.beginPath();
+    ctx.ellipse(x, y - 66, 14, 5, 0, Math.PI, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillRect(x - 9, y - 68, 18, 5);
+
+    // Fishing rod
+    ctx.strokeStyle = "#e7c58d";
+    ctx.lineWidth = 2.2;
+
+    ctx.beginPath();
+    ctx.moveTo(x + 12, y - 25);
+    ctx.quadraticCurveTo(x + 25, y - 66, x + 45, y - 70);
+    ctx.stroke();
+
+    ctx.lineCap = "butt";
+}
+
+// ================================================
+// FISHING LINE AND HOOK
+// ================================================
+
+function drawFishingLine() {
+
+    if (state === "idle" || state === "caught") return;
+
+    const startX = boatX + 28;
+    const startY = boatY - 24;
+
+    const curve = state === "fighting" ?
+        Math.sin(elapsed * 12) * 14 : 4;
+
+    ctx.strokeStyle = "#f8fafc";
+    ctx.lineWidth = 1.5;
+
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+
+    ctx.quadraticCurveTo(
+        (startX + hookX) / 2 + curve,
+        (startY + hookY) / 2,
+        hookX,
+        hookY
+    );
+
+    ctx.stroke();
+
+    // Hook
+    ctx.strokeStyle = "#e2e8f0";
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    ctx.moveTo(hookX, hookY - 6);
+    ctx.lineTo(hookX, hookY + 5);
+    ctx.arc(
+        hookX + 4,
+        hookY + 5,
+        4,
+        Math.PI,
+        Math.PI * 1.65
+    );
+
+    ctx.stroke();
+
+    // Bait
+    ctx.fillStyle = "#fb7185";
+    ctx.beginPath();
+    ctx.arc(hookX, hookY - 5, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (state === "biting") {
+
+        // Bite splash
+        for (let i = 0; i < 3; i++) {
 
             ctx.beginPath();
 
             ctx.ellipse(
-                f.x,
-                f.y,
-                f.type.size,
-                f.type.size * 0.45,
-                0,
-                0,
-                Math.PI * 2
+                hookX,
+                hookY,
+                10 + i * 7 + Math.sin(elapsed * 10) * 2,
+                3 + i * 2,
+                0, 0, Math.PI * 2
             );
 
-            ctx.fill();
-
-            // Fish tail
-            ctx.beginPath();
-
-            ctx.moveTo(
-                f.x - f.type.size * 0.8,
-                f.y
-            );
-
-            ctx.lineTo(
-                f.x - f.type.size * 1.4,
-                f.y - f.type.size * 0.4
-            );
-
-            ctx.lineTo(
-                f.x - f.type.size * 1.4,
-                f.y + f.type.size * 0.4
-            );
-
-            ctx.closePath();
-            ctx.fill();
-
-            // Fish eye
-            ctx.fillStyle = 'white';
-
-            ctx.beginPath();
-
-            ctx.arc(
-                f.x + f.type.size * 0.4,
-                f.y - 3,
-                3,
-                0,
-                Math.PI * 2
-            );
-
-            ctx.fill();
-
-        });
-
-    }
-
-    // ==========================================
-    // DRAW THE FISHING LINE
-    // ==========================================
-
-    function drawLine() {
-
-        if (isCasting || lineY > 0) {
-
-            ctx.strokeStyle = '#e2e8f0';
-            ctx.lineWidth = 2;
-
-            ctx.beginPath();
-
-            ctx.moveTo(
-                boatX,
-                height * 0.32
-            );
-
-            ctx.lineTo(
-                boatX,
-                height * 0.32 + lineY
-            );
-
+            ctx.strokeStyle = "#ffffffaa";
+            ctx.lineWidth = 1.4;
             ctx.stroke();
-
-            // Fishing hook
-            ctx.fillStyle = '#94a3b8';
-
-            ctx.beginPath();
-
-            ctx.arc(
-                boatX,
-                height * 0.32 + lineY,
-                5,
-                0,
-                Math.PI * 2
-            );
-
-            ctx.fill();
-
         }
+    }
+}
 
+// ================================================
+// WATER PARTICLES
+// ================================================
+
+function createSplash(x, y) {
+
+    for (let i = 0; i < 18; i++) {
+
+        particles.push({
+            x,
+            y,
+            vx: (Math.random() - 0.5) * 150,
+            vy: -Math.random() * 150,
+            life: 0.6 + Math.random() * 0.6,
+            maxLife: 1.2,
+            size: 2 + Math.random() * 4
+        });
+    }
+}
+
+function drawParticles(dt) {
+
+    particles = particles.filter(p => p.life > 0);
+
+    particles.forEach(p => {
+
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+
+        p.vy += 200 * dt;
+        p.life -= dt;
+
+        ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
+        ctx.fillStyle = "#dffbff";
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+    });
+
+    ctx.globalAlpha = 1;
+}
+
+// ================================================
+// HUD: FIGHTING PROGRESS
+// ================================================
+
+function drawFightBar() {
+
+    if (state !== "fighting") return;
+
+    const barWidth = Math.min(width * 0.68, 290);
+    const barHeight = 15;
+
+    const x = (width - barWidth) / 2;
+    const y = height * 0.10;
+
+    ctx.fillStyle = "#071827cc";
+    ctx.beginPath();
+    ctx.roundRect(x - 12, y - 30, barWidth + 24, 61, 12);
+    ctx.fill();
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 11px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("REELING PROGRESS", width / 2, y - 13);
+
+    ctx.fillStyle = "#334155";
+    ctx.beginPath();
+    ctx.roundRect(x, y, barWidth, barHeight, 7);
+    ctx.fill();
+
+    ctx.fillStyle = "#4ade80";
+    ctx.beginPath();
+    ctx.roundRect(
+        x,
+        y,
+        barWidth * Math.max(0, Math.min(1, reelProgress / 100)),
+        barHeight,
+        7
+    );
+    ctx.fill();
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 10px sans-serif";
+    ctx.fillText(
+        Math.round(reelProgress) + "%",
+        width / 2,
+        y + 12
+    );
+}
+
+// ================================================
+// MAIN RENDER
+// ================================================
+
+function render(dt) {
+
+    ctx.clearRect(0, 0, width, height);
+
+    drawSky();
+    drawMountains();
+    drawWater();
+    drawFish();
+    drawBoat();
+    drawFishingLine();
+    drawParticles(dt);
+    drawFightBar();
+
+    // Underwater depth indicator
+    if (state === "waiting" || state === "fighting") {
+
+        ctx.fillStyle = "#ffffff9c";
+        ctx.font = "11px sans-serif";
+        ctx.textAlign = "left";
+
+        ctx.fillText(
+            "DEPTH " +
+            Math.round((hookY / Math.max(height, 1)) * 100) +
+            "%",
+            12,
+            height - 14
+        );
+    }
+}
+
+function gameLoop(timestamp) {
+
+    if (!gameScreen.isConnected ||
+        gameScreen.style.display === "none") {
+        animationFrame = null;
+        return;
     }
 
-    // ==========================================
-    // MAIN GAME LOOP
-    // ==========================================
+    const dt = Math.min(
+        0.05,
+        lastTime ? (timestamp - lastTime) / 1000 : 0.016
+    );
 
-    function gameLoop() {
+    lastTime = timestamp;
+    elapsed += dt;
 
-        ctx.clearRect(0, 0, width, height);
+    bobberPhase += dt;
 
-        // Sky
-        ctx.fillStyle = '#1e3a5f';
+    if (notificationFlash > 0) {
+        notificationFlash -= dt;
+    }
 
-        ctx.fillRect(
-            0,
-            0,
-            width,
-            height * 0.3
+    render(dt);
+
+    animationFrame = requestAnimationFrame(gameLoop);
+}
+
+// ================================================
+// START GAME
+// ================================================
+
+function startGame() {
+
+    clearAllTimers();
+
+    resize();
+
+    state = "idle";
+    catches = 0;
+    totalWeight = 0;
+
+    hookDepth = 0;
+    targetFish = null;
+    reelProgress = 0;
+
+    particles = [];
+
+    updateCounter();
+
+    castBtn.style.display = "block";
+    castBtn.disabled = false;
+
+    reelBtn.style.display = "none";
+    releaseBtn.style.display = "none";
+
+    statusText.textContent =
+        "Find the fish! Tap CAST to get your line in the water.";
+
+    if (animationFrame !== null) {
+        cancelAnimationFrame(animationFrame);
+    }
+
+    lastTime = 0;
+    elapsed = 0;
+
+    animationFrame = requestAnimationFrame(gameLoop);
+}
+
+function clearAllTimers() {
+
+    clearTimeout(biteTimer);
+    clearInterval(fightTimer);
+    clearTimeout(escapeTimer);
+
+    biteTimer = null;
+    fightTimer = null;
+    escapeTimer = null;
+}
+
+// ================================================
+// CAST LINE
+// ================================================
+
+castBtn.addEventListener("click", castLine);
+
+function castLine() {
+
+    if (state !== "idle") return;
+
+    state = "casting";
+
+    castBtn.disabled = true;
+
+    hookX = boatX + Math.min(90, width * 0.23);
+    hookY = height * 0.40;
+
+    hookDepth = 0;
+
+    statusText.textContent = "Casting... your bait is sinking!";
+
+    const startY = hookY;
+    const endY = height * 0.83;
+    const duration = 1400;
+    const startTime = performance.now();
+
+    function animateCast(now) {
+
+        if (state !== "casting") return;
+
+        const progress = Math.min(
+            1,
+            (now - startTime) / duration
         );
 
-        drawWater();
-        drawFish();
-        drawBoat();
-        drawLine();
+        // Smooth deceleration
+        const eased = 1 - Math.pow(1 - progress, 3);
 
-        animationFrame = requestAnimationFrame(gameLoop);
+        hookY = startY + (endY - startY) * eased;
 
+        if (progress < 1) {
+            requestAnimationFrame(animateCast);
+        } else {
+            startWaiting();
+        }
     }
 
-    // ==========================================
-    // START THE GAME
-    // ==========================================
+    requestAnimationFrame(animateCast);
+}
 
-    function initGame() {
+// ================================================
+// WAIT FOR A BITE
+// ================================================
 
-        if (animationFrame !== null) {
-            cancelAnimationFrame(animationFrame);
+function startWaiting() {
+
+    state = "waiting";
+
+    hookY = height * (0.70 + Math.random() * 0.13);
+
+    statusText.textContent =
+        "Your bait is in the water. Waiting for a bite...";
+
+    // A fish bites after a random wait.
+    // The fish is selected by proximity to the hook.
+
+    biteTimer = setTimeout(() => {
+
+        if (state !== "waiting") return;
+
+        let candidates = fish.filter(f => !f.caught && !f.hooked);
+
+        if (candidates.length === 0) {
+            createFish();
+            candidates = fish;
         }
 
-        if (castTimer !== null) {
-            clearInterval(castTimer);
-            castTimer = null;
-        }
+        candidates.sort((a, b) => {
 
-        resize();
-        createFish();
+            const da = Math.hypot(a.x - hookX, a.y - hookY);
+            const db = Math.hypot(b.x - hookX, b.y - hookY);
 
-        lineY = 0;
-        isCasting = false;
+            return da - db;
+        });
+
+        // A fish can approach the bait before biting.
+        const chosen = candidates[0];
+
+        targetFish = chosen;
+
+        // Move the selected fish to the hook area.
+        chosen.x = hookX - 15;
+        chosen.y = hookY + 8;
+        chosen.hooked = true;
+
+        state = "biting";
+
+        createSplash(hookX, hookY);
 
         statusText.textContent =
-            'Tap CAST to drop your line';
+            "🐟 BITE! A fish has taken your bait! REEL IN NOW!";
 
-        gameLoop();
+        castBtn.style.display = "none";
+        reelBtn.style.display = "block";
 
-    }
+        notificationFlash = 1.5;
 
-    // ==========================================
-    // CAST THE FISHING LINE
-    // ==========================================
+        // The fish escapes if you wait too long.
+        escapeTimer = setTimeout(() => {
 
-    castBtn.addEventListener('click', () => {
+            if (state === "biting") {
 
-        if (isCasting) {
-            return;
-        }
-
-        isCasting = true;
-        lineY = 0;
-
-        statusText.textContent = 'Line going down...';
-
-        if (castTimer !== null) {
-            clearInterval(castTimer);
-        }
-
-        castTimer = setInterval(() => {
-
-            lineY += 6;
-
-            if (lineY > height * 0.55) {
-
-                clearInterval(castTimer);
-                castTimer = null;
-
-                statusText.textContent =
-                    'Waiting for a bite... (Phase 3 coming next)';
-
-                isCasting = false;
-
+                loseFish(
+                    "The fish spit out the hook! Cast again."
+                );
             }
 
-        }, 30);
+        }, 6500);
 
-    });
+    }, 2500 + Math.random() * 5500);
+}
 
-    // ==========================================
-    // HANDLE SCREEN RESIZING
-    // ==========================================
+// ================================================
+// HOOK THE FISH AND START THE FIGHT
+// ================================================
 
-    window.addEventListener('resize', () => {
+reelBtn.addEventListener("click", reelIn);
 
-        if (gameScreen.style.display === 'flex') {
+function reelIn() {
 
-            resize();
-            createFish();
+    if (state !== "biting" && state !== "fighting") {
+        return;
+    }
 
+    if (state === "biting") {
+
+        clearTimeout(escapeTimer);
+        escapeTimer = null;
+
+        state = "fighting";
+
+        reelProgress = 0;
+
+        statusText.textContent =
+            "It's fighting back! Keep tapping REEL IN!";
+
+        fightTimer = setInterval(() => {
+
+            if (state !== "fighting") return;
+
+            // Larger fish are harder to reel in.
+            const sizeMultiplier = targetFish ?
+                targetFish.type.size * targetFish.scale : 1;
+
+            const resistance = 0.45 + sizeMultiplier * 0.35;
+
+            reelProgress -= resistance * (Math.random() * 2.2);
+
+            reelProgress = Math.max(0, reelProgress);
+
+            // Fish occasionally makes a run.
+            if (Math.random() < 0.13) {
+
+                reelProgress = Math.max(0, reelProgress - 4);
+
+                statusText.textContent =
+                    "It's making a run for it! Keep reeling!";
+            }
+
+            if (reelProgress >= 100) {
+                landFish();
+            }
+
+        }, 250);
+    }
+
+    if (state === "fighting") {
+
+        const sizeMultiplier = targetFish ?
+            targetFish.type.size * targetFish.scale : 1;
+
+        const gain = Math.max(
+            2.5,
+            10 - sizeMultiplier * 1.3
+        );
+
+        reelProgress = Math.min(
+            100,
+            reelProgress + gain + Math.random() * 2
+        );
+
+        // Move the hooked fish toward the boat.
+        if (targetFish) {
+
+            targetFish.x +=
+                (boatX + 15 - targetFish.x) * 0.09;
+
+            targetFish.y +=
+                (height * 0.51 - targetFish.y) * 0.04;
         }
 
-    });
+        if (reelProgress >= 100) {
+            landFish();
+        }
+    }
+}
+
+// ================================================
+// LAND THE FISH
+// ================================================
+
+function landFish() {
+
+    if (state !== "fighting" || !targetFish) return;
+
+    clearAllTimers();
+
+    state = "caught";
+
+    const caught = targetFish;
+
+    caught.caught = true;
+    caught.hooked = false;
+
+    createSplash(boatX, boatY);
+
+    const fishType = caught.type;
+
+    const inches = Math.round(
+        fishType.min +
+        Math.random() * (fishType.max - fishType.min)
+    );
+
+    // Illustrative game-only weight estimate.
+    // Real fish weights vary substantially by species and condition.
+    const weight = (
+        Math.pow(inches / 12, 3) *
+        fishType.weight *
+        (0.75 + Math.random() * 0.5)
+    );
+
+    const pounds = Math.max(0.2, weight);
+
+    catches++;
+    totalWeight += pounds;
+
+    updateCounter();
+
+    statusText.textContent =
+        "🎉 Nice catch! You landed a " + fishType.name + "!";
+
+    castBtn.style.display = "none";
+    reelBtn.style.display = "none";
+    releaseBtn.style.display = "block";
+
+    catchEmoji.textContent = fishType.emoji;
+
+    document.getElementById("catch-title").textContent =
+        inches >= 24 ? "TROPHY FISH!" : "FISH CAUGHT!";
+
+    catchDetails.innerHTML =
+        "<strong>Species:</strong> " + fishType.name + "<br>" +
+        "<strong>Length:</strong> " + inches + " inches<br>" +
+        "<strong>Estimated weight:</strong> " +
+        pounds.toFixed(1) + " lbs<br>" +
+        "<strong>Total catches:</strong> " + catches + "<br>" +
+        "<strong>Total estimated weight:</strong> " +
+        totalWeight.toFixed(1) + " lbs";
+
+    catchCard.style.display = "block";
+}
+
+// ================================================
+// FISH ESCAPES
+// ================================================
+
+function loseFish(message) {
+
+    clearAllTimers();
+
+    if (targetFish) {
+        targetFish.hooked = false;
+        targetFish = null;
+    }
+
+    state = "idle";
+
+    reelProgress = 0;
+
+    castBtn.style.display = "block";
+    castBtn.disabled = false;
+
+    reelBtn.style.display = "none";
+    releaseBtn.style.display = "none";
+
+    statusText.textContent = message;
+}
+
+// ================================================
+// CONTINUE FISHING
+// ================================================
+
+keepFishingBtn.addEventListener("click", closeCatch);
+
+releaseBtn.addEventListener("click", closeCatch);
+
+function closeCatch() {
+
+    catchCard.style.display = "none";
+
+    if (targetFish) {
+        targetFish.caught = true;
+        targetFish.hooked = false;
+        targetFish = null;
+    }
+
+    // Replenish fish for continued gameplay.
+    if (fish.filter(f => !f.caught).length < 6) {
+        createFish();
+    }
+
+    state = "idle";
+
+    reelProgress = 0;
+
+    castBtn.style.display = "block";
+    castBtn.disabled = false;
+
+    reelBtn.style.display = "none";
+    releaseBtn.style.display = "none";
+
+    statusText.textContent =
+        "Ready for another cast? Let's catch a bigger one!";
+}
+
+// ================================================
+// CATCH COUNTER
+// ================================================
+
+function updateCounter() {
+
+    fishCounter.textContent =
+        "Catches: " + catches;
+}
+
+// ================================================
+// RESIZE AND CLEANUP
+// ================================================
+
+window.addEventListener("resize", () => {
+
+    if (gameScreen.style.display === "flex") {
+        resize();
+    }
+});
+
+document.addEventListener("visibilitychange", () => {
+
+    if (document.hidden) {
+
+        clearTimeout(biteTimer);
+        biteTimer = null;
+
+        clearTimeout(escapeTimer);
+        escapeTimer = null;
+
+    }
+});
 
 })();
 </script>
