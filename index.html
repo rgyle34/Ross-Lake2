@@ -14,15 +14,14 @@ body{background:var(--deep);color:var(--white);font-family:-apple-system,BlinkMa
 .logo{font-size:clamp(2.6rem,10vw,4.2rem);font-weight:950;letter-spacing:3px;line-height:1;color:#f0f9ff;text-shadow:0 4px 0 #0369a1,0 0 40px #38bdf866}
 .subtitle{color:#7dd3fc;margin:12px 0 26px;letter-spacing:4px;text-transform:uppercase;font-size:.78rem;font-weight:600}
 .characters{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
-.character-card{color:white;font:inherit;appearance:none;background:linear-gradient(160deg,#14384e,#0a1f2e);border:2px solid #2a4d66;border-radius:20px;padding:16px 10px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden}
+.character-card{color:white;font:inherit;appearance:none;background:linear-gradient(160deg,#14384e,#0a1f2e);border:2px solid #2a4d66;border-radius:20px;padding:16px 10px;cursor:pointer;transition:all .22s}
 .character-card.selected{border-color:#38bdf8;background:linear-gradient(160deg,#155a75,#0d2f42);box-shadow:0 0 28px #38bdf844,0 8px 20px #0005;transform:translateY(-4px)}
-.avatar{width:68px;height:68px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:white;border:3px solid rgba(255,255,255,.25);box-shadow:inset 0 -10px 20px #0004}
+.avatar{width:68px;height:68px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:white;border:3px solid rgba(255,255,255,.25)}
 .clay{background:linear-gradient(145deg,#94a3b8,#475569)}.ryan{background:linear-gradient(145deg,#38bdf8,#0369a1)}.justin{background:linear-gradient(145deg,#4ade80,#166534)}.bob{background:linear-gradient(145deg,#fbbf24,#b45309)}
 .name{display:block;font-size:1.1rem;font-weight:800}
 .flavor{display:block;font-size:.68rem;color:#94a3b8;margin-top:3px}
-#startBtn{width:100%;max-width:300px;border:none;border-radius:50px;padding:15px;font-size:1.1rem;font-weight:900;background:linear-gradient(90deg,#38bdf8,#67e8f9);color:#062033;opacity:.35;cursor:not-allowed;box-shadow:0 6px 0 #0e7490;transition:all .25s}
+#startBtn{width:100%;max-width:300px;border:none;border-radius:50px;padding:15px;font-size:1.1rem;font-weight:900;background:linear-gradient(90deg,#38bdf8,#67e8f9);color:#062033;opacity:.35;cursor:not-allowed;box-shadow:0 6px 0 #0e7490}
 #startBtn.active{opacity:1;cursor:pointer}
-#startBtn.active:active{transform:translateY(3px);box-shadow:0 3px 0 #0e7490}
 #selectedInfo{color:#bae6fd;margin-top:16px;min-height:22px;font-size:.92rem}
 
 #game-screen{display:none;flex-direction:column;height:100vh;height:100dvh;width:100%;background:#04121f}
@@ -33,7 +32,7 @@ body{background:var(--deep);color:var(--white);font-family:-apple-system,BlinkMa
 #status{flex-shrink:0;min-height:42px;display:flex;justify-content:center;align-items:center;padding:7px 12px;text-align:center;background:#0c2233;color:#e0f2fe;font-size:.88rem;font-weight:600;border-bottom:1px solid #1a3348}
 #gameCanvas{display:block;width:100%;flex:1;min-height:0;background:#0c4a6e}
 #controls{flex-shrink:0;display:flex;justify-content:center;align-items:center;gap:8px;padding:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom));background:#06131e;border-top:1px solid #1e3a4f;flex-wrap:wrap}
-.game-btn{flex:1;min-width:70px;max-width:160px;min-height:50px;border:none;border-radius:14px;padding:11px 8px;font-size:.95rem;font-weight:950;letter-spacing:.5px;background:linear-gradient(145deg,#38bdf8,#22d3ee);color:#052033;cursor:pointer;box-shadow:0 4px 0 #0e7490;transition:transform .1s,box-shadow .1s}
+.game-btn{flex:1;min-width:70px;max-width:160px;min-height:50px;border:none;border-radius:14px;padding:11px 8px;font-size:.95rem;font-weight:950;background:linear-gradient(145deg,#38bdf8,#22d3ee);color:#052033;cursor:pointer;box-shadow:0 4px 0 #0e7490}
 .game-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #0e7490}
 .game-btn:disabled{opacity:.28;box-shadow:none;cursor:default}
 #reelBtn{display:none;background:linear-gradient(145deg,#4ade80,#a3e635);box-shadow:0 4px 0 #166534}
@@ -44,7 +43,7 @@ body{background:var(--deep);color:var(--white);font-family:-apple-system,BlinkMa
 #catch-card{display:none;position:fixed;z-index:20;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92%,380px);max-height:88dvh;overflow-y:auto;padding:26px 22px;border:2px solid #67e8f9;border-radius:22px;text-align:center;background:linear-gradient(160deg,#123c53,#071827);box-shadow:0 0 0 100vmax #000a,0 0 60px #38bdf866;animation:popIn .32s cubic-bezier(.34,1.4,.64,1)}
 @keyframes popIn{from{opacity:0;transform:translate(-50%,-50%) scale(.86)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 #catch-card h2{font-size:1.6rem;margin-bottom:5px;color:#a5f3fc}
-#catch-emoji{font-size:4rem;margin:8px 0;filter:drop-shadow(0 6px 12px #0006)}
+#catch-emoji{font-size:4rem;margin:8px 0}
 #catch-details{color:#dbeafe;line-height:1.8;margin:10px 0 18px;font-size:.93rem}
 #catch-card button{width:100%;border:none;padding:14px;border-radius:13px;font-size:1.02rem;font-weight:900;background:linear-gradient(90deg,#38bdf8,#67e8f9);color:#082f49;cursor:pointer;box-shadow:0 4px 0 #0e7490}
 
@@ -52,8 +51,6 @@ body{background:var(--deep);color:var(--white);font-family:-apple-system,BlinkMa
 #log-modal h3{color:#94a3b8;margin-bottom:12px;font-size:1.15rem}
 #log-content{color:#e2e8f0;line-height:1.85;font-size:.93rem;margin-bottom:16px}
 #log-modal button{width:100%;border:none;padding:11px;border-radius:11px;font-weight:800;background:#475569;color:#f1f5f9;cursor:pointer}
-
-@media(max-height:640px){.logo{font-size:2.1rem}.avatar{width:50px;height:50px;font-size:1.35rem}.game-btn{min-height:46px;padding:9px}}
 </style>
 </head>
 <body>
@@ -151,8 +148,9 @@ let boatX=0,boatY=0;
 let state="idle";
 let hookX=0,hookY=0,targetDepth=0;
 let targetFish=null;
-let biteTimer=null,fightTimer=null,escapeTimer=null;
+let biteTimer=null,escapeTimer=null;
 let reelProgress=0,tension=0,castPower=0,charging=false;
+let isReeling=false;               // ← important for tension logic
 let catches=0,totalWeight=0;
 let bestFish={name:"None",inches:0,pounds:0};
 let animationFrame=null,lastTime=0,elapsed=0;
@@ -187,7 +185,7 @@ function sfxEscape(){playTone(190,0.18,"sawtooth",0.09);playTone(130,0.22,"trian
 
 cards.forEach(c=>{
   c.addEventListener("click",()=>{
-    cards.forEach(o=>{const s=o===c;o.classList.toggle("selected",s);});
+    cards.forEach(o=>o.classList.toggle("selected",o===c));
     selectedPlayer=c.dataset.name;
     selectedInfo.textContent=selectedPlayer+" is ready!";
     startBtn.disabled=false;startBtn.classList.add("active");
@@ -233,13 +231,10 @@ function drawSky(){
   const glow=ctx.createRadialGradient(sx,sy,2,sx,sy,Math.min(width*0.23,110));
   glow.addColorStop(0,"rgba(255,248,200,0.95)");glow.addColorStop(0.25,"rgba(255,240,160,0.38)");glow.addColorStop(1,"rgba(255,240,160,0)");
   ctx.fillStyle=glow;ctx.fillRect(sx-125,sy-125,250,250);
-  ctx.save();ctx.globalAlpha=0.1;
-  for(let i=0;i<7;i++){const a=-0.65+i*0.19;ctx.strokeStyle="#fff8c0";ctx.lineWidth=15+i*2.2;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(sx+Math.cos(a)*180,sy+Math.sin(a)*160);ctx.stroke();}
-  ctx.restore();
   ctx.fillStyle="#fff6c8";ctx.beginPath();ctx.arc(sx,sy,18,0,Math.PI*2);ctx.fill();
   clouds.forEach(c=>{c.x+=c.speed*0.011;if(c.x>width+120)c.x=-120;ctx.globalAlpha=c.opacity;ctx.fillStyle="#fff";ctx.beginPath();ctx.ellipse(c.x,c.y,c.size,c.size*0.33,0,0,Math.PI*2);ctx.ellipse(c.x-c.size*0.48,c.y+3,c.size*0.52,c.size*0.27,0,0,Math.PI*2);ctx.ellipse(c.x+c.size*0.45,c.y+3,c.size*0.48,c.size*0.25,0,0,Math.PI*2);ctx.fill();});
   ctx.globalAlpha=1;
-  birds.forEach(b=>{b.x+=b.speed*b.dir*0.017;b.wing+=0.18;if(b.x>width+40){b.x=-40;b.y=16+Math.random()*height*0.14;}if(b.x<-40){b.x=width+40;b.y=16+Math.random()*height*0.14;}const f=Math.sin(b.wing)*5;ctx.strokeStyle="#1e293b";ctx.lineWidth=1.8;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(b.x-7*b.dir,b.y+f);ctx.quadraticCurveTo(b.x,b.y-4,b.x+7*b.dir,b.y+f);ctx.stroke();});
+  birds.forEach(b=>{b.x+=b.speed*b.dir*0.017;b.wing+=0.18;if(b.x>width+40){b.x=-40;b.y=16+Math.random()*height*0.14;}if(b.x<-40){b.x=width+40;b.y=16+Math.random()*height*0.14;}const f=Math.sin(b.wing)*5;ctx.strokeStyle="#1e293b";ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(b.x-7*b.dir,b.y+f);ctx.quadraticCurveTo(b.x,b.y-4,b.x+7*b.dir,b.y+f);ctx.stroke();});
 }
 function drawMountain(pts,col,yb){ctx.beginPath();ctx.moveTo(0,height*yb);pts.forEach(p=>ctx.lineTo(width*p[0],height*p[1]));ctx.lineTo(width,height*(yb+0.04));ctx.lineTo(width,height*0.49);ctx.lineTo(0,height*0.49);ctx.closePath();ctx.fillStyle=col;ctx.fill();}
 function drawMountains(){
@@ -247,16 +242,15 @@ function drawMountains(){
   ctx.fillStyle="#eef6f4";
   [[.33,.07,.048],[.6,.1,.04],[.12,.13,.036],[.87,.14,.03]].forEach(([x,y,s])=>{ctx.beginPath();ctx.moveTo(width*x,height*y);ctx.lineTo(width*(x-s),height*(y+s*1.55));ctx.lineTo(width*(x-s*.2),height*(y+s));ctx.lineTo(width*x,height*(y+s*1.25));ctx.lineTo(width*(x+s*.15),height*(y+s*.85));ctx.lineTo(width*(x+s),height*(y+s*1.55));ctx.closePath();ctx.fill();});
   drawMountain([[0,.37],[.09,.27],[.18,.35],[.3,.21],[.42,.36],[.57,.25],[.71,.36],[.85,.24],[1,.35]],"#2a5349",.37);
-  for(let i=0;i<28;i++){const x=(i/27)*width,y=height*(.36+Math.sin(i*1.7)*.014),sz=9+(i%5)*3.1;ctx.fillStyle=i%3===0?"#0f3d36":(i%2?"#145043":"#1a5c4a");ctx.beginPath();ctx.moveTo(x,y-sz);ctx.lineTo(x-sz*.68,y+sz*.85);ctx.lineTo(x+sz*.68,y+sz*.85);ctx.closePath();ctx.fill();ctx.fillStyle="#2d1f14";ctx.fillRect(x-1.8,y+sz*.65,3.6,7);}
+  for(let i=0;i<28;i++){const x=(i/27)*width,y=height*(.36+Math.sin(i*1.7)*.014),sz=9+(i%5)*3.1;ctx.fillStyle=i%3===0?"#0f3d36":(i%2?"#145043":"#1a5c4a");ctx.beginPath();ctx.moveTo(x,y-sz);ctx.lineTo(x-sz*.68,y+sz*.85);ctx.lineTo(x+sz*.68,y+sz*.85);ctx.closePath();ctx.fill();}
 }
 function drawWater(){
   const top=height*.41;
   const g=ctx.createLinearGradient(0,top,0,height);
   g.addColorStop(0,"#3aa0a8");g.addColorStop(.15,"#1a7f96");g.addColorStop(.45,"#0a5c7a");g.addColorStop(.75,"#043a55");g.addColorStop(1,"#021e30");
   ctx.fillStyle=g;ctx.fillRect(0,top,width,height-top);
-  sparkles.forEach(s=>{s.phase+=s.speed*.038;const a=.2+Math.sin(s.phase)*.36;ctx.globalAlpha=Math.max(0,a);ctx.fillStyle="#e0f7fa";ctx.beginPath();ctx.arc(s.x,s.y+Math.sin(elapsed*1.4+s.phase)*1.4,s.size,0,Math.PI*2);ctx.fill();});
+  sparkles.forEach(s=>{s.phase+=s.speed*.038;ctx.globalAlpha=Math.max(0,.2+Math.sin(s.phase)*.36);ctx.fillStyle="#e0f7fa";ctx.beginPath();ctx.arc(s.x,s.y+Math.sin(elapsed*1.4+s.phase)*1.4,s.size,0,Math.PI*2);ctx.fill();});
   ctx.globalAlpha=1;
-  for(let i=0;i<22;i++){const y=top+4+i*(height*.5/22),x=((i*97+elapsed*14)%(width+80))-40,len=15+(i%6)*10;ctx.strokeStyle=i%4===0?"rgba(200,250,255,.22)":"rgba(160,230,245,.1)";ctx.lineWidth=1+(i%3)*.35;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+len,y);ctx.stroke();}
   for(let i=0;i<8;i++){ctx.beginPath();const y=top+5+i*height*.07;for(let x=0;x<=width;x+=9){const wy=y+Math.sin(x*.022+elapsed*1.4+i*.65)*(2.1+i*.13);x===0?ctx.moveTo(x,wy):ctx.lineTo(x,wy);}ctx.strokeStyle=`rgba(180,240,250,${.06+i*.011})`;ctx.lineWidth=1.3;ctx.stroke();}
 }
 function drawOneFish(f,t){
@@ -267,8 +261,6 @@ function drawOneFish(f,t){
   const bg=ctx.createLinearGradient(0,-size*.42,0,size*.42);bg.addColorStop(0,"#ffffffbb");bg.addColorStop(.12,f.type.color);bg.addColorStop(.65,f.type.color);bg.addColorStop(1,f.type.belly);
   ctx.fillStyle=bg;ctx.beginPath();ctx.ellipse(0,0,size,size*.41,0,0,Math.PI*2);ctx.fill();
   ctx.fillStyle=f.type.color;ctx.beginPath();ctx.moveTo(-size*.18,-size*.26);ctx.lineTo(size*.14,-size*.64);ctx.lineTo(size*.48,-size*.25);ctx.closePath();ctx.fill();
-  ctx.beginPath();ctx.moveTo(-size*.08,size*.24);ctx.lineTo(size*.28,size*.52);ctx.lineTo(size*.46,size*.21);ctx.closePath();ctx.fill();
-  ctx.strokeStyle="rgba(30,50,60,.5)";ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(size*.43,0,size*.18,-1.1,1.1);ctx.stroke();
   ctx.fillStyle="#f8fafc";ctx.beginPath();ctx.arc(size*.63,-size*.06,size*.1,0,Math.PI*2);ctx.fill();
   ctx.fillStyle="#0f172a";ctx.beginPath();ctx.arc(size*.66,-size*.06,size*.05,0,Math.PI*2);ctx.fill();
   ctx.restore();
@@ -295,42 +287,30 @@ function drawBoat(){
   const hull=ctx.createLinearGradient(x,y-2,x,y+36);hull.addColorStop(0,"#e0b07a");hull.addColorStop(.35,"#a86b3c");hull.addColorStop(1,"#5c3018");
   ctx.fillStyle=hull;ctx.beginPath();ctx.moveTo(x-66,y);ctx.lineTo(x+66,y);ctx.lineTo(x+46,y+28);ctx.quadraticCurveTo(x,y+42,x-46,y+28);ctx.closePath();ctx.fill();
   ctx.strokeStyle="#3d2010";ctx.lineWidth=2.6;ctx.stroke();
-  ctx.strokeStyle="#f0d4a8";ctx.lineWidth=2.3;ctx.beginPath();ctx.moveTo(x-56,y+5);ctx.lineTo(x+56,y+5);ctx.stroke();
-  ctx.fillStyle="#c9a87a";ctx.fillRect(x-26,y+7,52,5);
-  ctx.strokeStyle="#1e2d3d";ctx.lineWidth=6.5;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(x-4,y-7);ctx.lineTo(x-13,y+7);ctx.moveTo(x+4,y-7);ctx.lineTo(x+13,y+7);ctx.stroke();
   const shirt=selectedPlayer==="Ryan"?"#0e7490":selectedPlayer==="Clay"?"#64748b":selectedPlayer==="Justin"?"#15803d":"#b45309";
   ctx.fillStyle=shirt;ctx.beginPath();ctx.roundRect(x-13,y-38,26,32,7);ctx.fill();
   ctx.strokeStyle="#d4a06a";ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(x-10,y-31);ctx.lineTo(x+13,y-20);ctx.lineTo(x+30,y-24);ctx.stroke();
-  ctx.fillStyle="#d4a06a";ctx.fillRect(x-4.5,y-48,9,11);
   ctx.fillStyle="#e8b888";ctx.beginPath();ctx.ellipse(x,y-56,12,14.5,0,0,Math.PI*2);ctx.fill();
   ctx.fillStyle=(selectedPlayer==="Bob"||selectedPlayer==="Clay")?"#e5e7eb":"#3d2e24";ctx.beginPath();ctx.arc(x,y-62,12,Math.PI,Math.PI*2);ctx.fill();
-  ctx.fillStyle="#14532d";ctx.beginPath();ctx.ellipse(x,y-67,14,5,0,Math.PI,Math.PI*2);ctx.fill();ctx.fillRect(x-9,y-69,18,4.5);
-  ctx.strokeStyle="#e8c98a";ctx.lineWidth=2.3;ctx.beginPath();ctx.moveTo(x+13,y-24);ctx.quadraticCurveTo(x+26,y-64,x+46,y-70);ctx.stroke();ctx.lineCap="butt";
+  ctx.fillStyle="#14532d";ctx.beginPath();ctx.ellipse(x,y-67,14,5,0,Math.PI,Math.PI*2);ctx.fill();
+  ctx.strokeStyle="#e8c98a";ctx.lineWidth=2.3;ctx.beginPath();ctx.moveTo(x+13,y-24);ctx.quadraticCurveTo(x+26,y-64,x+46,y-70);ctx.stroke();
 }
 function drawFishingLine(){
   if(state==="idle"||state==="caught")return;
   const sx=boatX+28,sy=boatY-24;
-  let tensionWiggle=0;
-  if(state==="fighting")tensionWiggle=Math.sin(elapsed*16)* (6+tension*0.18);
-  else if(state==="biting")tensionWiggle=Math.sin(elapsed*22)*8;
+  let wiggle = state==="fighting" ? Math.sin(elapsed*16)*(6+tension*0.18) : (state==="biting" ? Math.sin(elapsed*22)*8 : 4);
   ctx.strokeStyle="#f1f5f9";ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.moveTo(sx,sy);ctx.quadraticCurveTo((sx+hookX)/2+tensionWiggle,(sy+hookY)/2,hookX,hookY);ctx.stroke();
-  // bobber
+  ctx.beginPath();ctx.moveTo(sx,sy);ctx.quadraticCurveTo((sx+hookX)/2+wiggle,(sy+hookY)/2,hookX,hookY);ctx.stroke();
   const bobY=hookY-9+(state==="biting"?Math.sin(elapsed*18)*4:0);
   ctx.fillStyle="#ef4444";ctx.beginPath();ctx.arc(hookX,bobY,5.2,0,Math.PI*2);ctx.fill();
   ctx.fillStyle="#f8fafc";ctx.beginPath();ctx.arc(hookX,bobY-3,3,0,Math.PI*2);ctx.fill();
-  // hook
   ctx.strokeStyle="#cbd5e1";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(hookX,bobY+3);ctx.lineTo(hookX,hookY+6);ctx.arc(hookX+4,hookY+6,4,Math.PI,Math.PI*1.7);ctx.stroke();
-  ctx.fillStyle="#fb7185";ctx.beginPath();ctx.arc(hookX,hookY,2.8,0,Math.PI*2);ctx.fill();
-  if(state==="biting"){
-    for(let i=0;i<4;i++){ctx.beginPath();ctx.ellipse(hookX,hookY,10+i*7+Math.sin(elapsed*14)*2.5,3.5+i*2.2,0,0,Math.PI*2);ctx.strokeStyle=`rgba(255,255,255,${.45-i*.09})`;ctx.lineWidth=1.4;ctx.stroke();}
-  }
+  if(state==="biting"){for(let i=0;i<4;i++){ctx.beginPath();ctx.ellipse(hookX,hookY,10+i*7+Math.sin(elapsed*14)*2.5,3.5+i*2.2,0,0,Math.PI*2);ctx.strokeStyle=`rgba(255,255,255,${.45-i*.09})`;ctx.lineWidth=1.4;ctx.stroke();}}
 }
 function createSplash(x,y,n=20){for(let i=0;i<n;i++)particles.push({x,y,vx:(Math.random()-.5)*180,vy:-Math.random()*170-20,life:.45+Math.random()*0.65,maxLife:1.15,size:1.8+Math.random()*4.5});}
 function drawParticles(dt){particles=particles.filter(p=>p.life>0);particles.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=220*dt;p.life-=dt;ctx.globalAlpha=Math.max(0,p.life/p.maxLife);ctx.fillStyle="#dffbff";ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;}
 
 function drawHUD(){
-  // Cast power meter
   if(charging||(state==="idle"&&castPower>0)){
     const bw=Math.min(width*0.55,240),x=(width-bw)/2,y=height*0.08;
     ctx.fillStyle="rgba(7,24,39,0.8)";ctx.beginPath();ctx.roundRect(x-10,y-22,bw+20,48,10);ctx.fill();
@@ -340,23 +320,19 @@ function drawHUD(){
     const g=ctx.createLinearGradient(x,0,x+bw,0);g.addColorStop(0,"#38bdf8");g.addColorStop(0.7,"#22d3ee");g.addColorStop(1,"#fbbf24");
     ctx.fillStyle=g;ctx.beginPath();ctx.roundRect(x,y,bw*pct,12,6);ctx.fill();
   }
-  // Fight meters
   if(state==="fighting"){
     const bw=Math.min(width*0.68,280),x=(width-bw)/2,y=height*0.07;
     ctx.fillStyle="rgba(7,24,39,0.85)";ctx.beginPath();ctx.roundRect(x-12,y-26,bw+24,78,12);ctx.fill();
-    // progress
     ctx.fillStyle="#e2e8f0";ctx.font="bold 10px system-ui";ctx.textAlign="center";ctx.fillText("PROGRESS",width/2,y-10);
     ctx.fillStyle="#1e293b";ctx.beginPath();ctx.roundRect(x,y,bw,11,5);ctx.fill();
     const pg=ctx.createLinearGradient(x,0,x+bw,0);pg.addColorStop(0,"#22c55e");pg.addColorStop(1,"#a3e635");
     ctx.fillStyle=pg;ctx.beginPath();ctx.roundRect(x,y,bw*Math.min(1,reelProgress/100),11,5);ctx.fill();
-    // tension
     ctx.fillStyle="#e2e8f0";ctx.fillText("TENSION",width/2,y+28);
     ctx.fillStyle="#1e293b";ctx.beginPath();ctx.roundRect(x,y+32,bw,11,5);ctx.fill();
     const tCol=tension>75?"#ef4444":tension>50?"#f59e0b":"#38bdf8";
     ctx.fillStyle=tCol;ctx.beginPath();ctx.roundRect(x,y+32,bw*Math.min(1,tension/100),11,5);ctx.fill();
     if(tension>80){ctx.fillStyle="#fca5a5";ctx.font="bold 9px system-ui";ctx.fillText("LINE STRESS!",width/2,y+56);}
   }
-  // Depth while waiting
   if(state==="waiting"||state==="casting"){
     ctx.fillStyle="rgba(255,255,255,0.6)";ctx.font="11px system-ui";ctx.textAlign="left";
     ctx.fillText("DEPTH "+Math.round((hookY/height)*100)+"%",12,height-11);
@@ -373,89 +349,125 @@ function gameLoop(ts){
   const dt=Math.min(0.05,lastTime?(ts-lastTime)/1000:0.016);
   lastTime=ts;elapsed+=dt;
 
-  // charging cast
-  if(charging){
-    castPower=Math.min(100,castPower+dt*55);
-  }
+  if(charging) castPower=Math.min(100,castPower+dt*55);
 
-  // fight logic
-  if(state==="fighting"&&targetFish){
-    const sm=targetFish.type.size*targetFish.scale*targetFish.type.fight;
-    // natural tension decay + fish resistance
-    tension=Math.max(0,tension-dt*8);
-    tension+=dt*(4+sm*3.5);
-    // random strong run
-    runTimer-=dt;
-    if(runTimer<=0){
-      if(Math.random()<0.22){
-        fishRunDir=(Math.random()<0.5?-1:1)*(1.2+sm*0.4);
-        tension+=8+sm*6;
-        statusText.textContent="It's making a strong run!";
-        runTimer=1.1+Math.random()*1.4;
-      }else{fishRunDir=0;runTimer=0.6+Math.random()*1.2;}
+  // ========== FIXED FIGHT LOGIC ==========
+  if(state==="fighting" && targetFish){
+    const sm = targetFish.type.size * targetFish.scale * targetFish.type.fight;
+
+    // 1. Base fish pull is very mild
+    tension += dt * (1.2 + sm * 0.8);
+
+    // 2. Reeling adds the real tension
+    if(isReeling){
+      tension += dt * (14 + sm * 9);
+      reelProgress = Math.min(100, reelProgress + dt * (18 + 6 / sm));
+    } else {
+      // 3. When not reeling, tension drops quickly
+      tension = Math.max(0, tension - dt * 22);
+      // progress slowly slips away
+      reelProgress = Math.max(0, reelProgress - dt * (2.5 + sm * 1.5));
     }
-    // line snap
-    if(tension>=100){
+
+    // Strong runs
+    runTimer -= dt;
+    if(runTimer <= 0){
+      if(Math.random() < 0.18){
+        fishRunDir = (Math.random() < 0.5 ? -1 : 1) * (1.3 + sm * 0.4);
+        tension += 12 + sm * 8;
+        statusText.textContent = "Strong run! Ease off the reel!";
+        runTimer = 1.0 + Math.random() * 1.3;
+      } else {
+        fishRunDir = 0;
+        runTimer = 0.7 + Math.random() * 1.4;
+      }
+    }
+
+    // Line snap — clean exit
+    if(tension >= 100){
       sfxSnap();
       loseFish("Line snapped! The fish got away.");
-      return;
+      // do NOT return — let the frame finish cleanly
     }
-    // progress slowly decays if not reeling
-    reelProgress=Math.max(0,reelProgress-dt*(1.8+sm*1.2));
-    if(reelProgress>=100)landFish();
+
+    if(reelProgress >= 100){
+      landFish();
+    }
   }
 
   render(dt);
-  animationFrame=requestAnimationFrame(gameLoop);
+  animationFrame = requestAnimationFrame(gameLoop);
 }
 
 function startGame(){
-  clearAllTimers();resize();
-  state="idle";targetFish=null;reelProgress=0;tension=0;castPower=0;charging=false;fishRunDir=0;
-  particles=[];updateCounter();
-  castBtn.style.display="block";castBtn.disabled=false;castBtn.textContent="🎣 CAST";
-  reelBtn.style.display="none";releaseBtn.style.display="none";
-  depthUp.style.display="none";depthDown.style.display="none";
+  clearAllTimers();
+  resize();
+  state="idle";
+  targetFish=null;
+  reelProgress=0;tension=0;castPower=0;charging=false;isReeling=false;
+  fishRunDir=0;runTimer=0;
+  particles=[];
+  updateCounter();
+  showIdleUI();
   statusText.textContent="Hold CAST to power up, release to cast!";
-  if(animationFrame)cancelAnimationFrame(animationFrame);
+  if(animationFrame) cancelAnimationFrame(animationFrame);
   lastTime=0;elapsed=0;
   animationFrame=requestAnimationFrame(gameLoop);
 }
-function clearAllTimers(){clearTimeout(biteTimer);clearInterval(fightTimer);clearTimeout(escapeTimer);biteTimer=fightTimer=escapeTimer=null;}
 
-// CAST with power
-castBtn.addEventListener("pointerdown",e=>{
-  if(state!=="idle")return;
+function clearAllTimers(){
+  clearTimeout(biteTimer); clearTimeout(escapeTimer);
+  biteTimer=escapeTimer=null;
+}
+
+function showIdleUI(){
+  castBtn.style.display="block";
+  castBtn.disabled=false;
+  castBtn.textContent="🎣 CAST";
+  reelBtn.style.display="none";
+  releaseBtn.style.display="none";
+  depthUp.style.display="none";
+  depthDown.style.display="none";
+}
+
+// CAST
+castBtn.addEventListener("pointerdown", e=>{
+  if(state!=="idle") return;
   e.preventDefault();
-  initAudio();charging=true;castPower=8;
+  initAudio();
+  charging=true; castPower=8;
   castBtn.textContent="POWER...";
 });
-castBtn.addEventListener("pointerup",e=>{
-  if(!charging||state!=="idle")return;
+castBtn.addEventListener("pointerup", e=>{
+  if(!charging || state!=="idle") return;
   e.preventDefault();
   charging=false;
   doCast();
 });
-castBtn.addEventListener("pointerleave",()=>{if(charging){charging=false;castPower=0;castBtn.textContent="🎣 CAST";}});
+castBtn.addEventListener("pointerleave", ()=>{
+  if(charging){ charging=false; castPower=0; castBtn.textContent="🎣 CAST"; }
+});
 
 function doCast(){
   sfxCast();
-  state="casting";castBtn.disabled=true;castBtn.textContent="🎣 CAST";
+  state="casting";
+  castBtn.disabled=true;
+  castBtn.textContent="🎣 CAST";
   const power=Math.max(25,castPower);
-  const dist=0.18+power*0.0022;
-  hookX=boatX+Math.min(width*0.32,width*dist);
+  const dist=0.18 + power*0.0022;
+  hookX=boatX + Math.min(width*0.32, width*dist);
   const startY=height*0.38;
-  const endY=height*(0.58+power*0.0028);
+  const endY=height*(0.58 + power*0.0028);
   targetDepth=endY;
   statusText.textContent="Casting...";
-  const t0=performance.now(),dur=900+power*4;
+  const t0=performance.now(), dur=900+power*4;
   function anim(now){
-    if(state!=="casting")return;
+    if(state!=="casting") return;
     const p=Math.min(1,(now-t0)/dur);
     const e=1-Math.pow(1-p,2.5);
     hookY=startY+(endY-startY)*e;
-    if(p<1)requestAnimationFrame(anim);
-    else{createSplash(hookX,hookY,12);sfxSplash();startWaiting();}
+    if(p<1) requestAnimationFrame(anim);
+    else { createSplash(hookX,hookY,12); sfxSplash(); startWaiting(); }
   }
   requestAnimationFrame(anim);
 }
@@ -464,16 +476,15 @@ function startWaiting(){
   state="waiting";
   hookY=targetDepth;
   statusText.textContent="Bait is down. Adjust depth or wait for a bite...";
-  depthUp.style.display="block";depthDown.style.display="block";
+  depthUp.style.display="block";
+  depthDown.style.display="block";
   castBtn.style.display="none";
 
-  // bite chance influenced by depth
   const wait=1800+Math.random()*4500;
   biteTimer=setTimeout(()=>{
-    if(state!=="waiting")return;
+    if(state!=="waiting") return;
     let cands=fish.filter(f=>!f.caught&&!f.hooked);
-    if(!cands.length){createFish();cands=fish;}
-    // prefer fish near current depth
+    if(!cands.length){ createFish(); cands=fish; }
     cands.sort((a,b)=>{
       const da=Math.abs(a.y-hookY)+Math.abs(a.x-hookX)*0.4;
       const db=Math.abs(b.y-hookY)+Math.abs(b.x-hookX)*0.4;
@@ -481,75 +492,76 @@ function startWaiting(){
     });
     const chosen=cands[0];
     targetFish=chosen;
-    chosen.x=hookX+(Math.random()-.5)*20;
+    chosen.x=hookX+(Math.random()-0.5)*20;
     chosen.y=hookY+6;
     chosen.hooked=true;
     state="biting";
-    createSplash(hookX,hookY,18);sfxBite();sfxSplash();
+    createSplash(hookX,hookY,18); sfxBite(); sfxSplash();
     statusText.textContent="🐟 BITE! Tap REEL quickly to set the hook!";
-    depthUp.style.display="none";depthDown.style.display="none";
+    depthUp.style.display="none"; depthDown.style.display="none";
     reelBtn.style.display="block";
-    escapeTimer=setTimeout(()=>{if(state==="biting"){sfxEscape();loseFish("Too slow — the fish got off!");}},4200);
+    escapeTimer=setTimeout(()=>{
+      if(state==="biting"){ sfxEscape(); loseFish("Too slow — the fish got off!"); }
+    },4200);
   },wait);
 }
 
-// Depth control
 depthUp.addEventListener("click",()=>{
-  if(state!=="waiting")return;
+  if(state!=="waiting") return;
   hookY=Math.max(height*0.48,hookY-height*0.04);
   statusText.textContent="Raised the bait a bit...";
 });
 depthDown.addEventListener("click",()=>{
-  if(state!=="waiting")return;
+  if(state!=="waiting") return;
   hookY=Math.min(height*0.88,hookY+height*0.04);
   statusText.textContent="Dropped the bait deeper...";
 });
 
-// REEL
-reelBtn.addEventListener("pointerdown",e=>{
+// REEL – set the hook + continuous reeling while held
+reelBtn.addEventListener("pointerdown", e=>{
   e.preventDefault();
   if(state==="biting"){
-    clearTimeout(escapeTimer);escapeTimer=null;
+    clearTimeout(escapeTimer); escapeTimer=null;
     state="fighting";
-    reelProgress=12;tension=18;
-    statusText.textContent="Fish on! Manage tension while reeling!";
+    reelProgress=15; tension=12;
+    isReeling=true;
+    statusText.textContent="Fish on! Hold REEL, release when tension is high!";
+    sfxReel();
+  } else if(state==="fighting"){
+    isReeling=true;
     sfxReel();
   }
 });
-reelBtn.addEventListener("click",()=>{
-  if(state!=="fighting")return;
-  sfxReel();
-  const sm=targetFish?targetFish.type.size*targetFish.scale*targetFish.type.fight:1;
-  const gain=Math.max(3.2,13-sm*2.1);
-  reelProgress=Math.min(100,reelProgress+gain+Math.random()*2.2);
-  tension+=4.5+sm*3.2;          // reeling adds tension
-  if(targetFish){
-    targetFish.x+=(boatX+16-targetFish.x)*.09;
-    targetFish.y+=(height*0.46-targetFish.y)*.05;
-  }
-  if(reelProgress>=100)landFish();
-});
+reelBtn.addEventListener("pointerup", ()=>{ isReeling=false; });
+reelBtn.addEventListener("pointerleave", ()=>{ isReeling=false; });
+reelBtn.addEventListener("pointercancel", ()=>{ isReeling=false; });
 
 function landFish(){
-  if(state!=="fighting"||!targetFish)return;
-  clearAllTimers();state="caught";
-  const caught=targetFish;caught.caught=true;caught.hooked=false;
-  createSplash(boatX,boatY+8,26);sfxSuccess();sfxSplash();
+  if(state!=="fighting"||!targetFish) return;
+  clearAllTimers();
+  state="caught";
+  isReeling=false;
+  const caught=targetFish;
+  caught.caught=true; caught.hooked=false;
+  createSplash(boatX,boatY+8,26); sfxSuccess(); sfxSplash();
+
   const t=caught.type;
   const inches=Math.round(t.min+Math.random()*(t.max-t.min));
   const pounds=Math.max(0.2,Math.pow(inches/12,3)*t.weight*(0.75+Math.random()*0.5));
-  catches++;totalWeight+=pounds;
-  if(inches>bestFish.inches)bestFish={name:t.name,inches,pounds};
-  saveStats();updateCounter();
+  catches++; totalWeight+=pounds;
+  if(inches>bestFish.inches) bestFish={name:t.name,inches,pounds};
+  saveStats(); updateCounter();
 
-  let title="FISH CAUGHT!",rarity="Common";
-  if(inches>=28||t.rarity<0.3){title="LEGENDARY CATCH!";rarity="Legendary";}
-  else if(inches>=22||t.rarity<0.5){title="TROPHY FISH!";rarity="Trophy";}
-  else if(t.rarity<0.7){title="NICE CATCH!";rarity="Rare";}
+  let title="FISH CAUGHT!", rarity="Common";
+  if(inches>=28||t.rarity<0.3){ title="LEGENDARY CATCH!"; rarity="Legendary"; }
+  else if(inches>=22||t.rarity<0.5){ title="TROPHY FISH!"; rarity="Trophy"; }
+  else if(t.rarity<0.7){ title="NICE CATCH!"; rarity="Rare"; }
 
   statusText.textContent="🎉 "+title;
-  castBtn.style.display="none";reelBtn.style.display="none";releaseBtn.style.display="block";
-  depthUp.style.display="none";depthDown.style.display="none";
+  castBtn.style.display="none";
+  reelBtn.style.display="none";
+  releaseBtn.style.display="block";
+  depthUp.style.display="none"; depthDown.style.display="none";
   catchEmoji.textContent=t.emoji;
   $("catch-title").textContent=title;
   catchDetails.innerHTML=`<strong>Species:</strong> ${t.name}<br><strong>Length:</strong> ${inches} in<br><strong>Est. weight:</strong> ${pounds.toFixed(1)} lbs<br><strong>Rarity:</strong> ${rarity}<br><strong>Total catches:</strong> ${catches}<br><strong>Total weight:</strong> ${totalWeight.toFixed(1)} lbs`;
@@ -558,24 +570,26 @@ function landFish(){
 
 function loseFish(msg){
   clearAllTimers();
-  if(targetFish){targetFish.hooked=false;targetFish=null;}
-  state="idle";reelProgress=0;tension=0;castPower=0;fishRunDir=0;
-  castBtn.style.display="block";castBtn.disabled=false;castBtn.textContent="🎣 CAST";
-  reelBtn.style.display="none";releaseBtn.style.display="none";
-  depthUp.style.display="none";depthDown.style.display="none";
+  if(targetFish){
+    targetFish.hooked=false;
+    targetFish=null;
+  }
+  state="idle";
+  reelProgress=0; tension=0; castPower=0;
+  isReeling=false; fishRunDir=0; runTimer=0;
+  showIdleUI();
   statusText.textContent=msg;
 }
 
-keepFishingBtn.addEventListener("click",closeCatch);
-releaseBtn.addEventListener("click",closeCatch);
+keepFishingBtn.addEventListener("click", closeCatch);
+releaseBtn.addEventListener("click", closeCatch);
 function closeCatch(){
   catchCard.style.display="none";
-  if(targetFish){targetFish.caught=true;targetFish.hooked=false;targetFish=null;}
-  if(fish.filter(f=>!f.caught).length<7)createFish();
-  state="idle";reelProgress=0;tension=0;castPower=0;
-  castBtn.style.display="block";castBtn.disabled=false;castBtn.textContent="🎣 CAST";
-  reelBtn.style.display="none";releaseBtn.style.display="none";
-  depthUp.style.display="none";depthDown.style.display="none";
+  if(targetFish){ targetFish.caught=true; targetFish.hooked=false; targetFish=null; }
+  if(fish.filter(f=>!f.caught).length<7) createFish();
+  state="idle";
+  reelProgress=0; tension=0; isReeling=false;
+  showIdleUI();
   statusText.textContent="Hold CAST to power up, release to cast!";
 }
 
@@ -585,10 +599,12 @@ logBtn.addEventListener("click",()=>{
 });
 closeLogBtn.addEventListener("click",()=>logModal.style.display="none");
 
-function updateCounter(){fishCounter.textContent="Catches: "+catches;}
+function updateCounter(){ fishCounter.textContent="Catches: "+catches; }
 
-window.addEventListener("resize",()=>{if(gameScreen.style.display==="flex")resize();});
-document.addEventListener("visibilitychange",()=>{if(document.hidden){clearTimeout(biteTimer);biteTimer=null;clearTimeout(escapeTimer);escapeTimer=null;}});
+window.addEventListener("resize",()=>{ if(gameScreen.style.display==="flex") resize(); });
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden){ clearTimeout(biteTimer); biteTimer=null; clearTimeout(escapeTimer); escapeTimer=null; }
+});
 })();
 </script>
 </body>
