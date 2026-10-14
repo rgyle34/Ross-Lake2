@@ -3,50 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Ross Lake Fishing</title>
+<title>Ross Lake Wilderness Fishing</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:#04121f;color:#f0f9ff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;overflow:hidden;touch-action:none;user-select:none}
-#selection-screen{width:100%;height:100dvh;display:flex;justify-content:center;align-items:center;padding:20px 16px;background:radial-gradient(ellipse at 50% 0%,#1a5f7a 0%,transparent 50%),linear-gradient(180deg,#0a2a3d,#04121f)}
+body{background:#031018;color:#f0f9ff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;overflow:hidden;touch-action:none;user-select:none}
+#selection-screen{width:100%;height:100dvh;display:flex;justify-content:center;align-items:center;padding:20px 16px;background:radial-gradient(ellipse at 50% 0%,#1a5f7a 0%,transparent 55%),linear-gradient(180deg,#0a2a3d,#031018)}
 .container{width:100%;max-width:460px;text-align:center}
-.logo{font-size:clamp(2.5rem,9vw,4rem);font-weight:950;letter-spacing:3px;color:#f0f9ff;text-shadow:0 4px 0 #0369a1,0 0 36px #38bdf866}
-.subtitle{color:#7dd3fc;margin:10px 0 24px;letter-spacing:3px;text-transform:uppercase;font-size:.75rem;font-weight:600}
-.characters{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
-.character-card{color:white;font:inherit;appearance:none;background:linear-gradient(160deg,#14384e,#0a1f2e);border:2px solid #2a4d66;border-radius:18px;padding:14px 8px;cursor:pointer;transition:.2s}
-.character-card.selected{border-color:#38bdf8;background:linear-gradient(160deg,#155a75,#0d2f42);box-shadow:0 0 24px #38bdf844;transform:translateY(-3px)}
-.avatar{width:64px;height:64px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;font-weight:900;border:3px solid rgba(255,255,255,.22)}
+.logo{font-size:clamp(2.4rem,9vw,3.8rem);font-weight:950;letter-spacing:3px;color:#f0f9ff;text-shadow:0 4px 0 #0369a1,0 0 40px #38bdf866}
+.subtitle{color:#7dd3fc;margin:8px 0 22px;letter-spacing:3px;text-transform:uppercase;font-size:.72rem;font-weight:600}
+.characters{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:20px}
+.character-card{color:white;font:inherit;appearance:none;background:linear-gradient(160deg,#14384e,#0a1f2e);border:2px solid #2a4d66;border-radius:18px;padding:13px 8px;cursor:pointer;transition:.2s}
+.character-card.selected{border-color:#38bdf8;background:linear-gradient(160deg,#155a75,#0d2f42);box-shadow:0 0 28px #38bdf844;transform:translateY(-3px)}
+.avatar{width:62px;height:62px;border-radius:50%;margin:0 auto 7px;display:flex;align-items:center;justify-content:center;font-size:1.65rem;font-weight:900;border:3px solid rgba(255,255,255,.2)}
 .clay{background:linear-gradient(145deg,#94a3b8,#475569)}.ryan{background:linear-gradient(145deg,#38bdf8,#0369a1)}.justin{background:linear-gradient(145deg,#4ade80,#166534)}.bob{background:linear-gradient(145deg,#fbbf24,#b45309)}
 .name{display:block;font-size:1.05rem;font-weight:800}
-.flavor{display:block;font-size:.65rem;color:#94a3b8;margin-top:2px}
+.flavor{display:block;font-size:.63rem;color:#94a3b8;margin-top:2px}
 #startBtn{width:100%;max-width:280px;border:none;border-radius:50px;padding:14px;font-size:1.05rem;font-weight:900;background:linear-gradient(90deg,#38bdf8,#67e8f9);color:#062033;opacity:.35;cursor:not-allowed;box-shadow:0 5px 0 #0e7490}
 #startBtn.active{opacity:1;cursor:pointer}
-#selectedInfo{color:#bae6fd;margin-top:14px;font-size:.9rem}
+#selectedInfo{color:#bae6fd;margin-top:13px;font-size:.88rem}
 
-#game-screen{display:none;flex-direction:column;height:100dvh;width:100%;background:#04121f}
-#top-bar{flex-shrink:0;min-height:48px;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:linear-gradient(180deg,#0a1c2b,#06131e);border-bottom:1px solid #1e3a4f}
-#player-name{color:#7dd3fc;font-weight:800;font-size:.85rem}
-#location-name{font-weight:900;letter-spacing:1px;font-size:.9rem}
-#fish-counter{color:#a5f3fc;font-size:.75rem;font-weight:700}
-#status{flex-shrink:0;min-height:40px;display:flex;justify-content:center;align-items:center;padding:6px 10px;text-align:center;background:#0c2233;color:#e0f2fe;font-size:.85rem;font-weight:600;border-bottom:1px solid #1a3348}
+#game-screen{display:none;flex-direction:column;height:100dvh;width:100%;background:#031018}
+#top-bar{flex-shrink:0;min-height:46px;display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:linear-gradient(180deg,#0a1c2b,#06131e);border-bottom:1px solid #1e3a4f}
+#player-name{color:#7dd3fc;font-weight:800;font-size:.84rem}
+#location-name{font-weight:900;letter-spacing:1px;font-size:.88rem}
+#fish-counter{color:#a5f3fc;font-size:.74rem;font-weight:700}
+#status{flex-shrink:0;min-height:38px;display:flex;justify-content:center;align-items:center;padding:5px 10px;text-align:center;background:#0c2233;color:#e0f2fe;font-size:.83rem;font-weight:600;border-bottom:1px solid #1a3348}
 #gameCanvas{display:block;width:100%;flex:1;min-height:0;background:#0c4a6e}
-#controls{flex-shrink:0;display:flex;justify-content:center;align-items:center;gap:8px;padding:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom));background:#06131e;border-top:1px solid #1e3a4f;flex-wrap:wrap}
-.game-btn{flex:1;min-width:68px;max-width:150px;min-height:48px;border:none;border-radius:13px;padding:10px 6px;font-size:.9rem;font-weight:950;background:linear-gradient(145deg,#38bdf8,#22d3ee);color:#052033;cursor:pointer;box-shadow:0 4px 0 #0e7490}
+#controls{flex-shrink:0;display:flex;justify-content:center;align-items:center;gap:7px;padding:9px;padding-bottom:calc(9px + env(safe-area-inset-bottom));background:#06131e;border-top:1px solid #1e3a4f;flex-wrap:wrap}
+.game-btn{flex:1;min-width:66px;max-width:150px;min-height:48px;border:none;border-radius:13px;padding:10px 6px;font-size:.88rem;font-weight:950;background:linear-gradient(145deg,#38bdf8,#22d3ee);color:#052033;cursor:pointer;box-shadow:0 4px 0 #0e7490}
 .game-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #0e7490}
 .game-btn:disabled{opacity:.28;box-shadow:none}
 #reelBtn{display:none;background:linear-gradient(145deg,#4ade80,#a3e635);box-shadow:0 4px 0 #166534}
 #releaseBtn{display:none;background:linear-gradient(145deg,#fbbf24,#fb923c);box-shadow:0 4px 0 #9a3412}
-#depthUp,#depthDown{display:none;max-width:56px;background:linear-gradient(145deg,#64748b,#475569);box-shadow:0 4px 0 #1e293b;font-size:1.05rem}
-#logBtn{flex:0 0 auto;max-width:52px;background:linear-gradient(145deg,#64748b,#475569);box-shadow:0 4px 0 #1e293b;font-size:.8rem}
+#depthUp,#depthDown{display:none;max-width:54px;background:linear-gradient(145deg,#64748b,#475569);box-shadow:0 4px 0 #1e293b;font-size:1.05rem}
+#logBtn{flex:0 0 auto;max-width:50px;background:linear-gradient(145deg,#64748b,#475569);box-shadow:0 4px 0 #1e293b;font-size:.78rem}
 
 #catch-card{display:none;position:fixed;z-index:20;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92%,370px);max-height:88dvh;overflow-y:auto;padding:24px 20px;border:2px solid #67e8f9;border-radius:20px;text-align:center;background:linear-gradient(160deg,#123c53,#071827);box-shadow:0 0 0 100vmax #000a,0 0 50px #38bdf866}
-#catch-card h2{font-size:1.5rem;margin-bottom:4px;color:#a5f3fc}
-#catch-emoji{font-size:3.8rem;margin:8px 0}
-#catch-details{color:#dbeafe;line-height:1.75;margin:10px 0 16px;font-size:.9rem}
+#catch-card h2{font-size:1.45rem;margin-bottom:4px;color:#a5f3fc}
+#catch-emoji{font-size:3.6rem;margin:8px 0}
+#catch-details{color:#dbeafe;line-height:1.7;margin:10px 0 16px;font-size:.88rem}
 #catch-card button{width:100%;border:none;padding:13px;border-radius:12px;font-size:1rem;font-weight:900;background:linear-gradient(90deg,#38bdf8,#67e8f9);color:#082f49;cursor:pointer;box-shadow:0 3px 0 #0e7490}
 
 #log-modal{display:none;position:fixed;z-index:25;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92%,340px);padding:20px;border:2px solid #64748b;border-radius:16px;background:linear-gradient(160deg,#1e293b,#0f172a);box-shadow:0 0 0 100vmax #000a;text-align:center}
 #log-modal h3{color:#94a3b8;margin-bottom:10px}
-#log-content{color:#e2e8f0;line-height:1.8;font-size:.9rem;margin-bottom:14px}
+#log-content{color:#e2e8f0;line-height:1.75;font-size:.88rem;margin-bottom:14px}
 #log-modal button{width:100%;border:none;padding:10px;border-radius:10px;font-weight:800;background:#475569;color:#f1f5f9;cursor:pointer}
 </style>
 </head>
@@ -130,6 +130,14 @@ const cards = [...document.querySelectorAll(".character-card")];
 let selectedPlayer = null;
 let audioCtx = null;
 
+// Angler bonuses
+const anglerStats = {
+  Clay:   { tensionMul: 0.78, castSpeed: 1.0,  castDist: 1.0,  luck: 1.0,  sizeMul: 1.0,  label: "Steady" },
+  Ryan:   { tensionMul: 1.05, castSpeed: 1.55, castDist: 1.22, luck: 0.95, sizeMul: 0.98, label: "Fast Caster" },
+  Justin: { tensionMul: 1.0,  castSpeed: 1.05, castDist: 1.0,  luck: 1.45, sizeMul: 1.05, label: "Lucky" },
+  Bob:    { tensionMul: 1.08, castSpeed: 0.95, castDist: 1.05, luck: 1.1,  sizeMul: 1.28, label: "Trophy" }
+};
+
 const species = [
   {name:"Rainbow Trout",color:"#5a9e6a",belly:"#e8d8b8",size:1.00,min:9,max:23,weight:1.30,rarity:1.00,emoji:"🐟",fight:1.0,style:"surface"},
   {name:"Brown Trout",color:"#8b5e3c",belly:"#e5c9a5",size:1.08,min:10,max:28,weight:1.45,rarity:0.85,emoji:"🐟",fight:1.15,style:"surface"},
@@ -140,7 +148,7 @@ const species = [
 ];
 
 let width=0,height=0,dpr=1;
-let fish=[],particles=[],clouds=[],birds=[],sparkles=[];
+let fish=[],particles=[],clouds=[],birds=[],sparkles=[],trees=[];
 let boatX=0,boatY=0;
 let state="idle";
 let hookX=0,hookY=0,targetDepth=0,aimOffset=0;
@@ -152,6 +160,7 @@ let catches=0,totalWeight=0;
 let bestFish={name:"None",inches:0,pounds:0};
 let animationFrame=null,lastTime=0,elapsed=0;
 let pointerStartX=0;
+let stats = anglerStats.Clay;
 
 try{
   const s=JSON.parse(localStorage.getItem("rossLakeStats")||"{}");
@@ -190,6 +199,7 @@ cards.forEach(c=>{
 startBtn.addEventListener("click",()=>{
   if(!selectedPlayer)return;
   initAudio();
+  stats = anglerStats[selectedPlayer] || anglerStats.Clay;
   selectionScreen.style.display="none";
   gameScreen.style.display="flex";
   playerNameEl.textContent="🎣 "+selectedPlayer;
@@ -203,405 +213,785 @@ function resize(){
   width=r.width;height=r.height;
   canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
   ctx.setTransform(dpr,0,0,dpr,0,0);
-  boatX=width*0.5;boatY=height*0.26;
+  boatX=width*0.5;boatY=height*0.255;
   hookX=boatX+38;
-  createFish();createClouds();createBirds();createSparkles();
+  createFish();createClouds();createBirds();createSparkles();createTrees();
 }
 
 function createFish(){
   fish=[];
-  for(let i=0;i<15;i++){
+  for(let i=0;i<16;i++){
     const t=species[Math.floor(Math.random()*species.length)];
-    fish.push({x:Math.random()*width,y:height*(0.52+Math.random()*0.42),speed:10+Math.random()*22,direction:Math.random()<0.5?-1:1,type:t,phase:Math.random()*Math.PI*2,scale:0.55+Math.random()*0.5,caught:false,hooked:false});
+    fish.push({x:Math.random()*width,y:height*(0.50+Math.random()*0.44),speed:10+Math.random()*22,direction:Math.random()<0.5?-1:1,type:t,phase:Math.random()*Math.PI*2,scale:0.55+Math.random()*0.5,caught:false,hooked:false});
   }
 }
-function createClouds(){clouds=[];for(let i=0;i<6;i++)clouds.push({x:Math.random()*(width+180)-90,y:8+Math.random()*height*0.11,size:14+Math.random()*26,speed:1+Math.random()*3.8,opacity:0.25+Math.random()*0.35});}
-function createBirds(){birds=[];for(let i=0;i<4;i++)birds.push({x:Math.random()*width,y:14+Math.random()*height*0.14,speed:14+Math.random()*24,wing:Math.random()*Math.PI*2,dir:Math.random()<0.5?1:-1});}
-function createSparkles(){sparkles=[];for(let i=0;i<18;i++)sparkles.push({x:Math.random()*width,y:height*(0.42+Math.random()*0.12),size:1+Math.random()*2.4,phase:Math.random()*Math.PI*2,speed:0.5+Math.random()*1.4});}
+function createClouds(){clouds=[];for(let i=0;i<7;i++)clouds.push({x:Math.random()*(width+200)-100,y:6+Math.random()*height*0.12,size:16+Math.random()*28,speed:1+Math.random()*3.6,opacity:0.22+Math.random()*0.38});}
+function createBirds(){birds=[];for(let i=0;i<5;i++)birds.push({x:Math.random()*width,y:12+Math.random()*height*0.15,speed:13+Math.random()*26,wing:Math.random()*Math.PI*2,dir:Math.random()<0.5?1:-1});}
+function createSparkles(){sparkles=[];for(let i=0;i<22;i++)sparkles.push({x:Math.random()*width,y:height*(0.40+Math.random()*0.14),size:1+Math.random()*2.6,phase:Math.random()*Math.PI*2,speed:0.5+Math.random()*1.5});}
+function createTrees(){
+  trees=[];
+  for(let i=0;i<32;i++){
+    const x = (i/31)*width + (Math.random()-0.5)*18;
+    trees.push({x, baseY: height*0.38 + Math.sin(i*1.7)*height*0.012, h: 18 + (i%6)*5 + Math.random()*8, shade: i%3});
+  }
+}
 
 function drawSky(){
-  const g=ctx.createLinearGradient(0,0,0,height*0.46);
-  g.addColorStop(0,"#4a9fd4");g.addColorStop(0.4,"#8ecae6");g.addColorStop(0.75,"#c8e8f0");g.addColorStop(1,"#e8f4e8");
+  const g=ctx.createLinearGradient(0,0,0,height*0.44);
+  g.addColorStop(0,"#3b8ec8");
+  g.addColorStop(0.35,"#7ec8e8");
+  g.addColorStop(0.7,"#c5e8f0");
+  g.addColorStop(1,"#e8f4e8");
   ctx.fillStyle=g;ctx.fillRect(0,0,width,height);
-  const sx=width*0.78,sy=height*0.085;
-  const glow=ctx.createRadialGradient(sx,sy,2,sx,sy,Math.min(width*0.22,100));
-  glow.addColorStop(0,"rgba(255,248,200,0.9)");glow.addColorStop(0.3,"rgba(255,240,160,0.3)");glow.addColorStop(1,"rgba(255,240,160,0)");
-  ctx.fillStyle=glow;ctx.fillRect(sx-110,sy-110,220,220);
-  ctx.fillStyle="#fff6c8";ctx.beginPath();ctx.arc(sx,sy,16,0,Math.PI*2);ctx.fill();
-  clouds.forEach(c=>{c.x+=c.speed*0.01;if(c.x>width+100)c.x=-100;ctx.globalAlpha=c.opacity;ctx.fillStyle="#fff";ctx.beginPath();ctx.ellipse(c.x,c.y,c.size,c.size*0.32,0,0,Math.PI*2);ctx.ellipse(c.x-c.size*0.45,c.y+3,c.size*0.5,c.size*0.26,0,0,Math.PI*2);ctx.ellipse(c.x+c.size*0.42,c.y+2,c.size*0.46,c.size*0.24,0,0,Math.PI*2);ctx.fill();});
+
+  // sun
+  const sx=width*0.78,sy=height*0.08;
+  const glow=ctx.createRadialGradient(sx,sy,2,sx,sy,Math.min(width*0.26,120));
+  glow.addColorStop(0,"rgba(255,250,210,0.95)");
+  glow.addColorStop(0.25,"rgba(255,240,160,0.35)");
+  glow.addColorStop(1,"rgba(255,240,160,0)");
+  ctx.fillStyle=glow;ctx.fillRect(sx-130,sy-130,260,260);
+  ctx.fillStyle="#fff8d0";ctx.beginPath();ctx.arc(sx,sy,17,0,Math.PI*2);ctx.fill();
+
+  // clouds
+  clouds.forEach(c=>{
+    c.x+=c.speed*0.012;
+    if(c.x>width+110)c.x=-110;
+    ctx.globalAlpha=c.opacity;
+    ctx.fillStyle="#fff";
+    ctx.beginPath();
+    ctx.ellipse(c.x,c.y,c.size,c.size*0.34,0,0,Math.PI*2);
+    ctx.ellipse(c.x-c.size*0.48,c.y+3,c.size*0.52,c.size*0.28,0,0,Math.PI*2);
+    ctx.ellipse(c.x+c.size*0.44,c.y+2,c.size*0.48,c.size*0.26,0,0,Math.PI*2);
+    ctx.fill();
+  });
   ctx.globalAlpha=1;
-  birds.forEach(b=>{b.x+=b.speed*b.dir*0.016;b.wing+=0.17;if(b.x>width+35){b.x=-35;b.y=14+Math.random()*height*0.13;}if(b.x<-35){b.x=width+35;b.y=14+Math.random()*height*0.13;}const f=Math.sin(b.wing)*4.5;ctx.strokeStyle="#1e293b";ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(b.x-6*b.dir,b.y+f);ctx.quadraticCurveTo(b.x,b.y-3.5,b.x+6*b.dir,b.y+f);ctx.stroke();});
-}
-function drawMountain(pts,col,yb){ctx.beginPath();ctx.moveTo(0,height*yb);pts.forEach(p=>ctx.lineTo(width*p[0],height*p[1]));ctx.lineTo(width,height*(yb+0.04));ctx.lineTo(width,height*0.48);ctx.lineTo(0,height*0.48);ctx.closePath();ctx.fillStyle=col;ctx.fill();}
-function drawMountains(){
-  drawMountain([[0,.28],[.12,.12],[.2,.24],[.33,.06],[.47,.26],[.6,.09],[.74,.25],[.87,.13],[1,.29]],"#6b8a92",.33);
-  ctx.fillStyle="#eef6f4";
-  [[.33,.06,.045],[.6,.09,.038],[.12,.12,.034],[.87,.13,.028]].forEach(([x,y,s])=>{ctx.beginPath();ctx.moveTo(width*x,height*y);ctx.lineTo(width*(x-s),height*(y+s*1.5));ctx.lineTo(width*(x-s*.2),height*(y+s));ctx.lineTo(width*x,height*(y+s*1.2));ctx.lineTo(width*(x+s*.15),height*(y+s*.8));ctx.lineTo(width*(x+s),height*(y+s*1.5));ctx.closePath();ctx.fill();});
-  drawMountain([[0,.36],[.09,.26],[.18,.34],[.3,.2],[.42,.35],[.57,.24],[.71,.35],[.85,.23],[1,.34]],"#2a5349",.36);
-  for(let i=0;i<26;i++){const x=(i/25)*width,y=height*(.35+Math.sin(i*1.6)*.013),sz=8+(i%5)*2.9;ctx.fillStyle=i%3===0?"#0f3d36":(i%2?"#145043":"#1a5c4a");ctx.beginPath();ctx.moveTo(x,y-sz);ctx.lineTo(x-sz*.65,y+sz*.8);ctx.lineTo(x+sz*.65,y+sz*.8);ctx.closePath();ctx.fill();}
-}
-function drawWater(){
-  const top=height*.40;
-  const g=ctx.createLinearGradient(0,top,0,height);
-  g.addColorStop(0,"#3aa0a8");g.addColorStop(.15,"#1a7f96");g.addColorStop(.45,"#0a5c7a");g.addColorStop(.75,"#043a55");g.addColorStop(1,"#021e30");
-  ctx.fillStyle=g;ctx.fillRect(0,top,width,height-top);
-  sparkles.forEach(s=>{s.phase+=s.speed*.035;ctx.globalAlpha=Math.max(0,.18+Math.sin(s.phase)*.34);ctx.fillStyle="#e0f7fa";ctx.beginPath();ctx.arc(s.x,s.y+Math.sin(elapsed*1.3+s.phase)*1.3,s.size,0,Math.PI*2);ctx.fill();});
-  ctx.globalAlpha=1;
-  for(let i=0;i<7;i++){ctx.beginPath();const y=top+4+i*height*.068;for(let x=0;x<=width;x+=10){const wy=y+Math.sin(x*.02+elapsed*1.35+i*.6)*(2+i*.12);x===0?ctx.moveTo(x,wy):ctx.lineTo(x,wy);}ctx.strokeStyle=`rgba(180,240,250,${.055+i*.01})`;ctx.lineWidth=1.2;ctx.stroke();}
-}
-function drawOneFish(f,t){
-  const size=f.type.size*f.scale*14.5;const facing=f.direction;
-  ctx.save();ctx.translate(f.x,f.y);ctx.scale(facing,1);
-  const w=Math.sin(t*7+f.phase)*size*.16;
-  ctx.fillStyle=f.type.color;ctx.beginPath();ctx.moveTo(-size*.5,0);ctx.lineTo(-size*1.22,-size*.46+w);ctx.lineTo(-size*1.0,w*.3);ctx.lineTo(-size*1.22,size*.46+w);ctx.closePath();ctx.fill();
-  const bg=ctx.createLinearGradient(0,-size*.4,0,size*.4);bg.addColorStop(0,"#ffffffaa");bg.addColorStop(.12,f.type.color);bg.addColorStop(.65,f.type.color);bg.addColorStop(1,f.type.belly);
-  ctx.fillStyle=bg;ctx.beginPath();ctx.ellipse(0,0,size,size*.4,0,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle=f.type.color;ctx.beginPath();ctx.moveTo(-size*.16,-size*.25);ctx.lineTo(size*.12,-size*.6);ctx.lineTo(size*.45,-size*.24);ctx.closePath();ctx.fill();
-  ctx.fillStyle="#f8fafc";ctx.beginPath();ctx.arc(size*.6,-size*.05,size*.095,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle="#0f172a";ctx.beginPath();ctx.arc(size*.63,-size*.05,size*.048,0,Math.PI*2);ctx.fill();
-  ctx.restore();
-}
-function drawFish(){
-  fish.forEach(f=>{
-    if(f.caught)return;
-    if(f.hooked&&targetFish===f){
-      f.x+=(hookX-f.x)*.05;f.y+=(hookY-f.y)*.05;
-      if(state==="fighting"&&fishRunDir){f.x+=fishRunDir*1.6;hookX+=fishRunDir*0.9;}
-    }else if((state==="waiting"||state==="nibble")&&!f.hooked){
-      const dx=hookX-f.x,dy=hookY-f.y,d=Math.hypot(dx,dy);
-      if(d<130&&Math.random()<.025){f.x+=Math.sign(dx)*1.5;f.y+=Math.sign(dy)*.6;}
-      else{f.x+=f.direction*f.speed*.02;f.y+=Math.sin(elapsed*1.05+f.phase)*.12;}
-    }else{f.x+=f.direction*f.speed*.02;f.y+=Math.sin(elapsed*1.05+f.phase)*.12;}
-    if(f.x>width+60)f.x=-60;if(f.x<-60)f.x=width+60;
-    if(!f.hooked&&Math.random()<.0035)f.direction*=-1;
-    drawOneFish(f,elapsed);
+
+  // birds
+  birds.forEach(b=>{
+    b.x+=b.speed*b.dir*0.017;
+    b.wing+=0.18;
+    if(b.x>width+40){b.x=-40;b.y=12+Math.random()*height*0.14;}
+    if(b.x<-40){b.x=width+40;b.y=12+Math.random()*height*0.14;}
+    const f=Math.sin(b.wing)*5;
+    ctx.strokeStyle="#1e293b";ctx.lineWidth=1.7;
+    ctx.beginPath();ctx.moveTo(b.x-7*b.dir,b.y+f);ctx.quadraticCurveTo(b.x,b.y-4,b.x+7*b.dir,b.y+f);ctx.stroke();
   });
 }
-function drawBoat(){
-  const x=boatX,y=boatY+Math.sin(elapsed*1.25)*1.8;
-  ctx.fillStyle="rgba(5,40,60,.4)";ctx.beginPath();ctx.ellipse(x,y+30,66,8,0,0,Math.PI*2);ctx.fill();
-  const hull=ctx.createLinearGradient(x,y-2,x,y+34);hull.addColorStop(0,"#e0b07a");hull.addColorStop(.35,"#a86b3c");hull.addColorStop(1,"#5c3018");
-  ctx.fillStyle=hull;ctx.beginPath();ctx.moveTo(x-62,y);ctx.lineTo(x+62,y);ctx.lineTo(x+44,y+26);ctx.quadraticCurveTo(x,y+38,x-44,y+26);ctx.closePath();ctx.fill();
-  ctx.strokeStyle="#3d2010";ctx.lineWidth=2.4;ctx.stroke();
-  const shirt=selectedPlayer==="Ryan"?"#0e7490":selectedPlayer==="Clay"?"#64748b":selectedPlayer==="Justin"?"#15803d":"#b45309";
-  ctx.fillStyle=shirt;ctx.beginPath();ctx.roundRect(x-12,y-36,24,30,6);ctx.fill();
-  ctx.strokeStyle="#d4a06a";ctx.lineWidth=5.5;ctx.beginPath();ctx.moveTo(x-9,y-29);ctx.lineTo(x+12,y-18);ctx.lineTo(x+28,y-22);ctx.stroke();
-  ctx.fillStyle="#e8b888";ctx.beginPath();ctx.ellipse(x,y-53,11,13.5,0,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle=(selectedPlayer==="Bob"||selectedPlayer==="Clay")?"#e5e7eb":"#3d2e24";ctx.beginPath();ctx.arc(x,y-58,11,Math.PI,Math.PI*2);ctx.fill();
-  ctx.fillStyle="#14532d";ctx.beginPath();ctx.ellipse(x,y-63,13,4.5,0,Math.PI,Math.PI*2);ctx.fill();
-  ctx.strokeStyle="#e8c98a";ctx.lineWidth=2.1;ctx.beginPath();ctx.moveTo(x+12,y-22);ctx.quadraticCurveTo(x+24,y-60,x+42,y-66);ctx.stroke();
-}
-function drawFishingLine(){
-  if(state==="idle"||state==="caught")return;
-  const sx=boatX+26,sy=boatY-22;
-  let wiggle=4;
-  if(state==="fighting") wiggle=Math.sin(elapsed*15)*(5+tension*0.16);
-  else if(state==="biting") wiggle=Math.sin(elapsed*20)*7;
-  else if(state==="nibble") wiggle=Math.sin(elapsed*9)*3;
-  ctx.strokeStyle=tension>70?"#fca5a5":"#f1f5f9";
-  ctx.lineWidth=tension>70?2:1.4;
-  ctx.beginPath();ctx.moveTo(sx,sy);ctx.quadraticCurveTo((sx+hookX)/2+wiggle,(sy+hookY)/2,hookX,hookY);ctx.stroke();
 
-  // bobber with realistic movement
-  let bobOffset=0;
-  if(state==="nibble") bobOffset=Math.sin(elapsed*11)*3.5;
-  else if(state==="biting") bobOffset=Math.sin(elapsed*17)*5;
-  else if(state==="waiting") bobOffset=Math.sin(elapsed*2.2)*1.2;
-  const bobY=hookY-8+bobOffset;
-  ctx.fillStyle="#ef4444";ctx.beginPath();ctx.arc(hookX,bobY,5,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle="#f8fafc";ctx.beginPath();ctx.arc(hookX,bobY-2.8,2.8,0,Math.PI*2);ctx.fill();
-  ctx.strokeStyle="#cbd5e1";ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(hookX,bobY+2);ctx.lineTo(hookX,hookY+5);ctx.arc(hookX+3.5,hookY+5,3.5,Math.PI,Math.PI*1.7);ctx.stroke();
-  if(state==="biting"){for(let i=0;i<3;i++){ctx.beginPath();ctx.ellipse(hookX,hookY,9+i*6+Math.sin(elapsed*13)*2,3+i*2,0,0,Math.PI*2);ctx.strokeStyle=`rgba(255,255,255,${.4-i*.1})`;ctx.lineWidth=1.3;ctx.stroke();}}
+function drawMountain(pts,col,yb){
+  ctx.beginPath();
+  ctx.moveTo(0,height*yb);
+  pts.forEach(p=>ctx.lineTo(width*p[0],height*p[1]));
+  ctx.lineTo(width,height*(yb+0.04));
+  ctx.lineTo(width,height*0.46);
+  ctx.lineTo(0,height*0.46);
+  ctx.closePath();
+  ctx.fillStyle=col;ctx.fill();
 }
-function createSplash(x,y,n=18){for(let i=0;i<n;i++)particles.push({x,y,vx:(Math.random()-.5)*160,vy:-Math.random()*150-15,life:.4+Math.random()*0.6,maxLife:1.1,size:1.6+Math.random()*4});}
-function drawParticles(dt){particles=particles.filter(p=>p.life>0);particles.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=210*dt;p.life-=dt;ctx.globalAlpha=Math.max(0,p.life/p.maxLife);ctx.fillStyle="#dffbff";ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;}
+
+function drawMountains(){
+  // far range
+  drawMountain([[0,.27],[.11,.11],[.19,.23],[.32,.05],[.46,.25],[.59,.08],[.73,.24],[.86,.12],[1,.28]],"#6b8a92",.32);
+  // snow
+  ctx.fillStyle="#eef6f4";
+  [[.32,.05,.048],[.59,.08,.04],[.11,.11,.036],[.86,.12,.03]].forEach(([x,y,s])=>{
+    ctx.beginPath();
+    ctx.moveTo(width*x,height*y);
+    ctx.lineTo(width*(x-s),height*(y+s*1.55));
+    ctx.lineTo(width*(x-s*.2),height*(y+s));
+    ctx.lineTo(width*x,height*(y+s*1.25));
+    ctx.lineTo(width*(x+s*.18),height*(y+s*.85));
+    ctx.lineTo(width*(x+s),height*(y+s*1.55));
+    ctx.closePath();ctx.fill();
+  });
+  // mid range
+  drawMountain([[0,.35],[.08,.25],[.17,.33],[.29,.19],[.41,.34],[.56,.23],[.70,.34],[.84,.22],[1,.33]],"#2a5349",.35);
+
+  // shoreline trees
+  trees.forEach(t=>{
+    const col = t.shade===0 ? "#0f3d36" : (t.shade===1 ? "#145043" : "#1a5c4a");
+    ctx.fillStyle=col;
+    ctx.beginPath();
+    ctx.moveTo(t.x, t.baseY - t.h);
+    ctx.lineTo(t.x - t.h*0.42, t.baseY + t.h*0.15);
+    ctx.lineTo(t.x + t.h*0.42, t.baseY + t.h*0.15);
+    ctx.closePath();
+    ctx.fill();
+    // trunk
+    ctx.fillStyle="#3d2b1f";
+    ctx.fillRect(t.x-1.5, t.baseY + t.h*0.05, 3, t.h*0.18);
+  });
+}
+
+function drawWater(){
+  const top = height * 0.39;
+  const g = ctx.createLinearGradient(0, top, 0, height);
+  g.addColorStop(0, "#3aa0a8");
+  g.addColorStop(0.12, "#1a7f96");
+  g.addColorStop(0.4, "#0a5c7a");
+  g.addColorStop(0.72, "#043a55");
+  g.addColorStop(1, "#021e30");
+  ctx.fillStyle = g;
+  ctx.fillRect(0, top, width, height - top);
+
+  // sparkles
+  sparkles.forEach(s=>{
+    s.phase += s.speed * 0.036;
+    ctx.globalAlpha = Math.max(0, 0.16 + Math.sin(s.phase) * 0.36);
+    ctx.fillStyle = "#e0f7fa";
+    ctx.beginPath();
+    ctx.arc(s.x, s.y + Math.sin(elapsed*1.4 + s.phase)*1.4, s.size, 0, Math.PI*2);
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+
+  // wave lines
+  for(let i=0;i<8;i++){
+    ctx.beginPath();
+    const y = top + 5 + i * height * 0.065;
+    for(let x=0;x<=width;x+=9){
+      const wy = y + Math.sin(x*0.019 + elapsed*1.4 + i*0.7)*(2.2 + i*0.14);
+      x===0 ? ctx.moveTo(x,wy) : ctx.lineTo(x,wy);
+    }
+    ctx.strokeStyle = `rgba(180,240,250,${0.05 + i*0.009})`;
+    ctx.lineWidth = 1.3;
+    ctx.stroke();
+  }
+
+  // foam near boat
+  ctx.fillStyle = "rgba(220,245,250,0.12)";
+  ctx.beginPath();
+  ctx.ellipse(boatX, boatY + 32, 70, 9, 0, 0, Math.PI*2);
+  ctx.fill();
+}
+
+function drawOneFish(f,t){
+  const size = f.type.size * f.scale * 14.5;
+  const facing = f.direction;
+  ctx.save();
+  ctx.translate(f.x, f.y);
+  ctx.scale(facing, 1);
+  const w = Math.sin(t*7.5 + f.phase) * size * 0.17;
+
+  // tail
+  ctx.fillStyle = f.type.color;
+  ctx.beginPath();
+  ctx.moveTo(-size*0.5, 0);
+  ctx.lineTo(-size*1.25, -size*0.48 + w);
+  ctx.lineTo(-size*1.02, w*0.3);
+  ctx.lineTo(-size*1.25, size*0.48 + w);
+  ctx.closePath();
+  ctx.fill();
+
+  // body
+  const bg = ctx.createLinearGradient(0, -size*0.42, 0, size*0.42);
+  bg.addColorStop(0, "#ffffffaa");
+  bg.addColorStop(0.14, f.type.color);
+  bg.addColorStop(0.65, f.type.color);
+  bg.addColorStop(1, f.type.belly);
+  ctx.fillStyle = bg;
+  ctx.beginPath();
+  ctx.ellipse(0, 0, size, size*0.4, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // dorsal
+  ctx.fillStyle = f.type.color;
+  ctx.beginPath();
+  ctx.moveTo(-size*0.18, -size*0.26);
+  ctx.lineTo(size*0.14, -size*0.62);
+  ctx.lineTo(size*0.48, -size*0.25);
+  ctx.closePath();
+  ctx.fill();
+
+  // eye
+  ctx.fillStyle = "#f8fafc";
+  ctx.beginPath();
+  ctx.arc(size*0.62, -size*0.05, size*0.1, 0, Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle = "#0f172a";
+  ctx.beginPath();
+  ctx.arc(size*0.65, -size*0.05, size*0.05, 0, Math.PI*2);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function drawFish(){
+  fish.forEach(f=>{
+    if(f.caught) return;
+    if(f.hooked && targetFish === f){
+      f.x += (hookX - f.x) * 0.055;
+      f.y += (hookY - f.y) * 0.055;
+      if(state === "fighting" && fishRunDir){
+        f.x += fishRunDir * 1.7;
+        hookX += fishRunDir * 0.95;
+      }
+    } else if((state === "waiting" || state === "nibble") && !f.hooked){
+      const dx = hookX - f.x, dy = hookY - f.y, d = Math.hypot(dx,dy);
+      if(d < 140 && Math.random() < 0.028){
+        f.x += Math.sign(dx) * 1.6;
+        f.y += Math.sign(dy) * 0.7;
+      } else {
+        f.x += f.direction * f.speed * 0.021;
+        f.y += Math.sin(elapsed * 1.1 + f.phase) * 0.13;
+      }
+    } else {
+      f.x += f.direction * f.speed * 0.021;
+      f.y += Math.sin(elapsed * 1.1 + f.phase) * 0.13;
+    }
+    if(f.x > width + 65) f.x = -65;
+    if(f.x < -65) f.x = width + 65;
+    if(!f.hooked && Math.random() < 0.0032) f.direction *= -1;
+    drawOneFish(f, elapsed);
+  });
+}
+
+function drawBoat(){
+  const x = boatX, y = boatY + Math.sin(elapsed * 1.3) * 1.9;
+
+  // shadow
+  ctx.fillStyle = "rgba(5,40,60,0.42)";
+  ctx.beginPath();
+  ctx.ellipse(x, y + 31, 68, 9, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // hull
+  const hull = ctx.createLinearGradient(x, y-2, x, y+35);
+  hull.addColorStop(0, "#e0b07a");
+  hull.addColorStop(0.35, "#a86b3c");
+  hull.addColorStop(1, "#5c3018");
+  ctx.fillStyle = hull;
+  ctx.beginPath();
+  ctx.moveTo(x-64, y);
+  ctx.lineTo(x+64, y);
+  ctx.lineTo(x+46, y+27);
+  ctx.quadraticCurveTo(x, y+40, x-46, y+27);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = "#3d2010";
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // angler
+  const shirt = selectedPlayer === "Ryan" ? "#0e7490" :
+                selectedPlayer === "Clay" ? "#64748b" :
+                selectedPlayer === "Justin" ? "#15803d" : "#b45309";
+  ctx.fillStyle = shirt;
+  ctx.beginPath();
+  ctx.roundRect(x-12, y-37, 24, 31, 6);
+  ctx.fill();
+
+  // arm / rod
+  ctx.strokeStyle = "#d4a06a";
+  ctx.lineWidth = 5.5;
+  ctx.beginPath();
+  ctx.moveTo(x-9, y-30);
+  ctx.lineTo(x+13, y-19);
+  ctx.lineTo(x+29, y-23);
+  ctx.stroke();
+
+  // head
+  ctx.fillStyle = "#e8b888";
+  ctx.beginPath();
+  ctx.ellipse(x, y-54, 11.5, 14, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // hat
+  ctx.fillStyle = (selectedPlayer === "Bob" || selectedPlayer === "Clay") ? "#e5e7eb" : "#3d2e24";
+  ctx.beginPath();
+  ctx.arc(x, y-59, 11.5, Math.PI, Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle = "#14532d";
+  ctx.beginPath();
+  ctx.ellipse(x, y-64, 13.5, 4.6, 0, Math.PI, Math.PI*2);
+  ctx.fill();
+
+  // rod tip
+  ctx.strokeStyle = "#e8c98a";
+  ctx.lineWidth = 2.2;
+  ctx.beginPath();
+  ctx.moveTo(x+13, y-23);
+  ctx.quadraticCurveTo(x+25, y-62, x+44, y-68);
+  ctx.stroke();
+}
+
+function drawFishingLine(){
+  if(state === "idle" || state === "caught") return;
+  const sx = boatX + 27, sy = boatY - 23;
+  let wiggle = 4;
+  if(state === "fighting") wiggle = Math.sin(elapsed * 16) * (5 + tension * 0.17);
+  else if(state === "biting") wiggle = Math.sin(elapsed * 21) * 7.5;
+  else if(state === "nibble") wiggle = Math.sin(elapsed * 10) * 3.2;
+
+  ctx.strokeStyle = tension > 72 ? "#fca5a5" : "#f1f5f9";
+  ctx.lineWidth = tension > 72 ? 2.1 : 1.45;
+  ctx.beginPath();
+  ctx.moveTo(sx, sy);
+  ctx.quadraticCurveTo((sx + hookX)/2 + wiggle, (sy + hookY)/2, hookX, hookY);
+  ctx.stroke();
+
+  // bobber
+  let bobOffset = 0;
+  if(state === "nibble") bobOffset = Math.sin(elapsed * 12) * 3.8;
+  else if(state === "biting") bobOffset = Math.sin(elapsed * 18) * 5.5;
+  else if(state === "waiting") bobOffset = Math.sin(elapsed * 2.3) * 1.3;
+
+  const bobY = hookY - 8 + bobOffset;
+  ctx.fillStyle = "#ef4444";
+  ctx.beginPath();
+  ctx.arc(hookX, bobY, 5.2, 0, Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle = "#f8fafc";
+  ctx.beginPath();
+  ctx.arc(hookX, bobY - 2.9, 2.9, 0, Math.PI*2);
+  ctx.fill();
+  ctx.strokeStyle = "#cbd5e1";
+  ctx.lineWidth = 1.9;
+  ctx.beginPath();
+  ctx.moveTo(hookX, bobY + 2);
+  ctx.lineTo(hookX, hookY + 5);
+  ctx.arc(hookX + 3.6, hookY + 5, 3.6, Math.PI, Math.PI * 1.7);
+  ctx.stroke();
+
+  if(state === "biting"){
+    for(let i=0;i<3;i++){
+      ctx.beginPath();
+      ctx.ellipse(hookX, hookY, 10 + i*6.5 + Math.sin(elapsed*14)*2.2, 3.5 + i*2.2, 0, 0, Math.PI*2);
+      ctx.strokeStyle = `rgba(255,255,255,${0.42 - i*0.11})`;
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+    }
+  }
+}
+
+function createSplash(x,y,n=18){
+  for(let i=0;i<n;i++){
+    particles.push({
+      x, y,
+      vx: (Math.random()-0.5)*170,
+      vy: -Math.random()*160 - 18,
+      life: 0.4 + Math.random()*0.65,
+      maxLife: 1.15,
+      size: 1.7 + Math.random()*4.2
+    });
+  }
+}
+
+function drawParticles(dt){
+  particles = particles.filter(p => p.life > 0);
+  particles.forEach(p=>{
+    p.x += p.vx * dt;
+    p.y += p.vy * dt;
+    p.vy += 220 * dt;
+    p.life -= dt;
+    ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
+    ctx.fillStyle = "#dffbff";
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+}
 
 function drawHUD(){
   if(charging){
-    const bw=Math.min(width*0.52,220),x=(width-bw)/2,y=height*0.075;
-    ctx.fillStyle="rgba(7,24,39,0.82)";ctx.beginPath();ctx.roundRect(x-8,y-20,bw+16,44,9);ctx.fill();
-    ctx.fillStyle="#94a3b8";ctx.font="bold 9px system-ui";ctx.textAlign="center";ctx.fillText("CAST POWER  •  drag to aim",width/2,y-6);
-    ctx.fillStyle="#1e293b";ctx.beginPath();ctx.roundRect(x,y,bw,10,5);ctx.fill();
-    const pct=Math.min(1,castPower/100);
-    const g=ctx.createLinearGradient(x,0,x+bw,0);g.addColorStop(0,"#38bdf8");g.addColorStop(.7,"#22d3ee");g.addColorStop(1,"#fbbf24");
-    ctx.fillStyle=g;ctx.beginPath();ctx.roundRect(x,y,bw*pct,10,5);ctx.fill();
+    const bw = Math.min(width*0.54, 230), x = (width-bw)/2, y = height*0.072;
+    ctx.fillStyle = "rgba(7,24,39,0.84)";
+    ctx.beginPath(); ctx.roundRect(x-9, y-21, bw+18, 46, 10); ctx.fill();
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = "bold 9px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText("CAST POWER  •  drag to aim", width/2, y-7);
+    ctx.fillStyle = "#1e293b";
+    ctx.beginPath(); ctx.roundRect(x, y, bw, 11, 5); ctx.fill();
+    const pct = Math.min(1, castPower/100);
+    const g = ctx.createLinearGradient(x,0,x+bw,0);
+    g.addColorStop(0,"#38bdf8"); g.addColorStop(0.7,"#22d3ee"); g.addColorStop(1,"#fbbf24");
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.roundRect(x, y, bw*pct, 11, 5); ctx.fill();
   }
-  if(state==="fighting"){
-    const bw=Math.min(width*0.66,270),x=(width-bw)/2,y=height*0.065;
-    ctx.fillStyle="rgba(7,24,39,0.88)";ctx.beginPath();ctx.roundRect(x-10,y-24,bw+20,92,11);ctx.fill();
-    // progress
-    ctx.fillStyle="#e2e8f0";ctx.font="bold 9px system-ui";ctx.textAlign="center";ctx.fillText("PROGRESS",width/2,y-8);
-    ctx.fillStyle="#1e293b";ctx.beginPath();ctx.roundRect(x,y,bw,9,4);ctx.fill();
-    ctx.fillStyle="#22c55e";ctx.beginPath();ctx.roundRect(x,y,bw*Math.min(1,reelProgress/100),9,4);ctx.fill();
-    // tension
-    ctx.fillStyle="#e2e8f0";ctx.fillText("TENSION",width/2,y+24);
-    ctx.fillStyle="#1e293b";ctx.beginPath();ctx.roundRect(x,y+28,bw,9,4);ctx.fill();
-    const tCol=tension>78?"#ef4444":tension>55?"#f59e0b":"#38bdf8";
-    ctx.fillStyle=tCol;ctx.beginPath();ctx.roundRect(x,y+28,bw*Math.min(1,tension/100),9,4);ctx.fill();
-    // stamina
-    ctx.fillStyle="#e2e8f0";ctx.fillText("FISH ENERGY",width/2,y+52);
-    ctx.fillStyle="#1e293b";ctx.beginPath();ctx.roundRect(x,y+56,bw,9,4);ctx.fill();
-    ctx.fillStyle="#a78bfa";ctx.beginPath();ctx.roundRect(x,y+56,bw*Math.min(1,fishStamina/100),9,4);ctx.fill();
-    if(tension>78){ctx.fillStyle="#fca5a5";ctx.font="bold 8px system-ui";ctx.fillText("EASE OFF!",width/2,y+78);}
+
+  if(state === "fighting"){
+    const bw = Math.min(width*0.68, 280), x = (width-bw)/2, y = height*0.06;
+    ctx.fillStyle = "rgba(7,24,39,0.9)";
+    ctx.beginPath(); ctx.roundRect(x-11, y-25, bw+22, 96, 12); ctx.fill();
+
+    ctx.fillStyle = "#e2e8f0"; ctx.font = "bold 9px system-ui"; ctx.textAlign = "center";
+    ctx.fillText("PROGRESS", width/2, y-9);
+    ctx.fillStyle = "#1e293b"; ctx.beginPath(); ctx.roundRect(x,y,bw,10,5); ctx.fill();
+    ctx.fillStyle = "#22c55e"; ctx.beginPath(); ctx.roundRect(x,y,bw*Math.min(1,reelProgress/100),10,5); ctx.fill();
+
+    ctx.fillStyle = "#e2e8f0"; ctx.fillText("TENSION", width/2, y+25);
+    ctx.fillStyle = "#1e293b"; ctx.beginPath(); ctx.roundRect(x,y+29,bw,10,5); ctx.fill();
+    const tCol = tension>78 ? "#ef4444" : tension>55 ? "#f59e0b" : "#38bdf8";
+    ctx.fillStyle = tCol; ctx.beginPath(); ctx.roundRect(x,y+29,bw*Math.min(1,tension/100),10,5); ctx.fill();
+
+    ctx.fillStyle = "#e2e8f0"; ctx.fillText("FISH ENERGY", width/2, y+55);
+    ctx.fillStyle = "#1e293b"; ctx.beginPath(); ctx.roundRect(x,y+59,bw,10,5); ctx.fill();
+    ctx.fillStyle = "#a78bfa"; ctx.beginPath(); ctx.roundRect(x,y+59,bw*Math.min(1,fishStamina/100),10,5); ctx.fill();
+
+    if(tension > 78){
+      ctx.fillStyle = "#fca5a5";
+      ctx.font = "bold 9px system-ui";
+      ctx.fillText("EASE OFF!", width/2, y+82);
+    }
   }
-  if(state==="waiting"||state==="nibble"||state==="casting"){
-    ctx.fillStyle="rgba(255,255,255,0.55)";ctx.font="10px system-ui";ctx.textAlign="left";
-    ctx.fillText("DEPTH "+Math.round((hookY/height)*100)+"%",10,height-10);
+
+  if(state === "waiting" || state === "nibble" || state === "casting"){
+    ctx.fillStyle = "rgba(255,255,255,0.55)";
+    ctx.font = "10px system-ui";
+    ctx.textAlign = "left";
+    ctx.fillText("DEPTH " + Math.round((hookY/height)*100) + "%", 10, height-11);
   }
 }
 
 function render(dt){
   ctx.clearRect(0,0,width,height);
-  drawSky();drawMountains();drawWater();drawFish();drawBoat();drawFishingLine();drawParticles(dt);drawHUD();
+  drawSky();
+  drawMountains();
+  drawWater();
+  drawFish();
+  drawBoat();
+  drawFishingLine();
+  drawParticles(dt);
+  drawHUD();
 }
 
 function gameLoop(ts){
-  if(!gameScreen.isConnected||gameScreen.style.display==="none"){animationFrame=null;return;}
-  const dt=Math.min(0.048,lastTime?(ts-lastTime)/1000:0.016);
-  lastTime=ts;elapsed+=dt;
+  if(!gameScreen.isConnected || gameScreen.style.display === "none"){
+    animationFrame = null;
+    return;
+  }
+  const dt = Math.min(0.048, lastTime ? (ts-lastTime)/1000 : 0.016);
+  lastTime = ts;
+  elapsed += dt;
 
-  if(charging) castPower=Math.min(100,castPower+dt*48);
+  if(charging) castPower = Math.min(100, castPower + dt * 48 * stats.castSpeed);
 
-  if(state==="fighting"&&targetFish){
-    const sm=targetFish.type.size*targetFish.scale*targetFish.type.fight;
-    const style=targetFish.type.style;
+  if(state === "fighting" && targetFish){
+    const sm = targetFish.type.size * targetFish.scale * targetFish.type.fight;
+    const style = targetFish.type.style;
+    const tMul = stats.tensionMul;
 
-    // Fish tires over time
-    fishStamina=Math.max(15,fishStamina-dt*(2.8+sm*1.1));
+    fishStamina = Math.max(14, fishStamina - dt * (2.9 + sm * 1.15));
 
-    // Base mild pull
-    tension+=dt*(0.8+sm*0.5);
+    tension += dt * (0.85 + sm * 0.52) * tMul;
 
     if(isReeling){
-      // Reeling against the fish
-      const resistance=1+(100-fishStamina)/100; // harder when fresh
-      tension+=dt*(11+sm*7)*resistance;
-      const gain=dt*(16+8/sm)*(0.7+fishStamina/200);
-      reelProgress=Math.min(100,reelProgress+gain);
-    }else{
-      // Letting the fish run – tension drops
-      tension=Math.max(0,tension-dt*26);
-      reelProgress=Math.max(0,reelProgress-dt*(1.8+sm));
+      const resistance = 1 + (100 - fishStamina) / 100;
+      tension += dt * (11.5 + sm * 7.2) * resistance * tMul;
+      const gain = dt * (16.5 + 8.2 / sm) * (0.72 + fishStamina / 200);
+      reelProgress = Math.min(100, reelProgress + gain);
+    } else {
+      tension = Math.max(0, tension - dt * 27);
+      reelProgress = Math.max(0, reelProgress - dt * (1.9 + sm));
     }
 
-    // Runs based on style + stamina
-    runTimer-=dt;
-    if(runTimer<=0){
-      const runChance=0.12+sm*0.06+(fishStamina>60?0.08:0);
-      if(Math.random()<runChance){
-        let dir=(Math.random()<0.5?-1:1);
-        if(style==="deep") dir*=0.6; // more vertical feel
-        fishRunDir=dir*(1.1+sm*0.35)*(fishStamina/100);
-        tension+=9+sm*7;
-        if(style==="surface") statusText.textContent="Surface run! Keep pressure but don't horse it.";
-        else if(style==="deep") statusText.textContent="Deep dive! Let it take some line.";
-        else if(style==="fast") statusText.textContent="Fast run! Stay smooth.";
-        else statusText.textContent="Fish is shaking its head...";
-        runTimer=0.9+Math.random()*1.2;
-      }else{
-        fishRunDir=0;
-        runTimer=0.6+Math.random()*1.3;
+    runTimer -= dt;
+    if(runTimer <= 0){
+      const runChance = 0.13 + sm * 0.065 + (fishStamina > 60 ? 0.09 : 0);
+      if(Math.random() < runChance){
+        let dir = (Math.random() < 0.5 ? -1 : 1);
+        if(style === "deep") dir *= 0.55;
+        fishRunDir = dir * (1.15 + sm * 0.38) * (fishStamina / 100);
+        tension += (10 + sm * 7.5) * tMul;
+        if(style === "surface") statusText.textContent = "Surface run! Keep pressure but don't horse it.";
+        else if(style === "deep") statusText.textContent = "Deep dive! Let it take some line.";
+        else if(style === "fast") statusText.textContent = "Fast run! Stay smooth.";
+        else statusText.textContent = "Fish is shaking its head...";
+        runTimer = 0.9 + Math.random() * 1.25;
+      } else {
+        fishRunDir = 0;
+        runTimer = 0.6 + Math.random() * 1.35;
       }
     }
 
-    if(tension>=100){
+    if(tension >= 100){
       sfxSnap();
       loseFish("Line snapped under the pressure.");
-    }else if(reelProgress>=100){
+    } else if(reelProgress >= 100){
       landFish();
     }
   }
 
   render(dt);
-  animationFrame=requestAnimationFrame(gameLoop);
+  animationFrame = requestAnimationFrame(gameLoop);
 }
 
 function startGame(){
-  clearAllTimers();resize();
-  state="idle";targetFish=null;
-  reelProgress=0;tension=0;castPower=0;charging=false;isReeling=false;
-  fishStamina=100;fishRunDir=0;runTimer=0;bitePhase="none";aimOffset=0;
-  particles=[];updateCounter();
+  clearAllTimers();
+  resize();
+  state = "idle";
+  targetFish = null;
+  reelProgress = 0; tension = 0; castPower = 0; charging = false; isReeling = false;
+  fishStamina = 100; fishRunDir = 0; runTimer = 0; bitePhase = "none"; aimOffset = 0;
+  particles = [];
+  updateCounter();
   showIdleUI();
-  statusText.textContent="Hold CAST, drag left/right to aim, release to cast";
-  if(animationFrame)cancelAnimationFrame(animationFrame);
-  lastTime=0;elapsed=0;
-  animationFrame=requestAnimationFrame(gameLoop);
-}
-function clearAllTimers(){clearTimeout(biteTimer);clearTimeout(escapeTimer);clearTimeout(nibbleTimer);biteTimer=escapeTimer=nibbleTimer=null;}
-function showIdleUI(){
-  castBtn.style.display="block";castBtn.disabled=false;castBtn.textContent="🎣 CAST";
-  reelBtn.style.display="none";releaseBtn.style.display="none";
-  depthUp.style.display="none";depthDown.style.display="none";
+  statusText.textContent = "Hold CAST, drag left/right to aim, release to cast";
+  if(animationFrame) cancelAnimationFrame(animationFrame);
+  lastTime = 0; elapsed = 0;
+  animationFrame = requestAnimationFrame(gameLoop);
 }
 
-// CAST with aim
-castBtn.addEventListener("pointerdown",e=>{
-  if(state!=="idle")return;
+function clearAllTimers(){
+  clearTimeout(biteTimer); clearTimeout(escapeTimer); clearTimeout(nibbleTimer);
+  biteTimer = escapeTimer = nibbleTimer = null;
+}
+
+function showIdleUI(){
+  castBtn.style.display = "block";
+  castBtn.disabled = false;
+  castBtn.textContent = "🎣 CAST";
+  reelBtn.style.display = "none";
+  releaseBtn.style.display = "none";
+  depthUp.style.display = "none";
+  depthDown.style.display = "none";
+}
+
+// CAST
+castBtn.addEventListener("pointerdown", e => {
+  if(state !== "idle") return;
   e.preventDefault();
   initAudio();
-  charging=true;castPower=10;aimOffset=0;
-  pointerStartX=e.clientX||(e.touches&&e.touches[0].clientX)||0;
-  castBtn.textContent="AIM + POWER";
+  charging = true;
+  castPower = 10;
+  aimOffset = 0;
+  pointerStartX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+  castBtn.textContent = "AIM + POWER";
 });
-castBtn.addEventListener("pointermove",e=>{
-  if(!charging||state!=="idle")return;
-  const cx=e.clientX||(e.touches&&e.touches[0].clientX)||pointerStartX;
-  aimOffset=Math.max(-0.22,Math.min(0.22,(cx-pointerStartX)/width));
+castBtn.addEventListener("pointermove", e => {
+  if(!charging || state !== "idle") return;
+  const cx = e.clientX || (e.touches && e.touches[0].clientX) || pointerStartX;
+  aimOffset = Math.max(-0.24, Math.min(0.24, (cx - pointerStartX) / width));
 });
-castBtn.addEventListener("pointerup",e=>{
-  if(!charging||state!=="idle")return;
+castBtn.addEventListener("pointerup", e => {
+  if(!charging || state !== "idle") return;
   e.preventDefault();
-  charging=false;
+  charging = false;
   doCast();
 });
-castBtn.addEventListener("pointerleave",()=>{if(charging){charging=false;castPower=0;castBtn.textContent="🎣 CAST";}});
-castBtn.addEventListener("pointercancel",()=>{if(charging){charging=false;castPower=0;castBtn.textContent="🎣 CAST";}});
+castBtn.addEventListener("pointerleave", () => {
+  if(charging){ charging = false; castPower = 0; castBtn.textContent = "🎣 CAST"; }
+});
+castBtn.addEventListener("pointercancel", () => {
+  if(charging){ charging = false; castPower = 0; castBtn.textContent = "🎣 CAST"; }
+});
 
 function doCast(){
   sfxCast();
-  state="casting";castBtn.disabled=true;castBtn.textContent="🎣 CAST";
-  const power=Math.max(22,castPower);
-  const baseDist=0.17+power*0.0021;
-  hookX=boatX+width*(baseDist+aimOffset);
-  hookX=Math.max(width*0.18,Math.min(width*0.82,hookX));
-  const startY=height*0.37;
-  const endY=height*(0.57+power*0.0027);
-  targetDepth=endY;
-  statusText.textContent="Casting...";
-  const t0=performance.now(),dur=850+power*3.5;
+  state = "casting";
+  castBtn.disabled = true;
+  castBtn.textContent = "🎣 CAST";
+  const power = Math.max(22, castPower);
+  const baseDist = (0.17 + power * 0.00215) * stats.castDist;
+  hookX = boatX + width * (baseDist + aimOffset);
+  hookX = Math.max(width * 0.17, Math.min(width * 0.83, hookX));
+  const startY = height * 0.36;
+  const endY = height * (0.56 + power * 0.0028);
+  targetDepth = endY;
+  statusText.textContent = "Casting...";
+  const t0 = performance.now();
+  const dur = 820 + power * 3.4;
   function anim(now){
-    if(state!=="casting")return;
-    const p=Math.min(1,(now-t0)/dur);
-    const e=1-Math.pow(1-p,2.4);
-    hookY=startY+(endY-startY)*e;
-    if(p<1)requestAnimationFrame(anim);
-    else{createSplash(hookX,hookY,10);sfxSplash();startWaiting();}
+    if(state !== "casting") return;
+    const p = Math.min(1, (now - t0) / dur);
+    const e = 1 - Math.pow(1 - p, 2.5);
+    hookY = startY + (endY - startY) * e;
+    if(p < 1) requestAnimationFrame(anim);
+    else {
+      createSplash(hookX, hookY, 12);
+      sfxSplash();
+      startWaiting();
+    }
   }
   requestAnimationFrame(anim);
 }
 
 function startWaiting(){
-  state="waiting";
-  hookY=targetDepth;
-  bitePhase="none";
-  statusText.textContent="Bait settled. Adjust depth or wait...";
-  depthUp.style.display="block";depthDown.style.display="block";
-  castBtn.style.display="none";
+  state = "waiting";
+  hookY = targetDepth;
+  bitePhase = "none";
+  statusText.textContent = "Bait settled. Adjust depth or wait...";
+  depthUp.style.display = "block";
+  depthDown.style.display = "block";
+  castBtn.style.display = "none";
 
-  // Multi-stage bite
-  const wait=1600+Math.random()*4200;
-  biteTimer=setTimeout(()=>{
-    if(state!=="waiting")return;
-    // Stage 1: interest / nibble
-    state="nibble";
-    bitePhase="nibble";
-    statusText.textContent="Something's interested... bobber is moving";
+  const waitBase = 1500 + Math.random() * 4000;
+  const wait = waitBase / stats.luck; // Justin gets bites sooner
+
+  biteTimer = setTimeout(() => {
+    if(state !== "waiting") return;
+    state = "nibble";
+    bitePhase = "nibble";
+    statusText.textContent = "Something's interested... bobber is moving";
     sfxNibble();
-    nibbleTimer=setTimeout(()=>{
-      if(state!=="nibble")return;
-      // Stage 2: solid take
-      let cands=fish.filter(f=>!f.caught&&!f.hooked);
-      if(!cands.length){createFish();cands=fish;}
-      cands.sort((a,b)=>{
-        const da=Math.abs(a.y-hookY)+Math.abs(a.x-hookX)*0.35;
-        const db=Math.abs(b.y-hookY)+Math.abs(b.x-hookX)*0.35;
-        return da-db;
+    nibbleTimer = setTimeout(() => {
+      if(state !== "nibble") return;
+      let cands = fish.filter(f => !f.caught && !f.hooked);
+      if(!cands.length){ createFish(); cands = fish; }
+
+      // Justin luck + Bob size preference
+      cands.sort((a,b) => {
+        const da = Math.abs(a.y - hookY) + Math.abs(a.x - hookX) * 0.35;
+        const db = Math.abs(b.y - hookY) + Math.abs(b.x - hookX) * 0.35;
+        let scoreA = da - (a.type.rarity < 0.5 ? 25 * stats.luck : 0);
+        let scoreB = db - (b.type.rarity < 0.5 ? 25 * stats.luck : 0);
+        if(selectedPlayer === "Bob"){
+          scoreA -= a.type.size * 12;
+          scoreB -= b.type.size * 12;
+        }
+        return scoreA - scoreB;
       });
-      const chosen=cands[0];
-      targetFish=chosen;
-      chosen.x=hookX+(Math.random()-0.5)*16;
-      chosen.y=hookY+5;
-      chosen.hooked=true;
-      state="biting";
-      bitePhase="take";
-      fishStamina=100;
-      createSplash(hookX,hookY,16);sfxBite();sfxSplash();
-      statusText.textContent="FISH ON! Tap REEL to set the hook!";
-      depthUp.style.display="none";depthDown.style.display="none";
-      reelBtn.style.display="block";
-      escapeTimer=setTimeout(()=>{
-        if(state==="biting"){sfxEscape();loseFish("Missed the take — fish got away.");}
-      },3800);
-    },900+Math.random()*1400);
-  },wait);
+
+      const chosen = cands[0];
+      targetFish = chosen;
+      chosen.x = hookX + (Math.random() - 0.5) * 18;
+      chosen.y = hookY + 6;
+      chosen.hooked = true;
+      state = "biting";
+      bitePhase = "take";
+      fishStamina = 100;
+      createSplash(hookX, hookY, 18);
+      sfxBite(); sfxSplash();
+      statusText.textContent = "FISH ON! Tap REEL to set the hook!";
+      depthUp.style.display = "none";
+      depthDown.style.display = "none";
+      reelBtn.style.display = "block";
+      escapeTimer = setTimeout(() => {
+        if(state === "biting"){
+          sfxEscape();
+          loseFish("Missed the take — fish got away.");
+        }
+      }, 3900);
+    }, 850 + Math.random() * 1300);
+  }, wait);
 }
 
-depthUp.addEventListener("click",()=>{if(state!=="waiting"&&state!=="nibble")return;hookY=Math.max(height*0.47,hookY-height*0.038);statusText.textContent="Raised the bait...";});
-depthDown.addEventListener("click",()=>{if(state!=="waiting"&&state!=="nibble")return;hookY=Math.min(height*0.87,hookY+height*0.038);statusText.textContent="Dropped the bait deeper...";});
+depthUp.addEventListener("click", () => {
+  if(state !== "waiting" && state !== "nibble") return;
+  hookY = Math.max(height * 0.46, hookY - height * 0.04);
+  statusText.textContent = "Raised the bait...";
+});
+depthDown.addEventListener("click", () => {
+  if(state !== "waiting" && state !== "nibble") return;
+  hookY = Math.min(height * 0.88, hookY + height * 0.04);
+  statusText.textContent = "Dropped the bait deeper...";
+});
 
 // REEL
-reelBtn.addEventListener("pointerdown",e=>{
+reelBtn.addEventListener("pointerdown", e => {
   e.preventDefault();
-  if(state==="biting"){
-    clearTimeout(escapeTimer);escapeTimer=null;
-    state="fighting";
-    reelProgress=14;tension=10;isReeling=true;fishStamina=100;
-    statusText.textContent="Fight on! Hold to reel, release to ease tension.";
+  if(state === "biting"){
+    clearTimeout(escapeTimer); escapeTimer = null;
+    state = "fighting";
+    reelProgress = 15;
+    tension = 11;
+    isReeling = true;
+    fishStamina = 100;
+    statusText.textContent = "Fight on! Hold to reel, release to ease tension.";
     sfxReel();
-  }else if(state==="fighting"){
-    isReeling=true;sfxReel();
+  } else if(state === "fighting"){
+    isReeling = true;
+    sfxReel();
   }
 });
-reelBtn.addEventListener("pointerup",()=>{isReeling=false;});
-reelBtn.addEventListener("pointerleave",()=>{isReeling=false;});
-reelBtn.addEventListener("pointercancel",()=>{isReeling=false;});
+reelBtn.addEventListener("pointerup", () => { isReeling = false; });
+reelBtn.addEventListener("pointerleave", () => { isReeling = false; });
+reelBtn.addEventListener("pointercancel", () => { isReeling = false; });
 
 function landFish(){
-  if(state!=="fighting"||!targetFish)return;
-  clearAllTimers();state="caught";isReeling=false;
-  const caught=targetFish;caught.caught=true;caught.hooked=false;
-  createSplash(boatX,boatY+6,22);sfxSuccess();sfxSplash();
-  const t=caught.type;
-  const inches=Math.round(t.min+Math.random()*(t.max-t.min));
-  const pounds=Math.max(0.2,Math.pow(inches/12,3)*t.weight*(0.75+Math.random()*0.5));
-  catches++;totalWeight+=pounds;
-  if(inches>bestFish.inches)bestFish={name:t.name,inches,pounds};
-  saveStats();updateCounter();
-  let title="FISH CAUGHT!",rarity="Common";
-  if(inches>=28||t.rarity<0.28){title="LEGENDARY CATCH!";rarity="Legendary";}
-  else if(inches>=22||t.rarity<0.48){title="TROPHY FISH!";rarity="Trophy";}
-  else if(t.rarity<0.7){title="NICE CATCH!";rarity="Rare";}
-  statusText.textContent="🎉 "+title;
-  castBtn.style.display="none";reelBtn.style.display="none";releaseBtn.style.display="block";
-  depthUp.style.display="none";depthDown.style.display="none";
-  catchEmoji.textContent=t.emoji;
-  $("catch-title").textContent=title;
-  catchDetails.innerHTML=`<strong>Species:</strong> ${t.name}<br><strong>Length:</strong> ${inches} in<br><strong>Est. weight:</strong> ${pounds.toFixed(1)} lbs<br><strong>Rarity:</strong> ${rarity}<br><strong>Total catches:</strong> ${catches}<br><strong>Total weight:</strong> ${totalWeight.toFixed(1)} lbs`;
-  catchCard.style.display="block";
+  if(state !== "fighting" || !targetFish) return;
+  clearAllTimers();
+  state = "caught";
+  isReeling = false;
+  const caught = targetFish;
+  caught.caught = true;
+  caught.hooked = false;
+  createSplash(boatX, boatY + 7, 24);
+  sfxSuccess(); sfxSplash();
+
+  const t = caught.type;
+  let inches = Math.round(t.min + Math.random() * (t.max - t.min));
+  inches = Math.round(inches * stats.sizeMul);
+  const pounds = Math.max(0.2, Math.pow(inches / 12, 3) * t.weight * (0.75 + Math.random() * 0.5) * stats.sizeMul);
+
+  catches++;
+  totalWeight += pounds;
+  if(inches > bestFish.inches) bestFish = {name: t.name, inches, pounds};
+  saveStats();
+  updateCounter();
+
+  let title = "FISH CAUGHT!", rarity = "Common";
+  if(inches >= 28 || t.rarity < 0.28){ title = "LEGENDARY CATCH!"; rarity = "Legendary"; }
+  else if(inches >= 22 || t.rarity < 0.48){ title = "TROPHY FISH!"; rarity = "Trophy"; }
+  else if(t.rarity < 0.7){ title = "NICE CATCH!"; rarity = "Rare"; }
+
+  statusText.textContent = "🎉 " + title;
+  castBtn.style.display = "none";
+  reelBtn.style.display = "none";
+  releaseBtn.style.display = "block";
+  depthUp.style.display = "none";
+  depthDown.style.display = "none";
+
+  catchEmoji.textContent = t.emoji;
+  $("catch-title").textContent = title;
+  catchDetails.innerHTML = `
+    <strong>Species:</strong> ${t.name}<br>
+    <strong>Length:</strong> ${inches} in<br>
+    <strong>Est. weight:</strong> ${pounds.toFixed(1)} lbs<br>
+    <strong>Rarity:</strong> ${rarity}<br>
+    <strong>Angler bonus:</strong> ${stats.label}<br>
+    <strong>Total catches:</strong> ${catches}<br>
+    <strong>Total weight:</strong> ${totalWeight.toFixed(1)} lbs`;
+  catchCard.style.display = "block";
 }
 
 function loseFish(msg){
   clearAllTimers();
-  if(targetFish){targetFish.hooked=false;targetFish=null;}
-  state="idle";
-  reelProgress=0;tension=0;castPower=0;isReeling=false;
-  fishStamina=100;fishRunDir=0;runTimer=0;bitePhase="none";
+  if(targetFish){ targetFish.hooked = false; targetFish = null; }
+  state = "idle";
+  reelProgress = 0; tension = 0; castPower = 0; isReeling = false;
+  fishStamina = 100; fishRunDir = 0; runTimer = 0; bitePhase = "none";
   showIdleUI();
-  statusText.textContent=msg;
+  statusText.textContent = msg;
 }
 
-keepFishingBtn.addEventListener("click",closeCatch);
-releaseBtn.addEventListener("click",closeCatch);
+keepFishingBtn.addEventListener("click", closeCatch);
+releaseBtn.addEventListener("click", closeCatch);
 function closeCatch(){
-  catchCard.style.display="none";
-  if(targetFish){targetFish.caught=true;targetFish.hooked=false;targetFish=null;}
-  if(fish.filter(f=>!f.caught).length<6)createFish();
-  state="idle";reelProgress=0;tension=0;isReeling=false;
+  catchCard.style.display = "none";
+  if(targetFish){ targetFish.caught = true; targetFish.hooked = false; targetFish = null; }
+  if(fish.filter(f => !f.caught).length < 7) createFish();
+  state = "idle";
+  reelProgress = 0; tension = 0; isReeling = false;
   showIdleUI();
-  statusText.textContent="Hold CAST, drag left/right to aim, release to cast";
+  statusText.textContent = "Hold CAST, drag left/right to aim, release to cast";
 }
 
-logBtn.addEventListener("click",()=>{
-  logContent.innerHTML=`<strong>Total catches:</strong> ${catches}<br><strong>Total weight:</strong> ${totalWeight.toFixed(1)} lbs<br><strong>Best fish:</strong> ${bestFish.name}<br>${bestFish.inches?bestFish.inches+" in / "+bestFish.pounds.toFixed(1)+" lbs":"—"}`;
-  logModal.style.display="block";
+logBtn.addEventListener("click", () => {
+  logContent.innerHTML = `
+    <strong>Total catches:</strong> ${catches}<br>
+    <strong>Total weight:</strong> ${totalWeight.toFixed(1)} lbs<br>
+    <strong>Best fish:</strong> ${bestFish.name}<br>
+    ${bestFish.inches ? bestFish.inches + " in / " + bestFish.pounds.toFixed(1) + " lbs" : "—"}`;
+  logModal.style.display = "block";
 });
-closeLogBtn.addEventListener("click",()=>logModal.style.display="none");
+closeLogBtn.addEventListener("click", () => logModal.style.display = "none");
 
-function updateCounter(){fishCounter.textContent="Catches: "+catches;}
+function updateCounter(){ fishCounter.textContent = "Catches: " + catches; }
 
-window.addEventListener("resize",()=>{if(gameScreen.style.display==="flex")resize();});
-document.addEventListener("visibilitychange",()=>{if(document.hidden){clearTimeout(biteTimer);biteTimer=null;clearTimeout(escapeTimer);escapeTimer=null;clearTimeout(nibbleTimer);nibbleTimer=null;}});
+window.addEventListener("resize", () => {
+  if(gameScreen.style.display === "flex") resize();
+});
+document.addEventListener("visibilitychange", () => {
+  if(document.hidden){
+    clearTimeout(biteTimer); biteTimer = null;
+    clearTimeout(escapeTimer); escapeTimer = null;
+    clearTimeout(nibbleTimer); nibbleTimer = null;
+  }
+});
 })();
 </script>
 </body>
