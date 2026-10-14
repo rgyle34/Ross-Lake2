@@ -2,519 +2,2218 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Ross Lake Fishing Adventure</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#092b3b">
+<title>Ross Lake — Wilderness Fishing Adventure</title>
+
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:#071824;color:#effaff;font-family:system-ui,-apple-system,sans-serif}
-button,select{font:inherit}
-button{cursor:pointer;touch-action:manipulation}
-button:focus-visible,select:focus-visible{outline:3px solid white;outline-offset:2px}
-#selection{min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:18px;background:linear-gradient(#285f72,#0b293a 65%,#06151f)}
-.panel{width:min(100%,480px);text-align:center}
-.eyebrow{letter-spacing:.24em;font-size:.72rem;font-weight:800;color:#b6f1ff}
-h1{font-size:clamp(2.7rem,11vw,4.4rem);line-height:1;margin:12px 0;color:white;text-shadow:0 4px #075985}
-.subtitle{font-size:.76rem;letter-spacing:.12em;color:#c9e8f1;margin-bottom:18px}
-#anglerGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
-.angler{border:2px solid #476777;background:#102f40;color:white;border-radius:14px;padding:10px 5px;min-height:100px}
-.angler.selected{border-color:#67e8f9;background:#17556b;box-shadow:0 0 15px #67e8f944}
-.avatar{font-size:2rem;display:block}
-.angler strong{display:block}
-.angler small{display:block;color:#c2dce7;margin-top:3px}
-#backupRow{margin:12px 0;color:#cce5ee;font-size:.85rem}
-select{background:#123547;color:white;border:1px solid #6b99a8;border-radius:9px;padding:8px;max-width:100%}
-.primary{background:linear-gradient(100deg,#38bdf8,#67e8f9);color:#062436;font-weight:900;border:0;border-radius:12px;padding:14px 18px}
-#startButton{width:min(100%,300px);font-size:1rem}
-#selectedInfo{font-size:.85rem;color:#d5eef6;margin-top:12px}
-#game{display:none;height:100dvh;min-height:440px;flex-direction:column;overflow:hidden}
-#top{display:flex;justify-content:space-between;align-items:center;gap:5px;padding:9px;background:#0b2432;border-bottom:1px solid #2c5263;font-size:.78rem}
-#anglerName{color:#8beaff;font-weight:900}
-#status{min-height:46px;display:grid;place-items:center;text-align:center;padding:7px 10px;background:#0d2a3a;font-size:.84rem;font-weight:750}
-#stats{display:flex;justify-content:space-between;gap:8px;padding:6px 10px;background:#071d29;color:#c5eaf5;font-size:.74rem}
-#scene{display:block;width:100%;flex:1;min-height:0;background:#104b61}
-#controls{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;padding:9px 7px calc(9px + env(safe-area-inset-bottom));background:#06151f;border-top:1px solid #29495a}
-.action{flex:1 1 27%;min-width:78px;max-width:190px;min-height:45px;border:0;border-radius:10px;padding:8px 5px;background:linear-gradient(145deg,#38bdf8,#67e8f9);color:#052436;font-size:.77rem;font-weight:900}
-.action.green{background:linear-gradient(145deg,#86efac,#4ade80)}
-.action.orange{background:linear-gradient(145deg,#fde68a,#fb923c)}
-.action.gray{background:linear-gradient(145deg,#a1b2c3,#64748b)}
-.action:disabled{opacity:.35}
-.overlay{display:none;position:fixed;z-index:5;top:50%;left:50%;transform:translate(-50%,-50%);width:min(92%,400px);max-height:88dvh;overflow:auto;padding:18px;border:2px solid #67e8f9;border-radius:18px;background:linear-gradient(160deg,#17475b,#071827);box-shadow:0 0 0 100vmax #000b;text-align:center}
-.overlay h2{margin:0;color:#a5f3fc}
-#catchCanvas{width:100%;height:auto;margin-top:10px;border-radius:10px}
-.details{font-size:.88rem;line-height:1.8;margin:10px 0}
-.overlay button{width:100%;margin-top:7px}
-.journalEntry{text-align:left;padding:9px;margin:7px 0;border:1px solid #3b6475;border-radius:9px;background:#0c2b3b;font-size:.83rem;line-height:1.6}
-@media(max-height:650px){.subtitle{margin-bottom:8px}.angler{min-height:75px;padding:5px}.avatar{font-size:1.5rem}#controls{padding-top:5px;padding-bottom:5px}.action{min-height:40px}}
+:root {
+  --ocean: #092b3b;
+  --panel: #103d4d;
+  --cyan: #78edff;
+  --gold: #ffdc85;
+  --text: #f2fbff;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  background: var(--ocean);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+button, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button:focus-visible,
+select:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+
+#selection {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 22px 16px;
+  background:
+    radial-gradient(ellipse at 50% 10%, #8bbfc4 0%, transparent 42%),
+    linear-gradient(180deg, #285968 0%, #103c4d 60%, #061b28 100%);
+  overflow: auto;
+}
+
+.panel {
+  width: min(100%, 570px);
+  text-align: center;
+}
+
+.eyebrow {
+  color: #c1f8ff;
+  font-weight: 900;
+  letter-spacing: .28em;
+  font-size: .72rem;
+}
+
+h1 {
+  margin: 10px 0 4px;
+  font-size: clamp(2.8rem, 12vw, 5.2rem);
+  line-height: .98;
+  font-weight: 1000;
+  letter-spacing: -.055em;
+  color: #fff;
+  text-shadow:
+    0 3px 0 #3b7888,
+    0 7px 0 #153f50,
+    0 12px 24px #001722aa;
+}
+
+.subtitle {
+  margin: 12px 0 18px;
+  color: #d6f4f7;
+  font-size: .75rem;
+  font-weight: 850;
+  letter-spacing: .17em;
+}
+
+.intro {
+  font-size: .9rem;
+  color: #e4f7fa;
+}
+
+#anglerGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.angler {
+  min-width: 0;
+  border: 2px solid #527887;
+  border-radius: 17px;
+  padding: 10px 8px;
+  background: linear-gradient(145deg, #174657, #0b2939);
+  color: white;
+  min-height: 155px;
+  transition: border-color .15s, transform .15s, background .15s;
+}
+
+.angler:active {
+  transform: scale(.98);
+}
+
+.angler.selected {
+  border-color: #8af3ff;
+  background: linear-gradient(145deg, #226b7d, #104052);
+  box-shadow: 0 0 0 2px #8af3ff20, 0 0 22px #55dffb30;
+}
+
+.avatar {
+  display: block;
+  width: 100%;
+  height: 91px;
+  margin-bottom: 6px;
+}
+
+.angler strong {
+  display: block;
+  font-size: 1rem;
+}
+
+.angler small {
+  display: block;
+  margin-top: 3px;
+  color: #c6e8ee;
+  font-size: .72rem;
+}
+
+#backupRow {
+  margin: 12px 0;
+  font-size: .84rem;
+  color: #d6edf3;
+}
+
+select {
+  max-width: 100%;
+  padding: 8px;
+  border-radius: 9px;
+  border: 1px solid #6f9eac;
+  background: #0e3444;
+  color: white;
+}
+
+.primary {
+  border: 0;
+  border-radius: 13px;
+  padding: 14px 20px;
+  background: linear-gradient(110deg, #6be6ff, #9af5ee);
+  color: #073042;
+  font-weight: 950;
+  box-shadow: 0 5px 0 #176274;
+}
+
+#startButton {
+  width: min(100%, 340px);
+  font-size: 1rem;
+}
+
+#selectedInfo {
+  margin-top: 13px;
+  font-size: .85rem;
+  color: #d9f8fc;
+}
+
+#game {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  height: 100dvh;
+  min-height: 460px;
+  overflow: hidden;
+  background: #061a27;
+}
+
+#top {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+  padding: 10px 12px;
+  background: linear-gradient(90deg, #0b2838, #15495a, #0b2838);
+  border-bottom: 1px solid #397080;
+  font-size: .76rem;
+}
+
+#anglerName {
+  color: var(--cyan);
+  font-weight: 900;
+}
+
+#top strong {
+  letter-spacing: .09em;
+}
+
+#status {
+  flex-shrink: 0;
+  min-height: 48px;
+  display: grid;
+  place-items: center;
+  padding: 7px 12px;
+  text-align: center;
+  background: #0c3041;
+  border-bottom: 1px solid #214b5b;
+  font-size: .82rem;
+  font-weight: 750;
+}
+
+#stats {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 12px;
+  color: #d1f3fa;
+  background: #081f2c;
+  font-size: .73rem;
+}
+
+#scene {
+  display: block;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  background: #246778;
+  touch-action: manipulation;
+}
+
+#controls {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 7px calc(9px + env(safe-area-inset-bottom));
+  background: #061722;
+  border-top: 1px solid #294d5c;
+}
+
+.action {
+  flex: 1 1 27%;
+  min-width: 85px;
+  max-width: 200px;
+  min-height: 44px;
+  border: 0;
+  border-radius: 10px;
+  padding: 8px 5px;
+  color: #062636;
+  background: linear-gradient(145deg, #7de9ff, #a1f3ed);
+  font-size: .75rem;
+  font-weight: 950;
+}
+
+.action.green {
+  background: linear-gradient(145deg, #a7f3c0, #4ade80);
+}
+
+.action.orange {
+  background: linear-gradient(145deg, #ffe7a4, #ffab63);
+}
+
+.action.gray {
+  color: white;
+  background: linear-gradient(145deg, #526c7c, #344b5b);
+}
+
+.action:disabled {
+  opacity: .36;
+  cursor: default;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92%, 430px);
+  max-height: 88dvh;
+  overflow: auto;
+  padding: 18px;
+  border: 2px solid #8af3ff;
+  border-radius: 18px;
+  background: linear-gradient(155deg, #174b5c, #071c2b);
+  box-shadow: 0 0 0 100vmax #000b;
+  text-align: center;
+}
+
+.overlay h2 {
+  margin: 0;
+  color: #a7f5ff;
+}
+
+#catchCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 12px;
+}
+
+.details {
+  margin: 10px 0;
+  font-size: .87rem;
+  line-height: 1.8;
+}
+
+.overlay button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.journalEntry {
+  margin: 7px 0;
+  padding: 10px;
+  border: 1px solid #3c697b;
+  border-radius: 10px;
+  background: #0b2a3b;
+  text-align: left;
+  font-size: .82rem;
+  line-height: 1.6;
+}
+
+@media (max-height: 680px) {
+  #selection {
+    align-items: flex-start;
+    padding-top: 12px;
+  }
+
+  .subtitle {
+    margin-bottom: 8px;
+  }
+
+  .angler {
+    min-height: 125px;
+  }
+
+  .avatar {
+    height: 70px;
+  }
+
+  #controls {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .action {
+    min-height: 39px;
+  }
+}
+
+@media (min-width: 700px) {
+  #controls {
+    padding: 12px;
+  }
+
+  .action {
+    font-size: .85rem;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <section id="selection">
- <div class="panel">
-  <div class="eyebrow">PACIFIC NORTHWEST</div>
-  <h1>ROSS LAKE</h1>
-  <div class="subtitle">WILDERNESS FISHING ADVENTURE</div>
-  <p>CHOOSE YOUR ANGLER</p>
-  <div id="anglerGrid">
-   <button type="button" class="angler selected" data-angler="0"><span class="avatar">🧔🏻</span><strong>Clay</strong><small>Steady & patient</small></button>
-   <button type="button" class="angler" data-angler="1"><span class="avatar">🧢</span><strong>Ryan</strong><small>Fast caster</small></button>
-   <button type="button" class="angler" data-angler="2"><span class="avatar">🧔🏽</span><strong>Justin</strong><small>Lucky angler</small></button>
-   <button type="button" class="angler" data-angler="3"><span class="avatar">🧔🏼‍♂️</span><strong>Bob</strong><small>Trophy hunter</small></button>
+  <div class="panel">
+    <div class="eyebrow">PACIFIC NORTHWEST</div>
+    <h1>ROSS LAKE</h1>
+    <div class="subtitle">WILDERNESS FISHING ADVENTURE</div>
+
+    <p class="intro">Choose your angler and head into the wilderness.</p>
+
+    <div id="anglerGrid">
+
+      <button type="button" class="angler selected" data-angler="0">
+        <canvas class="avatar" id="avatar0" width="220" height="130"></canvas>
+        <strong>Clay</strong>
+        <small>Steady &amp; patient</small>
+      </button>
+
+      <button type="button" class="angler" data-angler="1">
+        <canvas class="avatar" id="avatar1" width="220" height="130"></canvas>
+        <strong>Ryan</strong>
+        <small>Fast caster</small>
+      </button>
+
+      <button type="button" class="angler" data-angler="2">
+        <canvas class="avatar" id="avatar2" width="220" height="130"></canvas>
+        <strong>Justin</strong>
+        <small>Lucky angler</small>
+      </button>
+
+      <button type="button" class="angler" data-angler="3">
+        <canvas class="avatar" id="avatar3" width="220" height="130"></canvas>
+        <strong>Bob</strong>
+        <small>Trophy hunter</small>
+      </button>
+
+    </div>
+
+    <div id="backupRow">
+      Or choose:
+      <select id="anglerSelect" aria-label="Choose angler">
+        <option value="0">Clay</option>
+        <option value="1">Ryan</option>
+        <option value="2">Justin</option>
+        <option value="3">Bob</option>
+      </select>
+    </div>
+
+    <button type="button" class="primary" id="startButton">
+      START FISHING
+    </button>
+
+    <div id="selectedInfo" aria-live="polite">Clay selected.</div>
   </div>
-  <div id="backupRow">Or choose here:
-   <select id="anglerSelect" aria-label="Choose angler">
-    <option value="0">Clay — Steady & patient</option>
-    <option value="1">Ryan — Fast caster</option>
-    <option value="2">Justin — Lucky angler</option>
-    <option value="3">Bob — Trophy hunter</option>
-   </select>
-  </div>
-  <button type="button" class="primary" id="startButton">START FISHING</button>
-  <div id="selectedInfo" aria-live="polite">Clay selected.</div>
- </div>
 </section>
 
 <section id="game">
- <header id="top">
-  <span id="anglerName">Clay</span>
-  <strong>ROSS LAKE</strong>
-  <span id="count">Catches: 0</span>
- </header>
- <div id="status" aria-live="polite">Watch the water and cast your line.</div>
- <div id="stats"><span id="biggest">Biggest: 0.00 lb</span><span id="totalWeight">Total: 0.00 lb</span></div>
- <canvas id="scene" aria-label="Lake scene showing underwater fish and your fishing line"></canvas>
- <nav id="controls">
-  <button type="button" id="castButton" class="action">🎣 CAST</button>
-  <button type="button" id="hookButton" class="action orange" disabled>⚡ SET HOOK</button>
-  <button type="button" id="reelButton" class="action green" disabled>⬆ REEL IN</button>
-  <button type="button" id="runButton" class="action gray" disabled>↔ LET IT RUN</button>
-  <button type="button" id="journalButton" class="action">📖 JOURNAL</button>
-  <button type="button" id="backButton" class="action gray">↩ ANGLERS</button>
- </nav>
+
+  <header id="top">
+    <span id="anglerName">Clay</span>
+    <strong>ROSS LAKE</strong>
+    <span id="count">Catches: 0</span>
+  </header>
+
+  <div id="status" aria-live="polite">
+    Welcome to Ross Lake. Cast your line!
+  </div>
+
+  <div id="stats">
+    <span id="biggest">Biggest: 0.00 lb</span>
+    <span id="totalWeight">Total: 0.00 lb</span>
+  </div>
+
+  <canvas id="scene" aria-label="Animated Ross Lake fishing scene"></canvas>
+
+  <nav id="controls">
+    <button type="button" id="castButton" class="action">
+      🎣 CAST
+    </button>
+
+    <button type="button" id="hookButton" class="action orange" disabled>
+      ⚡ SET HOOK
+    </button>
+
+    <button type="button" id="reelButton" class="action green" disabled>
+      ⬆ REEL IN
+    </button>
+
+    <button type="button" id="runButton" class="action gray" disabled>
+      ↔ LET IT RUN
+    </button>
+
+    <button type="button" id="journalButton" class="action">
+      📖 JOURNAL
+    </button>
+
+    <button type="button" id="backButton" class="action gray">
+      ↩ ANGLERS
+    </button>
+  </nav>
+
 </section>
 
 <div id="catchScreen" class="overlay">
- <h2>FISH LANDED!</h2>
- <canvas id="catchCanvas" width="600" height="300"></canvas>
- <div id="catchDetails" class="details"></div>
- <button type="button" id="continueButton" class="primary">KEEP FISHING</button>
+  <h2>FISH LANDED!</h2>
+  <canvas id="catchCanvas" width="600" height="300"></canvas>
+  <div id="catchDetails" class="details"></div>
+  <button type="button" id="continueButton" class="primary">
+    KEEP FISHING
+  </button>
 </div>
 
 <div id="journalScreen" class="overlay">
- <h2>FISHING JOURNAL</h2>
- <div id="journalStats" class="details"></div>
- <div id="journalList"></div>
- <button type="button" id="journalClose" class="primary">CLOSE</button>
+  <h2>FISHING JOURNAL</h2>
+  <div id="journalStats" class="details"></div>
+  <div id="journalList"></div>
+  <button type="button" id="journalClose" class="primary">CLOSE</button>
 </div>
 
 <script>
-(function(){
+(function () {
 'use strict';
 
-const $=id=>document.getElementById(id);
-const canvas=$('scene'),ctx=canvas.getContext('2d');
-const cc=$('catchCanvas'),cg=cc.getContext('2d');
+const $ = id => document.getElementById(id);
+const canvas = $('scene');
+const ctx = canvas.getContext('2d');
+const catchCanvas = $('catchCanvas');
+const catchCtx = catchCanvas.getContext('2d');
 
-const anglers=[
- {name:'Clay',trait:'Steady & patient',shirt:'#607c49',skin:'#c58c68',hair:'#493126',hat:'#c4a06a',skill:1.15,luck:1},
- {name:'Ryan',trait:'Fast caster',shirt:'#315f8c',skin:'#e0b18a',hair:'#49352a',hat:'#d9c8a1',skill:1.3,luck:1},
- {name:'Justin',trait:'Lucky angler',shirt:'#a65e43',skin:'#c58a62',hair:'#30251f',hat:'#496044',skill:1,luck:1.45},
- {name:'Bob',trait:'Trophy hunter',shirt:'#75618c',skin:'#e2ba98',hair:'#aaa08c',hat:'#907750',skill:1,luck:1.15}
+const anglers = [
+  {
+    name: 'Clay',
+    trait: 'Steady & patient',
+    shirt: '#647c45',
+    skin: '#c58b65',
+    hair: '#453126',
+    hat: '#b99a63',
+    beard: '#4b352a',
+    pants: '#3d4c43',
+    skill: 1.15
+  },
+  {
+    name: 'Ryan',
+    trait: 'Fast caster',
+    shirt: '#315e91',
+    skin: '#e1b28c',
+    hair: '#49352a',
+    hat: '#d9c8a1',
+    beard: '#49352a',
+    pants: '#354455',
+    skill: 1.3
+  },
+  {
+    name: 'Justin',
+    trait: 'Lucky angler',
+    shirt: '#a65e43',
+    skin: '#bd805a',
+    hair: '#30251f',
+    hat: '#496044',
+    beard: '#33241d',
+    pants: '#3b4740',
+    skill: 1
+  },
+  {
+    name: 'Bob',
+    trait: 'Trophy hunter',
+    shirt: '#75618c',
+    skin: '#e2ba98',
+    hair: '#aaa08c',
+    hat: '#907750',
+    beard: '#b1a48d',
+    pants: '#4d4d55',
+    skill: 1.05
+  }
 ];
 
-const species=[
- {name:'Rainbow Trout',min:.7,max:5.5,rarity:34,body:'#c6d6c6',back:'#587d59',belly:'#eee2c1',spot:'#4c5747'},
- {name:'Kokanee Salmon',min:1,max:4.5,rarity:22,body:'#d87869',back:'#65766d',belly:'#f3d3b2',spot:'#ad4d43'},
- {name:'Smallmouth Bass',min:.8,max:5.8,rarity:24,body:'#b7b27a',back:'#66774a',belly:'#e7dca9',spot:'#4b6142'},
- {name:'Bull Trout',min:2,max:12,rarity:12,body:'#b9c4b4',back:'#344e4a',belly:'#d8dfc8',spot:'#c77b60'},
- {name:'Lake Trout',min:3,max:20,rarity:8,body:'#bdc6b6',back:'#50635d',belly:'#e3dfc5',spot:'#384b46'}
+const species = [
+  {
+    name: 'Rainbow Trout',
+    min: .7, max: 5.5,
+    body: '#c6d6c6',
+    back: '#587d59',
+    belly: '#eee2c1',
+    spot: '#4c5747'
+  },
+  {
+    name: 'Kokanee Salmon',
+    min: 1, max: 4.5,
+    body: '#d87869',
+    back: '#65766d',
+    belly: '#f3d3b2',
+    spot: '#ad4d43'
+  },
+  {
+    name: 'Smallmouth Bass',
+    min: .8, max: 5.8,
+    body: '#b7b27a',
+    back: '#66774a',
+    belly: '#e7dca9',
+    spot: '#4b6142'
+  },
+  {
+    name: 'Bull Trout',
+    min: 2, max: 12,
+    body: '#b9c4b4',
+    back: '#344e4a',
+    belly: '#d8dfc8',
+    spot: '#c77b60'
+  },
+  {
+    name: 'Lake Trout',
+    min: 3, max: 20,
+    body: '#bdc6b6',
+    back: '#50635d',
+    belly: '#e3dfc5',
+    spot: '#384b46'
+  }
 ];
 
-let selected=0,W=1,H=1,DPR=1,time=0,last=0,raf=0;
-let started=false,mode='idle',fish=[],particles=[],target=null,hooked=null;
-let lure={x:0,y:0},castProgress=0,waitTime=0,biteTime=0;
-let tension=15,distance=1,stamina=100;
-let catches=[],totalCaught=0,totalWeight=0,biggest=0;
+let selected = 0;
+let W = 1, H = 1, DPR = 1;
+let time = 0, last = 0, raf = 0;
+let started = false;
+let mode = 'idle';
+let fish = [];
+let particles = [];
+let ripples = [];
+let target = null;
+let hooked = null;
 
-try{
- const s=JSON.parse(localStorage.getItem('rossLakeStatsV3')||'{}');
- catches=Array.isArray(s.catches)?s.catches:[];
- totalCaught=Number(s.totalCaught)||0;
- totalWeight=Number(s.totalWeight)||0;
- biggest=Number(s.biggest)||0;
-}catch(e){}
+let lure = { x: 0, y: 0 };
+let castProgress = 0;
+let waitTime = 0;
+let biteTime = 0;
 
-function save(){
- try{localStorage.setItem('rossLakeStatsV3',JSON.stringify({catches:catches.slice(0,100),totalCaught,totalWeight,biggest}));}catch(e){}
+let tension = 15;
+let distance = 1;
+let stamina = 100;
+
+let catches = [];
+let totalCaught = 0;
+let totalWeight = 0;
+let biggest = 0;
+
+try {
+  const saved = JSON.parse(
+    localStorage.getItem('rossLakeStatsV3') || '{}'
+  );
+
+  catches = Array.isArray(saved.catches) ? saved.catches : [];
+  totalCaught = Number(saved.totalCaught) || 0;
+  totalWeight = Number(saved.totalWeight) || 0;
+  biggest = Number(saved.biggest) || 0;
+} catch (e) {}
+
+function save() {
+  try {
+    localStorage.setItem('rossLakeStatsV3', JSON.stringify({
+      catches: catches.slice(0, 100),
+      totalCaught,
+      totalWeight,
+      biggest
+    }));
+  } catch (e) {}
 }
 
-function setStatus(s){$('status').textContent=s;}
-function rand(a,b){return a+Math.random()*(b-a);}
-
-function chooseAngler(n){
- selected=Math.max(0,Math.min(3,Number(n)||0));
- $('anglerSelect').value=String(selected);
- document.querySelectorAll('.angler').forEach((b,i)=>b.classList.toggle('selected',i===selected));
- $('selectedInfo').textContent=anglers[selected].name+' selected — '+anglers[selected].trait+'.';
+function rand(a, b) {
+  return a + Math.random() * (b - a);
 }
 
-document.querySelectorAll('.angler').forEach(b=>{
- b.addEventListener('click',()=>chooseAngler(b.dataset.angler));
-});
-$('anglerSelect').addEventListener('change',e=>chooseAngler(e.target.value));
-
-function stats(){
- $('count').textContent='Catches: '+totalCaught;
- $('biggest').textContent='Biggest: '+biggest.toFixed(2)+' lb';
- $('totalWeight').textContent='Total: '+totalWeight.toFixed(2)+' lb';
+function setStatus(text) {
+  $('status').textContent = text;
 }
 
-function resize(){
- const r=canvas.getBoundingClientRect();
- if(!r.width||!r.height)return;
- DPR=Math.min(window.devicePixelRatio||1,2);W=r.width;H=r.height;
- canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);
- ctx.setTransform(DPR,0,0,DPR,0,0);
- makeFish();
- draw();
+/* =====================================================
+   UNIQUE ANGLER PORTRAITS
+===================================================== */
+
+function drawPortrait(c, a, index) {
+  const g = c.getContext('2d');
+  const w = c.width;
+  const h = c.height;
+
+  g.clearRect(0, 0, w, h);
+
+  const bg = g.createLinearGradient(0, 0, 0, h);
+  bg.addColorStop(0, '#6095a0');
+  bg.addColorStop(1, '#173e4d');
+
+  g.fillStyle = bg;
+  g.fillRect(0, 0, w, h);
+
+  // Distant mountains
+  g.fillStyle = '#486c6b';
+  g.beginPath();
+  g.moveTo(0, 70);
+  g.lineTo(35, 24);
+  g.lineTo(66, 59);
+  g.lineTo(108, 12);
+  g.lineTo(151, 58);
+  g.lineTo(186, 29);
+  g.lineTo(220, 66);
+  g.lineTo(220, h);
+  g.lineTo(0, h);
+  g.fill();
+
+  // Shoulders and body
+  g.fillStyle = a.shirt;
+  g.beginPath();
+  g.moveTo(48, 130);
+  g.lineTo(56, 100);
+  g.quadraticCurveTo(110, 75, 164, 100);
+  g.lineTo(174, 130);
+  g.closePath();
+  g.fill();
+
+  // Neck
+  g.fillStyle = a.skin;
+  g.fillRect(96, 77, 28, 31);
+
+  // Ears
+  g.beginPath();
+  g.ellipse(80, 59, 8, 13, 0, 0, Math.PI * 2);
+  g.ellipse(140, 59, 8, 13, 0, 0, Math.PI * 2);
+  g.fill();
+
+  // Face
+  g.beginPath();
+  g.ellipse(110, 57, 31, 39, 0, 0, Math.PI * 2);
+  g.fill();
+
+  // Hair
+  g.fillStyle = a.hair;
+  g.beginPath();
+  g.moveTo(79, 51);
+  g.quadraticCurveTo(71, 15, 106, 17);
+  g.quadraticCurveTo(139, 9, 143, 42);
+  g.lineTo(138, 32);
+  g.quadraticCurveTo(110, 39, 83, 31);
+  g.closePath();
+  g.fill();
+
+  // Eyebrows
+  g.strokeStyle = a.hair;
+  g.lineWidth = 3;
+  g.beginPath();
+  g.moveTo(88, 48);
+  g.lineTo(101, 46);
+  g.moveTo(119, 46);
+  g.lineTo(132, 48);
+  g.stroke();
+
+  // Eyes
+  g.fillStyle = '#fff8e9';
+  g.beginPath();
+  g.ellipse(95, 53, 6, 3.5, 0, 0, Math.PI * 2);
+  g.ellipse(125, 53, 6, 3.5, 0, 0, Math.PI * 2);
+  g.fill();
+
+  g.fillStyle = '#26362e';
+  g.beginPath();
+  g.arc(96, 53, 2.5, 0, Math.PI * 2);
+  g.arc(124, 53, 2.5, 0, Math.PI * 2);
+  g.fill();
+
+  // Nose
+  g.strokeStyle = '#9d694f';
+  g.lineWidth = 2;
+  g.beginPath();
+  g.moveTo(110, 54);
+  g.lineTo(106, 67);
+  g.lineTo(113, 68);
+  g.stroke();
+
+  // Mouth
+  g.strokeStyle = '#774637';
+  g.lineWidth = 2;
+  g.beginPath();
+  g.moveTo(101, 76);
+  g.quadraticCurveTo(110, 81, 120, 75);
+  g.stroke();
+
+  // Individual facial hair
+  if (index !== 1) {
+    g.fillStyle = a.beard;
+    g.beginPath();
+    g.moveTo(82, 65);
+    g.quadraticCurveTo(86, 94, 110, 98);
+    g.quadraticCurveTo(136, 94, 139, 65);
+    g.quadraticCurveTo(132, 81, 121, 82);
+    g.lineTo(110, 88);
+    g.lineTo(99, 82);
+    g.quadraticCurveTo(89, 81, 82, 65);
+    g.fill();
+
+    // Re-draw the mouth on top of the beard
+    g.strokeStyle = '#d2a18a';
+    g.beginPath();
+    g.moveTo(102, 77);
+    g.quadraticCurveTo(110, 81, 119, 77);
+    g.stroke();
+  }
+
+  // Individual hats
+  if (index === 0 || index === 2 || index === 3) {
+    g.fillStyle = a.hat;
+    g.beginPath();
+    g.ellipse(110, 28, 43, 7, 0, 0, Math.PI * 2);
+    g.fill();
+
+    g.beginPath();
+    g.moveTo(78, 29);
+    g.quadraticCurveTo(79, 0, 109, 2);
+    g.quadraticCurveTo(139, 0, 142, 29);
+    g.closePath();
+    g.fill();
+
+    g.fillStyle = '#ffffff24';
+    g.fillRect(88, 11, 42, 3);
+  } else {
+    // Ryan has short uncovered hair
+    g.fillStyle = '#49352a';
+    g.beginPath();
+    g.moveTo(82, 33);
+    g.quadraticCurveTo(82, 14, 110, 15);
+    g.quadraticCurveTo(139, 13, 139, 34);
+    g.lineTo(129, 26);
+    g.lineTo(94, 27);
+    g.closePath();
+    g.fill();
+  }
+
+  // Highlights
+  g.fillStyle = '#ffffff18';
+  g.fillRect(0, 0, w, 3);
 }
 
-function makeFish(){
- fish=[];
- for(let i=0;i<17;i++){
-  const sp=species[Math.floor(Math.random()*species.length)];
-  fish.push({
-   sp,x:rand(0,W),y:rand(H*.69,H*.96),
-   size:rand(8,14)*(sp===species[4]?1.3:1),
-   speed:rand(9,24),dir:Math.random()<.5?-1:1,
-   phase:rand(0,6.28),state:'swim',alpha:rand(.65,.95)
+function chooseAngler(n) {
+  selected = Math.max(0, Math.min(3, Number(n) || 0));
+
+  $('anglerSelect').value = String(selected);
+
+  document.querySelectorAll('.angler').forEach((button, i) => {
+    button.classList.toggle('selected', i === selected);
   });
- }
+
+  $('selectedInfo').textContent =
+    anglers[selected].name + ' selected — ' +
+    anglers[selected].trait + '.';
 }
 
-function setButtons(){
- $('castButton').disabled=mode!=='idle';
- $('hookButton').disabled=mode!=='bite';
- $('reelButton').disabled=mode!=='fight';
- $('runButton').disabled=mode!=='fight';
-}
-
-$('startButton').addEventListener('click',()=>{
- if(started)return;
- chooseAngler($('anglerSelect').value);
- started=true;
- $('selection').style.display='none';
- $('game').style.display='flex';
- $('anglerName').textContent='🎣 '+anglers[selected].name;
- stats();resize();
- setStatus('Cast into the deep water. Watch the fish swim toward your lure!');
- if(!raf){last=0;raf=requestAnimationFrame(loop);}
+document.querySelectorAll('.angler').forEach(button => {
+  button.addEventListener('click', () => {
+    chooseAngler(button.dataset.angler);
+  });
 });
 
-$('backButton').addEventListener('click',()=>{
- if(mode!=='idle'){setStatus('Finish this cast before changing anglers.');return;}
- started=false;
- $('game').style.display='none';
- $('selection').style.display='flex';
+$('anglerSelect').addEventListener('change', event => {
+  chooseAngler(event.target.value);
 });
 
-function cast(){
- if(!started||mode!=='idle')return;
- mode='casting';castProgress=0;hooked=null;target=null;
- lure.x=W*.5+55;lure.y=H*.66;
- tension=15;stamina=100;distance=1;
- setButtons();
- setStatus('Casting! Watch the line travel down into the deep water.');
-}
-$('castButton').addEventListener('click',cast);
-
-function beginWaiting(){
- mode='waiting';waitTime=rand(2.5,5.5);
- lure.x=W*.66;lure.y=H*.88;
- setButtons();
- setStatus('Your lure is deep underwater. Watch for a fish approaching!');
-}
-
-function startApproach(){
- const available=fish.filter(f=>f.state==='swim');
- if(!available.length){makeFish();}
- const choices=fish.filter(f=>f.state==='swim');
- target=choices[Math.floor(Math.random()*choices.length)];
- target.state='approach';
- mode='approach';
- setButtons();
- setStatus('🐟 A fish has spotted your bait! Watch it swim toward the lure...');
-}
-
-function bite(){
- mode='bite';biteTime=3.2;
- if(target){target.state='bite';target.x=lure.x;target.y=lure.y;}
- setButtons();
- setStatus('🐟 BITE! The fish is at your lure! Tap SET HOOK now!');
-}
-
-$('hookButton').addEventListener('click',()=>{
- if(mode!=='bite'||!target)return;
- const sp=target.sp,a=anglers[selected];
- let weight=(sp.min+Math.random()*(sp.max-sp.min))* (a.name==='Bob'?1.15:1);
- weight=Math.min(sp.max,weight);
- hooked={sp,weight,length:Math.round(7+weight*3.1+Math.random()*5),
-  size:Math.max(23,Math.min(60,18+weight*1.5)),x:target.x,y:target.y,phase:rand(0,6.28)};
- target.state='caught';target=null;
- mode='fight';distance=1;stamina=100;tension=24;
- setButtons();splash(lure.x,lure.y,22);
- setStatus('HOOK SET! The fish is fighting below the boat. Reel it in!');
+anglers.forEach((angler, i) => {
+  drawPortrait($('avatar' + i), angler, i);
 });
 
-function reel(){
- if(mode!=='fight'||!hooked)return;
- if(tension>74){setStatus('The fish is pulling hard! Tap LET IT RUN to relax the line.');return;}
- distance-=.075*anglers[selected].skill;
- stamina-=7;tension+=5;
- if(distance<=.04||stamina<=0){landFish();return;}
- setStatus('Reeling in! Keep watching your fish beneath the boat.');
-}
-$('reelButton').addEventListener('click',reel);
+/* =====================================================
+   STATS AND RESIZING
+===================================================== */
 
-$('runButton').addEventListener('click',()=>{
- if(mode!=='fight'||!hooked)return;
- tension=Math.max(5,tension-27);
- distance=Math.min(1,distance+.012);
- stamina=Math.max(0,stamina-2);
- setStatus('Letting the fish run. Your line tension is relaxing.');
- if(stamina<=0)landFish();
+function stats() {
+  $('count').textContent = 'Catches: ' + totalCaught;
+  $('biggest').textContent = 'Biggest: ' + biggest.toFixed(2) + ' lb';
+  $('totalWeight').textContent = 'Total: ' + totalWeight.toFixed(2) + ' lb';
+}
+
+function resize() {
+  const rect = canvas.getBoundingClientRect();
+
+  if (!rect.width || !rect.height) return;
+
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  W = rect.width;
+  H = rect.height;
+
+  canvas.width = Math.round(W * DPR);
+  canvas.height = Math.round(H * DPR);
+
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+  makeFish();
+  draw();
+}
+
+function makeFish() {
+  fish = [];
+
+  for (let i = 0; i < 19; i++) {
+    const sp = species[Math.floor(Math.random() * species.length)];
+
+    fish.push({
+      sp,
+      x: rand(0, Math.max(1, W)),
+      y: rand(H * .68, H * .96),
+      size: rand(10, 17) * (sp === species[4] ? 1.3 : 1),
+      speed: rand(8, 24),
+      dir: Math.random() < .5 ? -1 : 1,
+      phase: rand(0, Math.PI * 2),
+      state: 'swim',
+      alpha: rand(.6, .94)
+    });
+  }
+}
+
+/* =====================================================
+   START AND CONTROLS
+===================================================== */
+
+function setButtons() {
+  $('castButton').disabled = mode !== 'idle';
+  $('hookButton').disabled = mode !== 'bite';
+  $('reelButton').disabled = mode !== 'fight';
+  $('runButton').disabled = mode !== 'fight';
+}
+
+$('startButton').addEventListener('click', () => {
+  if (started) return;
+
+  chooseAngler($('anglerSelect').value);
+
+  started = true;
+  $('selection').style.display = 'none';
+  $('game').style.display = 'flex';
+
+  $('anglerName').textContent = '🎣 ' + anglers[selected].name;
+
+  stats();
+  resize();
+
+  setStatus('Welcome to Ross Lake. Cast into the deep water!');
+
+  if (!raf) {
+    last = 0;
+    raf = requestAnimationFrame(loop);
+  }
 });
 
-function landFish(){
- if(!hooked)return;
- const f=hooked,entry={
-  name:f.sp.name,weight:Number(f.weight.toFixed(2)),length:f.length,
-  angler:anglers[selected].name,time:new Date().toLocaleString(),
-  body:f.sp.body,back:f.sp.back,belly:f.sp.belly,spot:f.sp.spot,size:f.size
- };
- catches.unshift(entry);catches=catches.slice(0,100);
- totalCaught++;totalWeight+=entry.weight;biggest=Math.max(biggest,entry.weight);
- save();stats();hooked=null;mode='idle';tension=15;setButtons();
- showCatch(entry);
-}
-
-function showCatch(f){
- $('catchDetails').replaceChildren();
- [['Species',f.name],['Weight',f.weight.toFixed(2)+' lb'],['Length',f.length+' inches'],['Angler',f.angler],['Catch time',f.time]].forEach(([k,v])=>{
-  const row=document.createElement('div'),strong=document.createElement('strong');
-  strong.textContent=k+': ';row.appendChild(strong);row.appendChild(document.createTextNode(v));
-  $('catchDetails').appendChild(row);
- });
- drawCatch(f);$('catchScreen').style.display='block';
- setStatus('Fish landed! Your weight and catch statistics have been saved.');
-}
-
-function drawCatch(f){
- const g=cg,w=cc.width,h=cc.height;
- const sky=g.createLinearGradient(0,0,0,h);
- sky.addColorStop(0,'#92c6d1');sky.addColorStop(.5,'#397c8b');sky.addColorStop(1,'#10394a');
- g.fillStyle=sky;g.fillRect(0,0,w,h);
- g.fillStyle='#496b61';g.beginPath();
- g.moveTo(0,145);g.lineTo(90,40);g.lineTo(175,122);g.lineTo(290,18);g.lineTo(405,115);g.lineTo(510,38);g.lineTo(600,135);g.lineTo(600,300);g.lineTo(0,300);g.fill();
- g.fillStyle='#226b7c';g.fillRect(0,150,w,150);
- drawFish(g,w/2,170,Math.min(105,40+f.weight*2),f,1,false);
- g.fillStyle='white';g.textAlign='center';g.font='bold 20px system-ui';
- g.fillText('ROSS LAKE TROPHY',w/2,30);
- g.font='bold 17px system-ui';g.fillText(f.weight.toFixed(2)+' LB  •  '+f.length+' IN',w/2,278);
-}
-
-$('continueButton').addEventListener('click',()=>{$('catchScreen').style.display='none';setStatus('Ready to cast again. Look for fish swimming below the boat.');});
-
-function journal(){
- $('journalStats').textContent='Total catches: '+totalCaught+' · Total weight: '+totalWeight.toFixed(2)+' lb · Biggest: '+biggest.toFixed(2)+' lb';
- $('journalList').replaceChildren();
- if(!catches.length){
-  const d=document.createElement('div');d.className='journalEntry';d.textContent='No fish landed yet. Cast your line to start!';
-  $('journalList').appendChild(d);
- }else catches.forEach((f,i)=>{
-  const d=document.createElement('div');d.className='journalEntry';
-  d.textContent='#'+(i+1)+' · '+f.name+' — '+f.weight.toFixed(2)+' lb, '+f.length+' in · '+f.angler+' · '+f.time;
-  $('journalList').appendChild(d);
- });
- $('journalScreen').style.display='block';
-}
-$('journalButton').addEventListener('click',journal);
-$('journalClose').addEventListener('click',()=>{$('journalScreen').style.display='none';});
-
-function splash(x,y,n){
- for(let i=0;i<n;i++)particles.push({x,y,vx:rand(-60,60),vy:rand(-90,-15),life:rand(.3,.8),size:rand(1,4)});
-}
-
-function background(){
- const sky=ctx.createLinearGradient(0,0,0,H*.55);
- sky.addColorStop(0,'#719fb2');sky.addColorStop(1,'#d3d9c7');
- ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
- ctx.fillStyle='#6c8779';ctx.beginPath();ctx.moveTo(0,H*.53);
- for(let x=0;x<=W+15;x+=18)ctx.lineTo(x,H*(.43+Math.sin(x*.018)*.03));
- ctx.lineTo(W,H*.62);ctx.lineTo(0,H*.62);ctx.fill();
- ctx.fillStyle='#234d3b';
- for(let x=0;x<W;x+=20){
-  const y=H*(.52+Math.sin(x*.025)*.02);
-  ctx.beginPath();ctx.moveTo(x,y-25);ctx.lineTo(x-12,y+3);ctx.lineTo(x+12,y+3);ctx.fill();
- }
- const water=ctx.createLinearGradient(0,H*.54,0,H);
- water.addColorStop(0,'#5ca4aa');water.addColorStop(.25,'#287b8c');water.addColorStop(1,'#061e35');
- ctx.fillStyle=water;ctx.fillRect(0,H*.54,W,H*.46);
-
- // Underwater depth bands make the lure's depth obvious.
- ctx.fillStyle='rgba(8,45,66,.18)';ctx.fillRect(0,H*.68,W,H*.32);
- ctx.fillStyle='rgba(2,22,43,.22)';ctx.fillRect(0,H*.83,W,H*.17);
- ctx.fillStyle='rgba(190,239,244,.55)';ctx.font='bold 11px system-ui';ctx.textAlign='left';
- ctx.fillText('UNDERWATER',10,H*.70);
- ctx.fillStyle='rgba(210,239,245,.22)';
- for(let i=0;i<40;i++){
-  const y=H*.57+((i*19+time*7)%(H*.4));
-  const x=(i*73+Math.sin(time+i)*15)%W;
-  ctx.fillRect(x,y,12+(i%5)*5,1);
- }
-}
-
-function boat(){
- const x=W*.5,y=H*.70+Math.sin(time*1.2)*2,a=anglers[selected];
- ctx.fillStyle='rgba(0,0,0,.22)';ctx.beginPath();ctx.ellipse(x,y+20,78,8,0,0,Math.PI*2);ctx.fill();
- ctx.fillStyle='#65452f';ctx.beginPath();ctx.moveTo(x-76,y);ctx.lineTo(x+76,y);ctx.lineTo(x+53,y+24);ctx.lineTo(x-53,y+24);ctx.closePath();ctx.fill();
- ctx.fillStyle='#c2a16b';ctx.beginPath();ctx.moveTo(x-68,y-5);ctx.lineTo(x+68,y-5);ctx.lineTo(x+53,y+10);ctx.lineTo(x-53,y+10);ctx.closePath();ctx.fill();
- ctx.fillStyle=a.shirt;ctx.beginPath();ctx.ellipse(x-4,y-30,18,22,0,0,Math.PI*2);ctx.fill();
- ctx.fillStyle=a.skin;ctx.beginPath();ctx.arc(x-4,y-56,13,0,Math.PI*2);ctx.fill();
- ctx.fillStyle=a.hair;ctx.beginPath();ctx.arc(x-4,y-60,13,Math.PI,Math.PI*2);ctx.fill();
- ctx.fillStyle=a.hat;ctx.beginPath();ctx.ellipse(x-4,y-64,20,4,0,0,Math.PI*2);ctx.fill();
- ctx.beginPath();ctx.moveTo(x-14,y-65);ctx.quadraticCurveTo(x-10,y-78,x-3,y-77);ctx.quadraticCurveTo(x+8,y-77,x+9,y-65);ctx.fill();
- ctx.strokeStyle='#3d2b1c';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x+14,y-38);ctx.lineTo(x+43,y-101);ctx.stroke();
- ctx.strokeStyle='#eee1c2';ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(x+43,y-101);ctx.quadraticCurveTo(x+60,y-73,x+55,y-45);ctx.stroke();
-}
-
-function drawFish(g,x,y,size,f,alpha=1,flip=true){
- g.save();g.globalAlpha=alpha;g.translate(x,y);if(flip)g.scale(-1,1);
- g.fillStyle=f.back;g.beginPath();g.moveTo(-size*.5,0);g.lineTo(-size*1.05,-size*.4);g.lineTo(-size,0);g.lineTo(-size*1.05,size*.4);g.closePath();g.fill();
- g.beginPath();g.moveTo(-size*.18,-size*.14);g.lineTo(-size*.05,-size*.42);g.lineTo(size*.22,-size*.15);g.closePath();g.fill();
- g.fillStyle=f.back;g.beginPath();g.ellipse(0,0,size*.68,size*.34,0,0,Math.PI*2);g.fill();
- g.fillStyle=f.body;g.beginPath();g.ellipse(size*.04,-size*.02,size*.61,size*.27,0,0,Math.PI*2);g.fill();
- g.fillStyle=f.belly;g.beginPath();g.ellipse(size*.04,size*.13,size*.43,size*.12,0,0,Math.PI);g.fill();
- g.fillStyle=f.back;g.beginPath();g.moveTo(-size*.02,size*.04);g.lineTo(size*.22,size*.3);g.lineTo(size*.32,size*.02);g.fill();
- for(let i=0;i<6;i++){g.fillStyle=f.spot;g.beginPath();g.arc(-size*.25+(i%3)*size*.17,(i%2?1:-1)*size*.1,Math.max(.7,size*.035),0,Math.PI*2);g.fill();}
- g.fillStyle='#fff5dc';g.beginPath();g.arc(size*.5,-size*.06,Math.max(1.3,size*.08),0,Math.PI*2);g.fill();
- g.fillStyle='#15241e';g.beginPath();g.arc(size*.52,-size*.06,Math.max(.7,size*.04),0,Math.PI*2);g.fill();
- g.restore();
-}
-
-function school(){
- fish.forEach(f=>{
-  if(f.state==='caught')return;
-  drawFish(ctx,f.x,f.y,f.size,f.sp,f.alpha);
- });
-}
-
-function lineAndLure(){
- if(!['casting','waiting','approach','bite','fight'].includes(mode))return;
- const sx=W*.5+54,sy=H*.70-91;
- let ex=lure.x,ey=lure.y;
- if(mode==='fight'&&hooked){ex=hooked.x;ey=hooked.y;}
- ctx.strokeStyle=tension>70?'#ffe3a2':'#fff5dc';ctx.lineWidth=1.6;
- ctx.beginPath();ctx.moveTo(sx,sy);
- ctx.quadraticCurveTo((sx+ex)/2+Math.sin(time*2)*4,(sy+ey)/2,ex,ey);ctx.stroke();
-
- // Bright, unmistakable lure underwater.
- if(mode!=='fight'){
-  ctx.fillStyle='#ffdb4d';ctx.beginPath();ctx.ellipse(ex,ey,7,4,Math.sin(time*4)*.2,0,Math.PI*2);ctx.fill();
-  ctx.strokeStyle='#fff7da';ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(ex+3,ey+2);ctx.lineTo(ex+5,ey+7);ctx.quadraticCurveTo(ex+9,ey+7,ex+7,ey+3);ctx.stroke();
- }
- if(mode==='bite'){
-  for(let i=0;i<3;i++){ctx.strokeStyle='rgba(255,255,255,'+(.6-i*.15)+')';ctx.beginPath();ctx.ellipse(ex,ey,12+i*8,4+i*2,0,0,Math.PI*2);ctx.stroke();}
- }
-}
-
-function drawHooked(){
- if(!hooked)return;
- drawFish(ctx,hooked.x,hooked.y,hooked.size,hooked.sp,1);
- ctx.strokeStyle='#ffe7a0';ctx.lineWidth=1.5;ctx.beginPath();ctx.ellipse(hooked.x,hooked.y,hooked.size*1.3,hooked.size*.6,0,0,Math.PI*2);ctx.stroke();
-}
-
-function drawParticles(dt){
- particles=particles.filter(p=>p.life>0);
- for(const p of particles){
-  p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=160*dt;p.life-=dt;
-  ctx.globalAlpha=Math.max(0,p.life/.8);ctx.fillStyle='#e7ffff';
-  ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
- }
- ctx.globalAlpha=1;
-}
-
-function draw(){
- if(!W||!H)return;
- ctx.clearRect(0,0,W,H);
- background();school();boat();lineAndLure();drawHooked();
-}
-
-function update(dt){
- time+=dt;
-
- fish.forEach(f=>{
-  if(f.state==='caught')return;
-  if(f.state==='swim'){
-   f.x+=f.speed*f.dir*dt;
-   f.y+=Math.sin(time*1.3+f.phase)*dt*3;
-   if(f.x<-45)f.x=W+45;if(f.x>W+45)f.x=-45;
+$('backButton').addEventListener('click', () => {
+  if (mode !== 'idle') {
+    setStatus('Finish this cast before changing anglers.');
+    return;
   }
- });
 
- if(mode==='casting'){
-  castProgress=Math.min(1,castProgress+dt*1.05);
-  const p=castProgress,sx=W*.5+55,sy=H*.70-90;
-  const tx=W*.66,ty=H*.88;
-  lure.x=sx+(tx-sx)*p;
-  lure.y=sy+(ty-sy)*p-Math.sin(p*Math.PI)*H*.09;
-  if(p>=1){
-   lure.x=tx;lure.y=ty;splash(lure.x,lure.y,16);beginWaiting();
-  }
- }else if(mode==='waiting'){
-  waitTime-=dt;
-  lure.x=W*.66+Math.sin(time*.65)*W*.025;
-  lure.y=H*.88+Math.sin(time*1.7)*2;
-  if(waitTime<=0)startApproach();
- }else if(mode==='approach'&&target){
-  // Fish swims toward the actual lure instead of appearing on the hook.
-  const dx=lure.x-target.x,dy=lure.y-target.y;
-  const d=Math.hypot(dx,dy)||1;
-  const speed=48;
-  target.x+=dx/d*speed*dt;
-  target.y+=dy/d*speed*dt;
-  target.x+=Math.sin(time*4+target.phase)*dt*4;
-  target.y+=Math.cos(time*4+target.phase)*dt*3;
-  if(d<13){
-   target.x=lure.x;target.y=lure.y;
-   bite();splash(lure.x,lure.y,10);
-  }
- }else if(mode==='bite'){
-  biteTime-=dt;
-  if(target){target.x=lure.x+Math.sin(time*13)*4;target.y=lure.y+Math.sin(time*15)*3;}
-  if(Math.random()<.08)splash(lure.x,lure.y,2);
-  if(biteTime<=0){
-   if(target)target.state='swim';
-   target=null;mode='idle';setButtons();
-   setStatus('The fish let go! Cast again and watch for another approach.');
-  }
- }else if(mode==='fight'&&hooked){
-  hooked.x=W*.5+Math.sin(time*1.7+hooked.phase)*Math.min(W*.28,100)*distance;
-  hooked.y=H*.86+Math.sin(time*2.6+hooked.phase)*H*.025;
-  tension=Math.max(5,Math.min(88,tension+dt*(Math.sin(time*1.8+hooked.phase)>.75?3:-1)));
-  if(tension>82)tension-=dt*8;
- }
- drawParticles(dt);
+  started = false;
+  $('game').style.display = 'none';
+  $('selection').style.display = 'flex';
+});
+
+function cast() {
+  if (!started || mode !== 'idle') return;
+
+  mode = 'casting';
+  castProgress = 0;
+  hooked = null;
+  target = null;
+
+  lure.x = W * .5 + 55;
+  lure.y = H * .66;
+
+  tension = 15;
+  stamina = 100;
+  distance = 1;
+
+  setButtons();
+  setStatus('Casting! Watch the line and lure enter the water.');
 }
 
-function loop(now){
- raf=requestAnimationFrame(loop);
- const dt=Math.min(.04,Math.max(0,(now-last)/1000||0));last=now;
- update(dt);draw();
+$('castButton').addEventListener('click', cast);
+
+function beginWaiting() {
+  mode = 'waiting';
+  waitTime = rand(2.5, 5.5);
+
+  lure.x = W * .66;
+  lure.y = H * .88;
+
+  setButtons();
+  setStatus('Your lure is deep underwater. Watch for movement!');
 }
 
-chooseAngler(0);stats();window.addEventListener('resize',resize);
+function startApproach() {
+  if (!fish.some(f => f.state === 'swim')) {
+    makeFish();
+  }
+
+  const choices = fish.filter(f => f.state === 'swim');
+
+  target = choices[Math.floor(Math.random() * choices.length)];
+
+  target.state = 'approach';
+  mode = 'approach';
+
+  setButtons();
+
+  setStatus('🐟 A fish has spotted your lure and is swimming toward it!');
+}
+
+function bite() {
+  mode = 'bite';
+  biteTime = 3.2;
+
+  if (target) {
+    target.state = 'bite';
+  }
+
+  setButtons();
+
+  setStatus('🐟 BITE! The fish is attacking your lure! Tap SET HOOK!');
+}
+
+$('hookButton').addEventListener('click', () => {
+  if (mode !== 'bite' || !target) return;
+
+  const sp = target.sp;
+  const angler = anglers[selected];
+
+  let weight = sp.min + Math.random() * (sp.max - sp.min);
+
+  if (angler.name === 'Bob') {
+    weight *= 1.1;
+  }
+
+  weight = Math.min(sp.max, weight);
+
+  hooked = {
+    sp,
+    weight,
+    length: Math.round(7 + weight * 3.1 + Math.random() * 5),
+    size: Math.max(23, Math.min(60, 18 + weight * 1.5)),
+    x: target.x,
+    y: target.y,
+    phase: rand(0, Math.PI * 2)
+  };
+
+  target.state = 'caught';
+  target = null;
+
+  mode = 'fight';
+  distance = 1;
+  stamina = 100;
+  tension = 24;
+
+  setButtons();
+  splash(lure.x, lure.y, 22);
+
+  setStatus('HOOK SET! The fish is fighting beneath the boat. Reel it in!');
+});
+
+function reel() {
+  if (mode !== 'fight' || !hooked) return;
+
+  if (tension > 74) {
+    setStatus('The fish is pulling hard! Let it run to relax the line.');
+    return;
+  }
+
+  distance -= .075 * anglers[selected].skill;
+  stamina -= 7;
+  tension += 5;
+
+  if (distance <= .04 || stamina <= 0) {
+    landFish();
+    return;
+  }
+
+  setStatus('Reeling in! Watch the fish struggle below the surface.');
+}
+
+$('reelButton').addEventListener('click', reel);
+
+$('runButton').addEventListener('click', () => {
+  if (mode !== 'fight' || !hooked) return;
+
+  tension = Math.max(5, tension - 27);
+  distance = Math.min(1, distance + .012);
+  stamina = Math.max(0, stamina - 2);
+
+  setStatus('Letting the fish run. Your line is relaxing.');
+
+  if (stamina <= 0) landFish();
+});
+
+/* =====================================================
+   CATCH SCREEN AND JOURNAL
+===================================================== */
+
+function landFish() {
+  if (!hooked) return;
+
+  const f = hooked;
+
+  const entry = {
+    name: f.sp.name,
+    weight: Number(f.weight.toFixed(2)),
+    length: f.length,
+    angler: anglers[selected].name,
+    time: new Date().toLocaleString(),
+    body: f.sp.body,
+    back: f.sp.back,
+    belly: f.sp.belly,
+    spot: f.sp.spot,
+    size: f.size
+  };
+
+  catches.unshift(entry);
+  catches = catches.slice(0, 100);
+
+  totalCaught++;
+  totalWeight += entry.weight;
+  biggest = Math.max(biggest, entry.weight);
+
+  save();
+  stats();
+
+  hooked = null;
+  mode = 'idle';
+  tension = 15;
+
+  setButtons();
+  showCatch(entry);
+}
+
+function showCatch(f) {
+  $('catchDetails').replaceChildren();
+
+  [
+    ['Species', f.name],
+    ['Weight', f.weight.toFixed(2) + ' lb'],
+    ['Length', f.length + ' inches'],
+    ['Angler', f.angler],
+    ['Catch time', f.time]
+  ].forEach(([label, value]) => {
+    const row = document.createElement('div');
+    const strong = document.createElement('strong');
+
+    strong.textContent = label + ': ';
+
+    row.appendChild(strong);
+    row.appendChild(document.createTextNode(value));
+
+    $('catchDetails').appendChild(row);
+  });
+
+  drawCatch(f);
+
+  $('catchScreen').style.display = 'block';
+
+  setStatus('Fish landed! Your catch has been saved to your journal.');
+}
+
+function drawCatch(f) {
+  const g = catchCtx;
+  const w = catchCanvas.width;
+  const h = catchCanvas.height;
+
+  const sky = g.createLinearGradient(0, 0, 0, h);
+
+  sky.addColorStop(0, '#9ccbd6');
+  sky.addColorStop(.5, '#3b7d89');
+  sky.addColorStop(1, '#10394a');
+
+  g.fillStyle = sky;
+  g.fillRect(0, 0, w, h);
+
+  g.fillStyle = '#5d8073';
+  g.beginPath();
+  g.moveTo(0, 145);
+  g.lineTo(70, 70);
+  g.lineTo(125, 103);
+  g.lineTo(230, 25);
+  g.lineTo(330, 110);
+  g.lineTo(430, 38);
+  g.lineTo(520, 105);
+  g.lineTo(600, 65);
+  g.lineTo(600, 300);
+  g.lineTo(0, 300);
+  g.fill();
+
+  g.fillStyle = '#276d7b';
+  g.fillRect(0, 150, w, 150);
+
+  for (let i = 0; i < 12; i++) {
+    g.fillStyle = '#ffffff18';
+    g.fillRect(i * 55, 165 + (i % 3) * 15, 30, 2);
+  }
+
+  drawFish(g, w / 2, 170, Math.min(110, 40 + f.weight * 2), f, 1, false);
+
+  g.fillStyle = 'white';
+  g.textAlign = 'center';
+  g.font = 'bold 22px system-ui';
+  g.fillText('ROSS LAKE TROPHY', w / 2, 30);
+
+  g.font = 'bold 17px system-ui';
+  g.fillText(f.weight.toFixed(2) + ' LB  •  ' + f.length + ' IN', w / 2, 278);
+}
+
+$('continueButton').addEventListener('click', () => {
+  $('catchScreen').style.display = 'none';
+  setStatus('Ready to cast again. Look for fish below the boat.');
+});
+
+function journal() {
+  $('journalStats').textContent =
+    'Total catches: ' + totalCaught +
+    ' · Total weight: ' + totalWeight.toFixed(2) + ' lb' +
+    ' · Biggest: ' + biggest.toFixed(2) + ' lb';
+
+  $('journalList').replaceChildren();
+
+  if (!catches.length) {
+    const d = document.createElement('div');
+
+    d.className = 'journalEntry';
+    d.textContent = 'No fish landed yet. Cast your line to start!';
+
+    $('journalList').appendChild(d);
+  } else {
+    catches.forEach((f, i) => {
+      const d = document.createElement('div');
+
+      d.className = 'journalEntry';
+      d.textContent =
+        '#' + (i + 1) + ' · ' + f.name +
+        ' — ' + f.weight.toFixed(2) + ' lb, ' +
+        f.length + ' in · ' + f.angler + ' · ' + f.time;
+
+      $('journalList').appendChild(d);
+    });
+  }
+
+  $('journalScreen').style.display = 'block';
+}
+
+$('journalButton').addEventListener('click', journal);
+
+$('journalClose').addEventListener('click', () => {
+  $('journalScreen').style.display = 'none';
+});
+
+/* =====================================================
+   WATER PARTICLES AND RIPPLES
+===================================================== */
+
+function splash(x, y, amount) {
+  for (let i = 0; i < amount; i++) {
+    particles.push({
+      x, y,
+      vx: rand(-65, 65),
+      vy: rand(-95, -15),
+      life: rand(.3, .8),
+      size: rand(1, 4)
+    });
+  }
+
+  ripples.push({
+    x, y,
+    radius: 4,
+    life: 1
+  });
+}
+
+function drawParticles(dt) {
+  particles = particles.filter(p => p.life > 0);
+
+  for (const p of particles) {
+    p.x += p.vx * dt;
+    p.y += p.vy * dt;
+    p.vy += 160 * dt;
+    p.life -= dt;
+
+    ctx.globalAlpha = Math.max(0, p.life / .8);
+    ctx.fillStyle = '#e7ffff';
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  ctx.globalAlpha = 1;
+
+  ripples = ripples.filter(r => r.life > 0);
+
+  for (const r of ripples) {
+    ctx.globalAlpha = r.life * .65;
+    ctx.strokeStyle = '#d8fbff';
+    ctx.lineWidth = 1.3;
+
+    ctx.beginPath();
+    ctx.ellipse(
+      r.x, r.y,
+      r.radius * 1.8,
+      r.radius * .5,
+      0, 0, Math.PI * 2
+    );
+    ctx.stroke();
+
+    r.radius += 28 * dt;
+    r.life -= dt * .7;
+  }
+
+  ctx.globalAlpha = 1;
+}
+
+/* =====================================================
+   PART 1 GRAPHICS: SKY AND MOUNTAINS
+===================================================== */
+
+function background() {
+  // Sky gradient
+  const sky = ctx.createLinearGradient(0, 0, 0, H * .61);
+
+  sky.addColorStop(0, '#6ba5c0');
+  sky.addColorStop(.42, '#b7d4d5');
+  sky.addColorStop(.78, '#e1dfc7');
+  sky.addColorStop(1, '#8bb9b7');
+
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, W, H);
+
+  // Sun glow
+  const sunX = W * .78;
+  const sunY = H * .12;
+
+  const glow = ctx.createRadialGradient(
+    sunX, sunY, 2,
+    sunX, sunY, Math.min(W, H) * .24
+  );
+
+  glow.addColorStop(0, '#fff9d8a0');
+  glow.addColorStop(.25, '#fff3c530');
+  glow.addColorStop(1, '#fff3c500');
+
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, W, H * .5);
+
+  ctx.fillStyle = '#fff5d4';
+  ctx.beginPath();
+  ctx.arc(sunX, sunY, Math.min(W, H) * .035, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Soft clouds
+  for (let i = 0; i < 4; i++) {
+    const x = ((i * W * .31 + time * (2 + i)) % (W + 100)) - 50;
+    const y = H * (.09 + (i % 3) * .065);
+
+    ctx.fillStyle = '#ffffff28';
+    ctx.beginPath();
+    ctx.ellipse(x, y, 32, 8, 0, 0, Math.PI * 2);
+    ctx.ellipse(x + 20, y - 5, 24, 10, 0, 0, Math.PI * 2);
+    ctx.ellipse(x + 40, y, 32, 7, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Distant mountain range
+  ctx.fillStyle = '#77949a';
+  ctx.beginPath();
+  ctx.moveTo(0, H * .51);
+
+  for (let x = 0; x <= W + 10; x += 10) {
+    const y = H * .37
+      + Math.sin(x * .012) * H * .035
+      + Math.sin(x * .027) * H * .018;
+
+    ctx.lineTo(x, y);
+  }
+
+  ctx.lineTo(W, H * .62);
+  ctx.lineTo(0, H * .62);
+  ctx.closePath();
+  ctx.fill();
+
+  // Main mountain range
+  ctx.fillStyle = '#4c7079';
+  ctx.beginPath();
+  ctx.moveTo(0, H * .53);
+  ctx.lineTo(W * .08, H * .40);
+  ctx.lineTo(W * .17, H * .45);
+  ctx.lineTo(W * .30, H * .23);
+  ctx.lineTo(W * .39, H * .37);
+  ctx.lineTo(W * .48, H * .43);
+  ctx.lineTo(W * .62, H * .20);
+  ctx.lineTo(W * .72, H * .36);
+  ctx.lineTo(W * .82, H * .28);
+  ctx.lineTo(W, H * .45);
+  ctx.lineTo(W, H * .63);
+  ctx.lineTo(0, H * .63);
+  ctx.closePath();
+  ctx.fill();
+
+  // Snowcaps
+  ctx.fillStyle = '#e5eee8';
+
+  ctx.beginPath();
+  ctx.moveTo(W * .255, H * .31);
+  ctx.lineTo(W * .30, H * .23);
+  ctx.lineTo(W * .345, H * .31);
+  ctx.lineTo(W * .32, H * .30);
+  ctx.lineTo(W * .30, H * .33);
+  ctx.lineTo(W * .283, H * .30);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(W * .575, H * .28);
+  ctx.lineTo(W * .62, H * .20);
+  ctx.lineTo(W * .675, H * .29);
+  ctx.lineTo(W * .64, H * .27);
+  ctx.lineTo(W * .62, H * .30);
+  ctx.lineTo(W * .60, H * .27);
+  ctx.closePath();
+  ctx.fill();
+
+  // Sunlit mountain faces
+  ctx.fillStyle = '#91a6a3';
+
+  ctx.beginPath();
+  ctx.moveTo(W * .30, H * .23);
+  ctx.lineTo(W * .345, H * .31);
+  ctx.lineTo(W * .39, H * .37);
+  ctx.lineTo(W * .33, H * .35);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(W * .62, H * .20);
+  ctx.lineTo(W * .675, H * .29);
+  ctx.lineTo(W * .72, H * .36);
+  ctx.lineTo(W * .66, H * .32);
+  ctx.closePath();
+  ctx.fill();
+
+  // Forested foothills
+  ctx.fillStyle = '#385e50';
+
+  ctx.beginPath();
+  ctx.moveTo(0, H * .49);
+  ctx.quadraticCurveTo(W * .22, H * .43, W * .42, H * .51);
+  ctx.quadraticCurveTo(W * .69, H * .42, W, H * .49);
+  ctx.lineTo(W, H * .65);
+  ctx.lineTo(0, H * .65);
+  ctx.closePath();
+  ctx.fill();
+
+  // Distant trees
+  for (let x = -5; x < W + 10; x += Math.max(7, W / 95)) {
+    const y = H * (.51 + Math.sin(x * .027) * .018);
+    const size = H * (.025 + (Math.sin(x * .37) + 1) * .012);
+
+    ctx.fillStyle = x % 3 < 1 ? '#244b3e' : '#2d5543';
+
+    ctx.beginPath();
+    ctx.moveTo(x, y - size * 2);
+    ctx.lineTo(x - size * .7, y);
+    ctx.lineTo(x + size * .7, y);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // Near shoreline
+  ctx.fillStyle = '#244a3b';
+  ctx.beginPath();
+  ctx.moveTo(0, H * .55);
+  ctx.quadraticCurveTo(W * .16, H * .51, W * .29, H * .57);
+  ctx.lineTo(W * .41, H * .60);
+  ctx.lineTo(W * .57, H * .56);
+  ctx.quadraticCurveTo(W * .77, H * .50, W, H * .56);
+  ctx.lineTo(W, H * .66);
+  ctx.lineTo(0, H * .66);
+  ctx.closePath();
+  ctx.fill();
+
+  // Near-shore trees with multiple layers
+  for (let i = 0; i < 70; i++) {
+    const x = i * W / 69;
+    const y = H * (.56 + Math.sin(i * 1.7) * .015);
+    const height = H * (.035 + (Math.sin(i * 2.4) + 1) * .018);
+    const width = height * .38;
+
+    ctx.fillStyle = i % 3 === 0 ? '#193d31' :
+                    i % 3 === 1 ? '#28513c' : '#315b43';
+
+    ctx.beginPath();
+    ctx.moveTo(x, y - height);
+    ctx.lineTo(x - width, y);
+    ctx.lineTo(x - width * .48, y - height * .45);
+    ctx.lineTo(x + width * .48, y - height * .45);
+    ctx.lineTo(x + width, y);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // Water
+  const water = ctx.createLinearGradient(0, H * .55, 0, H);
+
+  water.addColorStop(0, '#73b8ba');
+  water.addColorStop(.15, '#378d9c');
+  water.addColorStop(.42, '#17677e');
+  water.addColorStop(.72, '#0a3b59');
+  water.addColorStop(1, '#041d34');
+
+  ctx.fillStyle = water;
+  ctx.fillRect(0, H * .55, W, H * .45);
+
+  // Underwater depth layers
+  ctx.fillStyle = '#092c45aa';
+  ctx.fillRect(0, H * .70, W, H * .30);
+
+  ctx.fillStyle = '#03192d60';
+  ctx.fillRect(0, H * .85, W, H * .15);
+
+  // Sun reflections
+  for (let i = 0; i < 42; i++) {
+    const x = (i * 67 + time * (9 + i % 4)) % W;
+    const y = H * .565 + (i % 13) * H * .009;
+
+    ctx.globalAlpha = .10 + (Math.sin(time * 2 + i) + 1) * .07;
+    ctx.strokeStyle = '#e9ffff';
+    ctx.lineWidth = .8 + (i % 3) * .3;
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 8 + (i % 5) * 4, y + Math.sin(time + i) * 1.5);
+    ctx.stroke();
+  }
+
+  ctx.globalAlpha = 1;
+
+  // Underwater light rays
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, H * .55, W, H * .45);
+  ctx.clip();
+
+  for (let i = 0; i < 5; i++) {
+    const x = W * (.15 + i * .18) + Math.sin(time * .2 + i) * 14;
+
+    ctx.fillStyle = '#c8ffff0b';
+    ctx.beginPath();
+    ctx.moveTo(x, H * .55);
+    ctx.lineTo(x + 20, H * .55);
+    ctx.lineTo(x + 80, H);
+    ctx.lineTo(x + 35, H);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // Underwater floating particles
+  for (let i = 0; i < 45; i++) {
+    const x = (i * 79 + Math.sin(time + i) * 12 + W) % W;
+    const y = H * .60 + ((i * 23 + time * (4 + i % 4)) % (H * .38));
+
+    ctx.fillStyle = '#d5ffff55';
+    ctx.beginPath();
+    ctx.arc(x, y, .7 + (i % 3) * .35, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Bottom stones
+  for (let i = 0; i < 24; i++) {
+    const x = i * W / 23;
+    const y = H * (.96 + Math.sin(i * 2) * .025);
+
+    ctx.fillStyle = i % 2 ? '#263f4a' : '#344c51';
+
+    ctx.beginPath();
+    ctx.ellipse(x, y, W * .025, H * .018, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Aquatic plants
+  for (let i = 0; i < 10; i++) {
+    const x = i * W / 9;
+    const base = H * (.98 - (i % 3) * .01);
+
+    ctx.strokeStyle = '#286953';
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    ctx.moveTo(x, base);
+    ctx.quadraticCurveTo(
+      x + Math.sin(time + i) * 5,
+      base - H * .07,
+      x + Math.sin(time * .7 + i) * 8,
+      base - H * (.10 + (i % 3) * .025)
+    );
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x + 2, base);
+    ctx.quadraticCurveTo(
+      x + 10,
+      base - H * .05,
+      x + 13,
+      base - H * .08
+    );
+    ctx.stroke();
+  }
+
+  ctx.restore();
+
+  // Underwater label
+  ctx.fillStyle = '#e0ffff88';
+  ctx.font = 'bold 10px system-ui';
+  ctx.textAlign = 'left';
+  ctx.fillText('UNDERWATER', 10, H * .72);
+}
+
+/* =====================================================
+   DETAILED FISH DRAWING
+===================================================== */
+
+function drawFish(g, x, y, size, f, alpha = 1, flip = true) {
+  g.save();
+
+  g.globalAlpha = alpha;
+  g.translate(x, y);
+
+  if (flip) g.scale(-1, 1);
+
+  const wag = Math.sin(time * 7 + (f.phase || 0)) * size * .07;
+
+  // Tail fin
+  g.fillStyle = f.back;
+  g.beginPath();
+  g.moveTo(-size * .42, 0);
+  g.lineTo(-size * 1.05, -size * .43 + wag);
+  g.lineTo(-size * .96, wag);
+  g.lineTo(-size * 1.05, size * .43 + wag);
+  g.closePath();
+  g.fill();
+
+  // Upper fin
+  g.beginPath();
+  g.moveTo(-size * .25, -size * .15);
+  g.lineTo(-size * .05, -size * .45);
+  g.lineTo(size * .25, -size * .18);
+  g.closePath();
+  g.fill();
+
+  // Lower fin
+  g.beginPath();
+  g.moveTo(-size * .20, size * .16);
+  g.lineTo(size * .04, size * .36);
+  g.lineTo(size * .24, size * .13);
+  g.closePath();
+  g.fill();
+
+  // Main body
+  g.fillStyle = f.back;
+  g.beginPath();
+  g.ellipse(0, 0, size * .68, size * .35, 0, 0, Math.PI * 2);
+  g.fill();
+
+  // Body highlights
+  const bodyGradient = g.createLinearGradient(0, -size * .3, 0, size * .25);
+
+  bodyGradient.addColorStop(0, f.back);
+  bodyGradient.addColorStop(.38, f.body);
+  bodyGradient.addColorStop(1, f.belly);
+
+  g.fillStyle = bodyGradient;
+  g.beginPath();
+  g.ellipse(size * .04, -size * .015, size * .62, size * .28, 0, 0, Math.PI * 2);
+  g.fill();
+
+  // Belly
+  g.fillStyle = f.belly;
+  g.beginPath();
+  g.ellipse(size * .08, size * .14, size * .43, size * .12, 0, 0, Math.PI);
+  g.fill();
+
+  // Gill
+  g.strokeStyle = f.spot;
+  g.lineWidth = Math.max(.7, size * .025);
+
+  g.beginPath();
+  g.arc(size * .37, 0, size * .16, -.95, .95);
+  g.stroke();
+
+  // Individual fish spots
+  for (let i = 0; i < 9; i++) {
+    const sx = -size * .30 + (i % 5) * size * .13;
+    const sy = (i % 2 ? 1 : -1) * size * (.08 + (i % 3) * .045);
+
+    g.fillStyle = f.spot;
+    g.beginPath();
+    g.arc(sx, sy, Math.max(.8, size * .028), 0, Math.PI * 2);
+    g.fill();
+  }
+
+  // Scales
+  g.strokeStyle = '#ffffff20';
+  g.lineWidth = Math.max(.5, size * .012);
+
+  for (let i = 0; i < 4; i++) {
+    g.beginPath();
+    g.arc(
+      -size * .12 + i * size * .12,
+      -size * .03,
+      size * .07,
+      .1,
+      2.6
+    );
+    g.stroke();
+  }
+
+  // Eye
+  g.fillStyle = '#fff6dc';
+  g.beginPath();
+  g.arc(size * .51, -size * .06, Math.max(1.4, size * .075), 0, Math.PI * 2);
+  g.fill();
+
+  g.fillStyle = '#14291f';
+  g.beginPath();
+  g.arc(size * .53, -size * .06, Math.max(.8, size * .038), 0, Math.PI * 2);
+  g.fill();
+
+  // Eye highlight
+  g.fillStyle = 'white';
+  g.beginPath();
+  g.arc(size * .54, -size * .085, Math.max(.5, size * .017), 0, Math.PI * 2);
+  g.fill();
+
+  // Mouth
+  g.strokeStyle = f.spot;
+  g.lineWidth = Math.max(.6, size * .018);
+
+  g.beginPath();
+  g.moveTo(size * .59, size * .045);
+  g.lineTo(size * .69, size * .065);
+  g.stroke();
+
+  g.restore();
+}
+
+function school() {
+  fish.forEach(f => {
+    if (f.state === 'caught') return;
+
+    const bob = Math.sin(time * 2 + f.phase) * 2;
+
+    drawFish(
+      ctx,
+      f.x,
+      f.y + bob,
+      f.size,
+      f.sp,
+      f.alpha,
+      f.dir < 0
+    );
+  });
+}
+
+/* =====================================================
+   BOAT AND ANGLER
+===================================================== */
+
+function boat() {
+  const x = W * .5;
+  const y = H * .70 + Math.sin(time * 1.2) * 2;
+  const a = anglers[selected];
+
+  // Boat shadow
+  ctx.fillStyle = '#00151b44';
+  ctx.beginPath();
+  ctx.ellipse(x, y + 22, 87, 10, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Hull shadow
+  ctx.fillStyle = '#34271f';
+  ctx.beginPath();
+  ctx.moveTo(x - 80, y - 2);
+  ctx.lineTo(x + 80, y - 2);
+  ctx.lineTo(x + 55, y + 27);
+  ctx.quadraticCurveTo(x, y + 37, x - 55, y + 27);
+  ctx.closePath();
+  ctx.fill();
+
+  // Hull
+  const hull = ctx.createLinearGradient(x, y, x, y + 27);
+  hull.addColorStop(0, '#9c754c');
+  hull.addColorStop(.45, '#775236');
+  hull.addColorStop(1, '#453427');
+
+  ctx.fillStyle = hull;
+  ctx.beginPath();
+  ctx.moveTo(x - 78, y - 1);
+  ctx.lineTo(x + 78, y - 1);
+  ctx.lineTo(x + 53, y + 24);
+  ctx.quadraticCurveTo(x, y + 33, x - 53, y + 24);
+  ctx.closePath();
+  ctx.fill();
+
+  // Inner boat
+  ctx.fillStyle = '#d0b17a';
+  ctx.beginPath();
+  ctx.moveTo(x - 69, y - 7);
+  ctx.lineTo(x + 69, y - 7);
+  ctx.lineTo(x + 52, y + 8);
+  ctx.lineTo(x - 52, y + 8);
+  ctx.closePath();
+  ctx.fill();
+
+  // Bench
+  ctx.fillStyle = '#8b6844';
+  ctx.fillRect(x - 35, y - 9, 68, 5);
+
+  // Angler body
+  ctx.fillStyle = a.shirt;
+  ctx.beginPath();
+  ctx.ellipse(x - 5, y - 34, 19, 22, -.1, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Clothing highlight
+  ctx.strokeStyle = '#ffffff26';
+  ctx.lineWidth = 2;
+
+  ctx.beginPath();
+  ctx.moveTo(x - 12, y - 48);
+  ctx.lineTo(x - 17, y - 29);
+  ctx.stroke();
+
+  // Neck
+  ctx.fillStyle = a.skin;
+  ctx.fillRect(x - 11, y - 58, 14, 13);
+
+  // Head
+  ctx.fillStyle = a.skin;
+  ctx.beginPath();
+  ctx.ellipse(x - 4, y - 64, 14, 17, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Hair
+  ctx.fillStyle = a.hair;
+  ctx.beginPath();
+  ctx.arc(x - 4, y - 68, 14, Math.PI, Math.PI * 2);
+  ctx.lineTo(x + 10, y - 61);
+  ctx.lineTo(x + 5, y - 64);
+  ctx.lineTo(x - 12, y - 62);
+  ctx.closePath();
+  ctx.fill();
+
+  // Ear
+  ctx.fillStyle = a.skin;
+  ctx.beginPath();
+  ctx.arc(x - 18, y - 63, 3.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Eye and nose
+  ctx.fillStyle = '#28312a';
+  ctx.beginPath();
+  ctx.arc(x + 2, y - 65, 1.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.strokeStyle = '#9d694f';
+  ctx.lineWidth = 1;
+
+  ctx.beginPath();
+  ctx.moveTo(x + 6, y - 61);
+  ctx.lineTo(x + 9, y - 58);
+  ctx.stroke();
+
+  // Beard for Clay, Justin, and Bob
+  if (selected !== 1) {
+    ctx.fillStyle = a.beard;
+
+    ctx.beginPath();
+    ctx.moveTo(x - 17, y - 59);
+    ctx.quadraticCurveTo(x - 16, y - 45, x - 4, y - 45);
+    ctx.quadraticCurveTo(x + 9, y - 46, x + 10, y - 59);
+    ctx.lineTo(x + 5, y - 53);
+    ctx.lineTo(x - 4, y - 50);
+    ctx.lineTo(x - 12, y - 54);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // Hat
+  ctx.fillStyle = a.hat;
+  ctx.beginPath();
+  ctx.ellipse(x - 4, y - 77, 20, 4, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(x - 17, y - 76);
+  ctx.quadraticCurveTo(x - 17, y - 91, x - 4, y - 91);
+  ctx.quadraticCurveTo(x + 9, y - 91, x + 10, y - 76);
+  ctx.closePath();
+  ctx.fill();
+
+  // Arms
+  ctx.strokeStyle = a.skin;
+  ctx.lineWidth = 6;
+  ctx.lineCap = 'round';
+
+  ctx.beginPath();
+  ctx.moveTo(x + 7, y - 43);
+  ctx.lineTo(x + 20, y - 31);
+  ctx.stroke();
+
+  // Fishing rod
+  const rodBend = mode === 'fight' ? Math.sin(time * 5) * 8 : 0;
+
+  ctx.strokeStyle = '#4b3525';
+  ctx.lineWidth = 3;
+
+  ctx.beginPath();
+  ctx.moveTo(x + 15, y - 39);
+  ctx.quadraticCurveTo(
+    x + 31 + rodBend,
+    y - 65,
+    x + 45,
+    y - 103
+  );
+  ctx.stroke();
+
+  ctx.strokeStyle = '#bd9862';
+  ctx.lineWidth = 1;
+
+  ctx.beginPath();
+  ctx.moveTo(x + 17, y - 41);
+  ctx.quadraticCurveTo(
+    x + 33 + rodBend,
+    y - 67,
+    x + 45,
+    y - 103
+  );
+  ctx.stroke();
+
+  // Reel
+  ctx.strokeStyle = '#e0d4ac';
+  ctx.lineWidth = 2;
+
+  ctx.beginPath();
+  ctx.arc(x + 21, y - 32, 4, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Boat rim highlight
+  ctx.strokeStyle = '#e5c997';
+  ctx.lineWidth = 2;
+
+  ctx.beginPath();
+  ctx.moveTo(x - 69, y - 7);
+  ctx.lineTo(x + 69, y - 7);
+  ctx.stroke();
+}
+
+/* =====================================================
+   FISHING LINE AND LURE
+===================================================== */
+
+function lineAndLure() {
+  if (!['casting', 'waiting', 'approach', 'bite', 'fight'].includes(mode)) {
+    return;
+  }
+
+  const sx = W * .5 + 45;
+  const sy = H * .70 - 101;
+
+  let ex = lure.x;
+  let ey = lure.y;
+
+  if (mode === 'fight' && hooked) {
+    ex = hooked.x;
+    ey = hooked.y;
+  }
+
+  // Line follows the rod and lure
+  ctx.strokeStyle = tension > 70 ? '#ffe2a3' : '#f5fff5';
+  ctx.lineWidth = 1.4;
+
+  ctx.beginPath();
+  ctx.moveTo(sx, sy);
+
+  ctx.quadraticCurveTo(
+    (sx + ex) / 2 + Math.sin(time * 2) * 5,
+    (sy + ey) / 2,
+    ex,
+    ey
+  );
+
+  ctx.stroke();
+
+  // Lure
+  if (mode !== 'fight') {
+    ctx.save();
+    ctx.translate(ex, ey);
+    ctx.rotate(Math.sin(time * 4) * .16);
+
+    // Lure body
+    const lureGradient = ctx.createLinearGradient(-7, -3, 7, 3);
+
+    lureGradient.addColorStop(0, '#d44b38');
+    lureGradient.addColorStop(.45, '#ffe76c');
+    lureGradient.addColorStop(1, '#fff9db');
+
+    ctx.fillStyle = lureGradient;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 7, 3.5, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Hook
+    ctx.strokeStyle = '#f7f1d7';
+    ctx.lineWidth = 1.5;
+
+    ctx.beginPath();
+    ctx.moveTo(4, 2);
+    ctx.lineTo(6, 7);
+    ctx.quadraticCurveTo(11, 7, 8, 2);
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  // Bite ripples
+  if (mode === 'bite') {
+    for (let i = 0; i < 3; i++) {
+      ctx.strokeStyle = 'rgba(255,255,255,' + (.7 - i * .17) + ')';
+      ctx.lineWidth = 1.3;
+
+      ctx.beginPath();
+      ctx.ellipse(
+        ex,
+        ey,
+        12 + i * 9 + Math.sin(time * 9) * 2,
+        4 + i * 3,
+        0, 0, Math.PI * 2
+      );
+      ctx.stroke();
+    }
+  }
+}
+
+function drawHooked() {
+  if (!hooked) return;
+
+  drawFish(
+    ctx,
+    hooked.x,
+    hooked.y,
+    hooked.size,
+    hooked.sp,
+    1,
+    true
+  );
+
+  ctx.strokeStyle = '#ffe8a8';
+  ctx.lineWidth = 1.4;
+
+  ctx.beginPath();
+  ctx.ellipse(
+    hooked.x,
+    hooked.y,
+    hooked.size * 1.3,
+    hooked.size * .6,
+    0, 0, Math.PI * 2
+  );
+
+  ctx.stroke();
+}
+
+/* =====================================================
+   MAIN DRAW AND ANIMATION
+===================================================== */
+
+function draw() {
+  if (!W || !H) return;
+
+  ctx.clearRect(0, 0, W, H);
+
+  background();
+  school();
+  boat();
+  lineAndLure();
+  drawHooked();
+}
+
+function update(dt) {
+  time += dt;
+
+  // Free-swimming fish
+  fish.forEach(f => {
+    if (f.state === 'caught') return;
+
+    if (f.state === 'swim') {
+      f.x += f.speed * f.dir * dt;
+      f.y += Math.sin(time * 1.3 + f.phase) * dt * 3;
+
+      if (f.x < -50) f.x = W + 50;
+      if (f.x > W + 50) f.x = -50;
+    }
+  });
+
+  // Cast
+  if (mode === 'casting') {
+    castProgress = Math.min(1, castProgress + dt * 1.05);
+
+    const p = castProgress;
+    const sx = W * .5 + 55;
+    const sy = H * .70 - 90;
+
+    const tx = W * .66;
+    const ty = H * .88;
+
+    lure.x = sx + (tx - sx) * p;
+    lure.y = sy + (ty - sy) * p - Math.sin(p * Math.PI) * H * .09;
+
+    if (p >= 1) {
+      lure.x = tx;
+      lure.y = ty;
+
+      splash(lure.x, lure.y, 16);
+      beginWaiting();
+    }
+  }
+
+  // Lure sinks and waits
+  else if (mode === 'waiting') {
+    waitTime -= dt;
+
+    lure.x = W * .66 + Math.sin(time * .65) * W * .025;
+    lure.y = H * .88 + Math.sin(time * 1.7) * 2;
+
+    if (waitTime <= 0) {
+      startApproach();
+    }
+  }
+
+  // Fish actually swims toward the lure
+  else if (mode === 'approach' && target) {
+    const dx = lure.x - target.x;
+    const dy = lure.y - target.y;
+    const d = Math.hypot(dx, dy) || 1;
+
+    const speed = 48;
+
+    target.x += dx / d * speed * dt;
+    target.y += dy / d * speed * dt;
+
+    target.x += Math.sin(time * 4 + target.phase) * dt * 4;
+    target.y += Math.cos(time * 4 + target.phase) * dt * 3;
+
+    target.dir = dx < 0 ? -1 : 1;
+
+    if (d < 13) {
+      target.x = lure.x;
+      target.y = lure.y;
+
+      bite();
+      splash(lure.x, lure.y, 10);
+    }
+  }
+
+  // Fish attacks lure
+  else if (mode === 'bite') {
+    biteTime -= dt;
+
+    if (target) {
+      target.x = lure.x + Math.sin(time * 13) * 4;
+      target.y = lure.y + Math.sin(time * 15) * 3;
+    }
+
+    if (Math.random() < .08) {
+      splash(lure.x, lure.y, 2);
+    }
+
+    if (biteTime <= 0) {
+      if (target) target.state = 'swim';
+
+      target = null;
+      mode = 'idle';
+
+      setButtons();
+
+      setStatus('The fish let go! Cast again and watch for another approach.');
+    }
+  }
+
+  // Underwater fight
+  else if (mode === 'fight' && hooked) {
+    hooked.x =
+      W * .5 +
+      Math.sin(time * 1.7 + hooked.phase) *
+      Math.min(W * .28, 100) * distance;
+
+    hooked.y =
+      H * .86 +
+      Math.sin(time * 2.6 + hooked.phase) * H * .025;
+
+    tension = Math.max(
+      5,
+      Math.min(
+        88,
+        tension + dt * (
+          Math.sin(time * 1.8 + hooked.phase) > .75 ? 3 : -1
+        )
+      )
+    );
+
+    if (tension > 82) tension -= dt * 8;
+  }
+
+  drawParticles(dt);
+}
+
+function loop(now) {
+  raf = requestAnimationFrame(loop);
+
+  const dt = Math.min(.04, Math.max(0, (now - last) / 1000 || 0));
+
+  last = now;
+
+  update(dt);
+  draw();
+}
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+chooseAngler(0);
+stats();
+
+window.addEventListener('resize', resize);
+
 })();
 </script>
+
 </body>
 </html>
