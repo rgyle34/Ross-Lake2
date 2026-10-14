@@ -5,319 +5,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Ross Lake Fishing</title>
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
-}
-:root {
-  --blue: #38bdf8;
-  --deep: #04121f;
-  --panel: #0c2233;
-  --white: #f0f9ff;
-  --accent: #67e8f9;
-}
-body {
-  background: var(--deep);
-  color: var(--white);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  overflow: hidden;
-  touch-action: manipulation;
-  user-select: none;
-}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--blue:#38bdf8;--deep:#04121f;--panel:#0c2233;--white:#f0f9ff;--accent:#67e8f9}
+body{background:var(--deep);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;overflow:hidden;touch-action:manipulation;user-select:none}
 
-/* ========== SELECTION SCREEN ========== */
-#selection-screen {
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  overflow-y: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 16px;
-  background:
-    radial-gradient(ellipse at 50% 0%, #1a5f7a 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, #0d3a4f 0%, transparent 40%),
-    linear-gradient(180deg, #0a2a3d 0%, #04121f 100%);
-}
-.container {
-  width: 100%;
-  max-width: 480px;
-  text-align: center;
-}
-.logo {
-  font-size: clamp(2.6rem, 10vw, 4.2rem);
-  font-weight: 950;
-  letter-spacing: 3px;
-  line-height: 1;
-  color: #f0f9ff;
-  text-shadow: 0 4px 0 #0369a1, 0 0 40px #38bdf866;
-}
-.subtitle {
-  color: #7dd3fc;
-  margin: 12px 0 28px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  font-size: 0.78rem;
-  font-weight: 600;
-}
-.characters {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 26px;
-}
-.character-card {
-  color: white;
-  font: inherit;
-  appearance: none;
-  background: linear-gradient(160deg, #14384e 0%, #0a1f2e 100%);
-  border: 2px solid #2a4d66;
-  border-radius: 20px;
-  padding: 18px 10px;
-  cursor: pointer;
-  transition: all 0.22s ease;
-  position: relative;
-  overflow: hidden;
-}
-.character-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, transparent 40%, rgba(56,189,248,0.08));
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.character-card:hover::before,
-.character-card.selected::before { opacity: 1; }
-.character-card.selected {
-  border-color: #38bdf8;
-  background: linear-gradient(160deg, #155a75 0%, #0d2f42 100%);
-  box-shadow: 0 0 28px #38bdf844, 0 8px 20px #0005;
-  transform: translateY(-4px);
-}
-.avatar {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  margin: 0 auto 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.9rem;
-  font-weight: 900;
-  color: white;
-  border: 3px solid rgba(255,255,255,0.25);
-  box-shadow: inset 0 -10px 20px #0004, 0 4px 12px #0003;
-}
-.clay  { background: linear-gradient(145deg, #94a3b8, #475569); }
-.ryan  { background: linear-gradient(145deg, #38bdf8, #0369a1); }
-.justin{ background: linear-gradient(145deg, #4ade80, #166534); }
-.bob   { background: linear-gradient(145deg, #fbbf24, #b45309); }
-.name {
-  display: block;
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-}
-#startBtn {
-  width: 100%;
-  max-width: 300px;
-  border: none;
-  border-radius: 50px;
-  padding: 16px;
-  font-size: 1.15rem;
-  font-weight: 900;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #38bdf8, #67e8f9);
-  color: #062033;
-  opacity: 0.35;
-  cursor: not-allowed;
-  transition: all 0.25s;
-  box-shadow: 0 6px 0 #0e7490;
-}
-#startBtn.active {
-  opacity: 1;
-  cursor: pointer;
-}
-#startBtn.active:active {
-  transform: translateY(3px);
-  box-shadow: 0 3px 0 #0e7490;
-}
-#selectedInfo {
-  color: #bae6fd;
-  margin-top: 18px;
-  min-height: 24px;
-  font-size: 0.95rem;
-  font-weight: 500;
-}
+/* Selection */
+#selection-screen{width:100%;height:100vh;height:100dvh;overflow-y:auto;display:flex;justify-content:center;align-items:center;padding:20px 16px;background:radial-gradient(ellipse at 50% 0%,#1a5f7a 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,#0d3a4f 0%,transparent 40%),linear-gradient(180deg,#0a2a3d 0%,#04121f 100%)}
+.container{width:100%;max-width:480px;text-align:center}
+.logo{font-size:clamp(2.6rem,10vw,4.2rem);font-weight:950;letter-spacing:3px;line-height:1;color:#f0f9ff;text-shadow:0 4px 0 #0369a1,0 0 40px #38bdf866}
+.subtitle{color:#7dd3fc;margin:12px 0 28px;letter-spacing:4px;text-transform:uppercase;font-size:.78rem;font-weight:600}
+.characters{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:26px}
+.character-card{color:white;font:inherit;appearance:none;background:linear-gradient(160deg,#14384e 0%,#0a1f2e 100%);border:2px solid #2a4d66;border-radius:20px;padding:18px 10px;cursor:pointer;transition:all .22s ease;position:relative;overflow:hidden}
+.character-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(56,189,248,.08));opacity:0;transition:opacity .2s}
+.character-card:hover::before,.character-card.selected::before{opacity:1}
+.character-card.selected{border-color:#38bdf8;background:linear-gradient(160deg,#155a75 0%,#0d2f42 100%);box-shadow:0 0 28px #38bdf844,0 8px 20px #0005;transform:translateY(-4px)}
+.avatar{width:72px;height:72px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:1.9rem;font-weight:900;color:white;border:3px solid rgba(255,255,255,.25);box-shadow:inset 0 -10px 20px #0004,0 4px 12px #0003}
+.clay{background:linear-gradient(145deg,#94a3b8,#475569)}.ryan{background:linear-gradient(145deg,#38bdf8,#0369a1)}.justin{background:linear-gradient(145deg,#4ade80,#166534)}.bob{background:linear-gradient(145deg,#fbbf24,#b45309)}
+.name{display:block;font-size:1.15rem;font-weight:800;letter-spacing:.5px}
+.flavor{display:block;font-size:.7rem;color:#94a3b8;margin-top:4px}
+#startBtn{width:100%;max-width:300px;border:none;border-radius:50px;padding:16px;font-size:1.15rem;font-weight:900;letter-spacing:1px;background:linear-gradient(90deg,#38bdf8,#67e8f9);color:#062033;opacity:.35;cursor:not-allowed;transition:all .25s;box-shadow:0 6px 0 #0e7490}
+#startBtn.active{opacity:1;cursor:pointer}
+#startBtn.active:active{transform:translateY(3px);box-shadow:0 3px 0 #0e7490}
+#selectedInfo{color:#bae6fd;margin-top:18px;min-height:24px;font-size:.95rem;font-weight:500}
 
-/* ========== GAME SCREEN ========== */
-#game-screen {
-  display: none;
-  flex-direction: column;
-  height: 100vh;
-  height: 100dvh;
-  width: 100%;
-  background: #04121f;
-}
-#top-bar {
-  flex-shrink: 0;
-  min-height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 10px 14px;
-  background: linear-gradient(180deg, #0a1c2b, #06131e);
-  border-bottom: 1px solid #1e3a4f;
-}
-#player-name { color: #7dd3fc; font-weight: 800; font-size: 0.9rem; }
-#location-name { font-weight: 900; letter-spacing: 1.5px; font-size: 0.95rem; }
-#fish-counter { color: #a5f3fc; font-size: 0.8rem; font-weight: 700; }
-#status {
-  flex-shrink: 0;
-  min-height: 44px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 14px;
-  text-align: center;
-  background: #0c2233;
-  color: #e0f2fe;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border-bottom: 1px solid #1a3348;
-}
-#gameCanvas {
-  display: block;
-  width: 100%;
-  flex: 1;
-  min-height: 0;
-  background: #0c4a6e;
-}
-#controls {
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  padding-bottom: calc(12px + env(safe-area-inset-bottom));
-  background: #06131e;
-  border-top: 1px solid #1e3a4f;
-}
-.game-btn {
-  flex: 1;
-  max-width: 240px;
-  min-height: 56px;
-  border: none;
-  border-radius: 16px;
-  padding: 14px 12px;
-  font-size: 1.05rem;
-  font-weight: 950;
-  letter-spacing: 1px;
-  background: linear-gradient(145deg, #38bdf8, #22d3ee);
-  color: #052033;
-  cursor: pointer;
-  touch-action: manipulation;
-  box-shadow: 0 5px 0 #0e7490;
-  transition: transform 0.1s, box-shadow 0.1s;
-}
-.game-btn:active {
-  transform: translateY(3px);
-  box-shadow: 0 2px 0 #0e7490;
-}
-.game-btn:disabled {
-  opacity: 0.3;
-  box-shadow: none;
-  cursor: default;
-}
-#reelBtn {
-  display: none;
-  background: linear-gradient(145deg, #4ade80, #a3e635);
-  box-shadow: 0 5px 0 #166534;
-}
-#releaseBtn {
-  display: none;
-  background: linear-gradient(145deg, #fbbf24, #fb923c);
-  box-shadow: 0 5px 0 #9a3412;
-}
+/* Game */
+#game-screen{display:none;flex-direction:column;height:100vh;height:100dvh;width:100%;background:#04121f}
+#top-bar{flex-shrink:0;min-height:52px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;background:linear-gradient(180deg,#0a1c2b,#06131e);border-bottom:1px solid #1e3a4f}
+#player-name{color:#7dd3fc;font-weight:800;font-size:.9rem}
+#location-name{font-weight:900;letter-spacing:1.5px;font-size:.95rem}
+#fish-counter{color:#a5f3fc;font-size:.8rem;font-weight:700}
+#status{flex-shrink:0;min-height:44px;display:flex;justify-content:center;align-items:center;padding:8px 14px;text-align:center;background:#0c2233;color:#e0f2fe;font-size:.9rem;font-weight:600;border-bottom:1px solid #1a3348}
+#gameCanvas{display:block;width:100%;flex:1;min-height:0;background:#0c4a6e}
+#controls{flex-shrink:0;display:flex;justify-content:center;align-items:center;gap:10px;padding:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom));background:#06131e;border-top:1px solid #1e3a4f}
+.game-btn{flex:1;max-width:200px;min-height:54px;border:none;border-radius:16px;padding:12px 10px;font-size:1rem;font-weight:950;letter-spacing:1px;background:linear-gradient(145deg,#38bdf8,#22d3ee);color:#052033;cursor:pointer;touch-action:manipulation;box-shadow:0 5px 0 #0e7490;transition:transform .1s,box-shadow .1s}
+.game-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #0e7490}
+.game-btn:disabled{opacity:.3;box-shadow:none;cursor:default}
+#reelBtn{display:none;background:linear-gradient(145deg,#4ade80,#a3e635);box-shadow:0 5px 0 #166534}
+#releaseBtn{display:none;background:linear-gradient(145deg,#fbbf24,#fb923c);box-shadow:0 5px 0 #9a3412}
+#logBtn{flex:0 0 auto;max-width:70px;background:linear-gradient(145deg,#64748b,#475569);box-shadow:0 5px 0 #1e293b;font-size:.85rem}
 
 /* Catch card */
-#catch-card {
-  display: none;
-  position: fixed;
-  z-index: 20;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: min(92%, 380px);
-  max-height: 88dvh;
-  overflow-y: auto;
-  padding: 28px 24px;
-  border: 2px solid #67e8f9;
-  border-radius: 24px;
-  text-align: center;
-  background: linear-gradient(160deg, #123c53 0%, #071827 100%);
-  box-shadow: 0 0 0 100vmax #000a, 0 0 60px #38bdf866;
-  animation: popIn 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
-}
-@keyframes popIn {
-  from { opacity: 0; transform: translate(-50%, -50%) scale(0.85); }
-  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
-#catch-card h2 {
-  font-size: 1.7rem;
-  margin-bottom: 6px;
-  color: #a5f3fc;
-}
-#catch-emoji {
-  font-size: 4.2rem;
-  margin: 10px 0;
-  filter: drop-shadow(0 6px 12px #0006);
-}
-#catch-details {
-  color: #dbeafe;
-  line-height: 1.85;
-  margin: 12px 0 20px;
-  font-size: 0.95rem;
-}
-#catch-card button {
-  width: 100%;
-  border: none;
-  padding: 15px;
-  border-radius: 14px;
-  font-size: 1.05rem;
-  font-weight: 900;
-  background: linear-gradient(90deg, #38bdf8, #67e8f9);
-  color: #082f49;
-  cursor: pointer;
-  box-shadow: 0 4px 0 #0e7490;
-}
-#catch-card button:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #0e7490;
-}
+#catch-card{display:none;position:fixed;z-index:20;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92%,380px);max-height:88dvh;overflow-y:auto;padding:28px 24px;border:2px solid #67e8f9;border-radius:24px;text-align:center;background:linear-gradient(160deg,#123c53 0%,#071827 100%);box-shadow:0 0 0 100vmax #000a,0 0 60px #38bdf866;animation:popIn .35s cubic-bezier(.34,1.4,.64,1)}
+@keyframes popIn{from{opacity:0;transform:translate(-50%,-50%) scale(.85)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+#catch-card h2{font-size:1.7rem;margin-bottom:6px;color:#a5f3fc}
+#catch-emoji{font-size:4.2rem;margin:10px 0;filter:drop-shadow(0 6px 12px #0006)}
+#catch-details{color:#dbeafe;line-height:1.85;margin:12px 0 20px;font-size:.95rem}
+#catch-card button{width:100%;border:none;padding:15px;border-radius:14px;font-size:1.05rem;font-weight:900;background:linear-gradient(90deg,#38bdf8,#67e8f9);color:#082f49;cursor:pointer;box-shadow:0 4px 0 #0e7490}
+#catch-card button:active{transform:translateY(2px);box-shadow:0 2px 0 #0e7490}
 
-@media (max-height: 640px) {
-  .logo { font-size: 2.2rem; }
-  .subtitle { margin-bottom: 14px; }
-  .character-card { padding: 12px 8px; }
-  .avatar { width: 52px; height: 52px; font-size: 1.4rem; }
-  .characters { gap: 10px; margin-bottom: 16px; }
-  .game-btn { min-height: 48px; padding: 11px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .character-card, #catch-card { transition: none; animation: none; }
-}
+/* Log modal */
+#log-modal{display:none;position:fixed;z-index:25;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92%,360px);padding:24px;border:2px solid #64748b;border-radius:20px;background:linear-gradient(160deg,#1e293b,#0f172a);box-shadow:0 0 0 100vmax #000a;text-align:center}
+#log-modal h3{color:#94a3b8;margin-bottom:14px;font-size:1.2rem}
+#log-content{color:#e2e8f0;line-height:1.9;font-size:.95rem;margin-bottom:18px}
+#log-modal button{width:100%;border:none;padding:12px;border-radius:12px;font-weight:800;background:#475569;color:#f1f5f9;cursor:pointer}
+
+@media(max-height:640px){.logo{font-size:2.2rem}.subtitle{margin-bottom:14px}.character-card{padding:12px 8px}.avatar{width:52px;height:52px;font-size:1.4rem}.characters{gap:10px;margin-bottom:16px}.game-btn{min-height:48px;padding:11px}}
+@media(prefers-reduced-motion:reduce){.character-card,#catch-card{transition:none;animation:none}}
 </style>
 </head>
 <body>
 
-<!-- SELECTION -->
 <div id="selection-screen">
   <div class="container">
     <div class="logo">ROSS LAKE</div>
@@ -326,18 +73,22 @@ body {
       <button class="character-card" data-name="Clay" aria-pressed="false">
         <span class="avatar clay">C</span>
         <span class="name">Clay</span>
+        <span class="flavor">Steady &amp; patient</span>
       </button>
       <button class="character-card" data-name="Ryan" aria-pressed="false">
         <span class="avatar ryan">R</span>
         <span class="name">Ryan</span>
+        <span class="flavor">Fast caster</span>
       </button>
       <button class="character-card" data-name="Justin" aria-pressed="false">
         <span class="avatar justin">J</span>
         <span class="name">Justin</span>
+        <span class="flavor">Lucky angler</span>
       </button>
       <button class="character-card" data-name="Bob" aria-pressed="false">
         <span class="avatar bob">B</span>
         <span class="name">Bob</span>
+        <span class="flavor">Trophy hunter</span>
       </button>
     </div>
     <button id="startBtn" disabled>START FISHING</button>
@@ -345,7 +96,6 @@ body {
   </div>
 </div>
 
-<!-- GAME -->
 <div id="game-screen">
   <div id="top-bar">
     <div id="player-name">Angler</div>
@@ -358,15 +108,21 @@ body {
     <button id="castBtn" class="game-btn">🎣 CAST</button>
     <button id="reelBtn" class="game-btn">⬆ REEL IN!</button>
     <button id="releaseBtn" class="game-btn">CONTINUE</button>
+    <button id="logBtn" class="game-btn">📊</button>
   </div>
 </div>
 
-<!-- CATCH -->
-<div id="catch-card" role="dialog" aria-modal="true" aria-labelledby="catch-title">
+<div id="catch-card" role="dialog" aria-modal="true">
   <h2 id="catch-title">FISH CAUGHT!</h2>
   <div id="catch-emoji">🐟</div>
   <div id="catch-details"></div>
   <button id="keepFishingBtn">KEEP FISHING</button>
+</div>
+
+<div id="log-modal">
+  <h3>Session Stats</h3>
+  <div id="log-content"></div>
+  <button id="closeLogBtn">CLOSE</button>
 </div>
 
 <script>
@@ -377,851 +133,579 @@ const selectionScreen = document.getElementById("selection-screen");
 const gameScreen = document.getElementById("game-screen");
 const startBtn = document.getElementById("startBtn");
 const selectedInfo = document.getElementById("selectedInfo");
-const playerName = document.getElementById("player-name");
+const playerNameEl = document.getElementById("player-name");
 const fishCounter = document.getElementById("fish-counter");
 const statusText = document.getElementById("status");
 const castBtn = document.getElementById("castBtn");
 const reelBtn = document.getElementById("reelBtn");
 const releaseBtn = document.getElementById("releaseBtn");
+const logBtn = document.getElementById("logBtn");
 const catchCard = document.getElementById("catch-card");
 const catchEmoji = document.getElementById("catch-emoji");
 const catchDetails = document.getElementById("catch-details");
 const keepFishingBtn = document.getElementById("keepFishingBtn");
+const logModal = document.getElementById("log-modal");
+const logContent = document.getElementById("log-content");
+const closeLogBtn = document.getElementById("closeLogBtn");
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const cards = [...document.querySelectorAll(".character-card")];
 
 let selectedPlayer = null;
+let audioCtx = null;
 
 const species = [
-  { name: "Rainbow Trout",     color: "#5a9e6a", belly: "#e8d8b8", size: 1.00, min: 9,  max: 23, weight: 1.30, rarity: 1.00, emoji: "🐟" },
-  { name: "Brown Trout",       color: "#8b5e3c", belly: "#e5c9a5", size: 1.08, min: 10, max: 28, weight: 1.45, rarity: 0.85, emoji: "🐟" },
-  { name: "Lake Trout",        color: "#5a7078", belly: "#c5d4d4", size: 1.50, min: 15, max: 40, weight: 1.90, rarity: 0.45, emoji: "🐟" },
-  { name: "Kokanee Salmon",    color: "#e07060", belly: "#f4d6c6", size: 1.05, min: 9,  max: 18, weight: 1.15, rarity: 0.70, emoji: "🐟" },
-  { name: "Bull Trout",        color: "#4a6a7a", belly: "#d7e0e5", size: 1.30, min: 12, max: 32, weight: 1.70, rarity: 0.28, emoji: "🐟" },
-  { name: "Mountain Whitefish",color: "#9a9d90", belly: "#e4e2d5", size: 0.82, min: 7,  max: 16, weight: 0.85, rarity: 0.60, emoji: "🐟" }
+  {name:"Rainbow Trout",color:"#5a9e6a",belly:"#e8d8b8",size:1.00,min:9,max:23,weight:1.30,rarity:1.00,emoji:"🐟"},
+  {name:"Brown Trout",color:"#8b5e3c",belly:"#e5c9a5",size:1.08,min:10,max:28,weight:1.45,rarity:0.85,emoji:"🐟"},
+  {name:"Lake Trout",color:"#5a7078",belly:"#c5d4d4",size:1.50,min:15,max:40,weight:1.90,rarity:0.42,emoji:"🐟"},
+  {name:"Kokanee Salmon",color:"#e07060",belly:"#f4d6c6",size:1.05,min:9,max:18,weight:1.15,rarity:0.68,emoji:"🐟"},
+  {name:"Bull Trout",color:"#4a6a7a",belly:"#d7e0e5",size:1.30,min:12,max:32,weight:1.70,rarity:0.25,emoji:"🐟"},
+  {name:"Mountain Whitefish",color:"#9a9d90",belly:"#e4e2d5",size:0.82,min:7,max:16,weight:0.85,rarity:0.58,emoji:"🐟"}
 ];
 
-let width = 0, height = 0, dpr = 1;
-let fish = [], particles = [], clouds = [], birds = [], sparkles = [];
-let boatX = 0, boatY = 0;
-let state = "idle";
-let hookX = 0, hookY = 0;
-let targetFish = null;
-let biteTimer = null, fightTimer = null, escapeTimer = null;
-let reelProgress = 0, catches = 0, totalWeight = 0;
-let animationFrame = null, lastTime = 0, elapsed = 0;
+let width=0,height=0,dpr=1;
+let fish=[],particles=[],clouds=[],birds=[],sparkles=[];
+let boatX=0,boatY=0;
+let state="idle";
+let hookX=0,hookY=0;
+let targetFish=null;
+let biteTimer=null,fightTimer=null,escapeTimer=null;
+let reelProgress=0,catches=0,totalWeight=0;
+let bestFish={name:"None",inches:0,pounds:0};
+let animationFrame=null,lastTime=0,elapsed=0;
 
-// ========== CHARACTER SELECT ==========
-cards.forEach(card => {
-  card.addEventListener("click", () => {
-    cards.forEach(o => {
-      const sel = o === card;
-      o.classList.toggle("selected", sel);
-      o.setAttribute("aria-pressed", String(sel));
-    });
-    selectedPlayer = card.dataset.name;
-    selectedInfo.textContent = `${selectedPlayer} is ready to hit the water!`;
-    startBtn.disabled = false;
+// Load persistent stats
+try{
+  const saved=JSON.parse(localStorage.getItem("rossLakeStats")||"{}");
+  if(saved.totalCatches) catches=saved.totalCatches;
+  if(saved.totalWeight) totalWeight=saved.totalWeight;
+  if(saved.bestFish) bestFish=saved.bestFish;
+}catch(e){}
+
+function saveStats(){
+  try{
+    localStorage.setItem("rossLakeStats",JSON.stringify({
+      totalCatches:catches,
+      totalWeight:totalWeight,
+      bestFish:bestFish
+    }));
+  }catch(e){}
+}
+
+// Simple Web Audio sounds
+function initAudio(){
+  if(audioCtx) return;
+  try{ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){}
+}
+function playTone(freq,dur,type="sine",vol=0.15){
+  if(!audioCtx) return;
+  const o=audioCtx.createOscillator();
+  const g=audioCtx.createGain();
+  o.type=type; o.frequency.value=freq;
+  g.gain.setValueAtTime(vol,audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);
+  o.connect(g); g.connect(audioCtx.destination);
+  o.start(); o.stop(audioCtx.currentTime+dur);
+}
+function sfxCast(){ playTone(220,0.12,"triangle",0.12); setTimeout(()=>playTone(180,0.18,"sine",0.08),80); }
+function sfxSplash(){ playTone(120,0.25,"sawtooth",0.1); playTone(90,0.3,"triangle",0.08); }
+function sfxBite(){ playTone(380,0.08,"square",0.14); setTimeout(()=>playTone(520,0.1,"square",0.1),70); }
+function sfxReel(){ playTone(160+Math.random()*40,0.06,"triangle",0.07); }
+function sfxSuccess(){ playTone(440,0.12,"sine",0.12); setTimeout(()=>playTone(554,0.12,"sine",0.12),100); setTimeout(()=>playTone(659,0.25,"sine",0.12),200); }
+function sfxEscape(){ playTone(200,0.2,"sawtooth",0.1); playTone(140,0.25,"triangle",0.08); }
+
+// Character select
+cards.forEach(card=>{
+  card.addEventListener("click",()=>{
+    cards.forEach(o=>{const sel=o===card;o.classList.toggle("selected",sel);o.setAttribute("aria-pressed",String(sel));});
+    selectedPlayer=card.dataset.name;
+    selectedInfo.textContent=`${selectedPlayer} is ready to hit the water!`;
+    startBtn.disabled=false;
     startBtn.classList.add("active");
   });
 });
 
-startBtn.addEventListener("click", () => {
-  if (!selectedPlayer) return;
-  selectionScreen.style.display = "none";
-  gameScreen.style.display = "flex";
-  playerName.textContent = "🎣 " + selectedPlayer;
+startBtn.addEventListener("click",()=>{
+  if(!selectedPlayer) return;
+  initAudio();
+  selectionScreen.style.display="none";
+  gameScreen.style.display="flex";
+  playerNameEl.textContent="🎣 "+selectedPlayer;
   startGame();
 });
 
-// ========== RESIZE ==========
-function resize() {
-  const rect = canvas.getBoundingClientRect();
-  if (rect.width < 1 || rect.height < 1) return;
-  dpr = Math.min(window.devicePixelRatio || 1, 2);
-  width = rect.width;
-  height = rect.height;
-  canvas.width = Math.round(width * dpr);
-  canvas.height = Math.round(height * dpr);
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  boatX = width * 0.5;
-  boatY = height * 0.28;
-  hookX = boatX + 38;
-  createFish();
-  createClouds();
-  createBirds();
-  createSparkles();
+function resize(){
+  const rect=canvas.getBoundingClientRect();
+  if(rect.width<1||rect.height<1) return;
+  dpr=Math.min(window.devicePixelRatio||1,2);
+  width=rect.width; height=rect.height;
+  canvas.width=Math.round(width*dpr);
+  canvas.height=Math.round(height*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  boatX=width*0.5; boatY=height*0.28;
+  hookX=boatX+38;
+  createFish(); createClouds(); createBirds(); createSparkles();
 }
 
-// ========== ENTITIES ==========
-function createFish() {
-  fish = [];
-  for (let i = 0; i < 15; i++) {
-    const type = species[Math.floor(Math.random() * species.length)];
+function createFish(){
+  fish=[];
+  for(let i=0;i<16;i++){
+    const type=species[Math.floor(Math.random()*species.length)];
     fish.push({
-      x: Math.random() * Math.max(width, 1),
-      y: height * (0.52 + Math.random() * 0.42),
-      speed: 12 + Math.random() * 22,
-      direction: Math.random() < 0.5 ? -1 : 1,
-      type,
-      phase: Math.random() * Math.PI * 2,
-      scale: 0.6 + Math.random() * 0.5,
-      caught: false,
-      hooked: false
+      x:Math.random()*Math.max(width,1),
+      y:height*(0.52+Math.random()*0.42),
+      speed:12+Math.random()*22,
+      direction:Math.random()<0.5?-1:1,
+      type,phase:Math.random()*Math.PI*2,
+      scale:0.58+Math.random()*0.52,
+      caught:false,hooked:false
     });
   }
 }
-
-function createClouds() {
-  clouds = [];
-  for (let i = 0; i < 6; i++) {
-    clouds.push({
-      x: Math.random() * (width + 200) - 100,
-      y: 12 + Math.random() * height * 0.12,
-      size: 18 + Math.random() * 28,
-      speed: 1.5 + Math.random() * 4,
-      opacity: 0.35 + Math.random() * 0.35
-    });
+function createClouds(){
+  clouds=[];
+  for(let i=0;i<7;i++){
+    clouds.push({x:Math.random()*(width+200)-100,y:10+Math.random()*height*0.13,size:16+Math.random()*30,speed:1.2+Math.random()*4.5,opacity:0.3+Math.random()*0.4});
+  }
+}
+function createBirds(){
+  birds=[];
+  for(let i=0;i<5;i++){
+    birds.push({x:Math.random()*width,y:18+Math.random()*height*0.16,speed:16+Math.random()*28,wing:Math.random()*Math.PI*2,dir:Math.random()<0.5?1:-1});
+  }
+}
+function createSparkles(){
+  sparkles=[];
+  for(let i=0;i<22;i++){
+    sparkles.push({x:Math.random()*width,y:height*(0.43+Math.random()*0.14),size:1+Math.random()*2.8,phase:Math.random()*Math.PI*2,speed:0.7+Math.random()*1.6});
   }
 }
 
-function createBirds() {
-  birds = [];
-  for (let i = 0; i < 4; i++) {
-    birds.push({
-      x: Math.random() * width,
-      y: 20 + Math.random() * height * 0.15,
-      speed: 18 + Math.random() * 25,
-      wing: Math.random() * Math.PI * 2,
-      dir: Math.random() < 0.5 ? 1 : -1
-    });
-  }
-}
+// Drawing
+function drawSky(){
+  const g=ctx.createLinearGradient(0,0,0,height*0.48);
+  g.addColorStop(0,"#4a9fd4"); g.addColorStop(0.4,"#8ecae6"); g.addColorStop(0.75,"#c8e8f0"); g.addColorStop(1,"#e8f4e8");
+  ctx.fillStyle=g; ctx.fillRect(0,0,width,height);
 
-function createSparkles() {
-  sparkles = [];
-  for (let i = 0; i < 18; i++) {
-    sparkles.push({
-      x: Math.random() * width,
-      y: height * (0.44 + Math.random() * 0.12),
-      size: 1 + Math.random() * 2.5,
-      phase: Math.random() * Math.PI * 2,
-      speed: 0.8 + Math.random() * 1.5
-    });
-  }
-}
+  const sx=width*0.78,sy=height*0.09;
+  const glow=ctx.createRadialGradient(sx,sy,2,sx,sy,Math.min(width*0.24,115));
+  glow.addColorStop(0,"rgba(255,248,200,0.95)"); glow.addColorStop(0.25,"rgba(255,240,160,0.4)"); glow.addColorStop(1,"rgba(255,240,160,0)");
+  ctx.fillStyle=glow; ctx.fillRect(sx-130,sy-130,260,260);
 
-// ========== DRAWING ==========
-function drawSky() {
-  const g = ctx.createLinearGradient(0, 0, 0, height * 0.48);
-  g.addColorStop(0, "#4a9fd4");
-  g.addColorStop(0.45, "#8ecae6");
-  g.addColorStop(0.75, "#c8e8f0");
-  g.addColorStop(1, "#e8f4e8");
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, width, height);
-
-  // Sun glow + core
-  const sx = width * 0.78, sy = height * 0.09;
-  const glow = ctx.createRadialGradient(sx, sy, 2, sx, sy, Math.min(width * 0.22, 110));
-  glow.addColorStop(0, "rgba(255,248,200,0.9)");
-  glow.addColorStop(0.3, "rgba(255,240,160,0.35)");
-  glow.addColorStop(1, "rgba(255,240,160,0)");
-  ctx.fillStyle = glow;
-  ctx.fillRect(sx - 120, sy - 120, 240, 240);
-
-  // Soft rays
-  ctx.save();
-  ctx.globalAlpha = 0.12;
-  for (let i = 0; i < 7; i++) {
-    const a = -0.6 + i * 0.2;
-    ctx.strokeStyle = "#fff8c0";
-    ctx.lineWidth = 18 + i * 2;
-    ctx.beginPath();
-    ctx.moveTo(sx, sy);
-    ctx.lineTo(sx + Math.cos(a) * 180, sy + Math.sin(a) * 160);
-    ctx.stroke();
+  ctx.save(); ctx.globalAlpha=0.11;
+  for(let i=0;i<8;i++){
+    const a=-0.7+i*0.18;
+    ctx.strokeStyle="#fff8c0"; ctx.lineWidth=16+i*2.5;
+    ctx.beginPath(); ctx.moveTo(sx,sy); ctx.lineTo(sx+Math.cos(a)*190,sy+Math.sin(a)*170); ctx.stroke();
   }
   ctx.restore();
 
-  ctx.fillStyle = "#fff6c8";
-  ctx.beginPath();
-  ctx.arc(sx, sy, 18, 0, Math.PI * 2);
-  ctx.fill();
+  ctx.fillStyle="#fff6c8"; ctx.beginPath(); ctx.arc(sx,sy,19,0,Math.PI*2); ctx.fill();
 
-  // Clouds
-  clouds.forEach(c => {
-    c.x += c.speed * 0.012;
-    if (c.x > width + 120) c.x = -120;
-    ctx.globalAlpha = c.opacity;
-    ctx.fillStyle = "#ffffff";
+  clouds.forEach(c=>{
+    c.x+=c.speed*0.012; if(c.x>width+130) c.x=-130;
+    ctx.globalAlpha=c.opacity; ctx.fillStyle="#fff";
     ctx.beginPath();
-    ctx.ellipse(c.x, c.y, c.size, c.size * 0.35, 0, 0, Math.PI * 2);
-    ctx.ellipse(c.x - c.size * 0.5, c.y + 4, c.size * 0.55, c.size * 0.28, 0, 0, Math.PI * 2);
-    ctx.ellipse(c.x + c.size * 0.48, c.y + 3, c.size * 0.5, c.size * 0.26, 0, 0, Math.PI * 2);
-    ctx.ellipse(c.x - c.size * 0.15, c.y - 6, c.size * 0.4, c.size * 0.22, 0, 0, Math.PI * 2);
+    ctx.ellipse(c.x,c.y,c.size,c.size*0.34,0,0,Math.PI*2);
+    ctx.ellipse(c.x-c.size*0.5,c.y+4,c.size*0.55,c.size*0.28,0,0,Math.PI*2);
+    ctx.ellipse(c.x+c.size*0.48,c.y+3,c.size*0.5,c.size*0.26,0,0,Math.PI*2);
+    ctx.ellipse(c.x-c.size*0.12,c.y-7,c.size*0.42,c.size*0.22,0,0,Math.PI*2);
     ctx.fill();
   });
-  ctx.globalAlpha = 1;
+  ctx.globalAlpha=1;
 
-  // Birds
-  birds.forEach(b => {
-    b.x += b.speed * b.dir * 0.018;
-    b.wing += 0.18;
-    if (b.x > width + 40) { b.x = -40; b.y = 20 + Math.random() * height * 0.14; }
-    if (b.x < -40) { b.x = width + 40; b.y = 20 + Math.random() * height * 0.14; }
-    const flap = Math.sin(b.wing) * 5;
-    ctx.strokeStyle = "#1e293b";
-    ctx.lineWidth = 1.8;
-    ctx.lineCap = "round";
-    ctx.beginPath();
-    ctx.moveTo(b.x - 7 * b.dir, b.y + flap);
-    ctx.quadraticCurveTo(b.x, b.y - 4, b.x + 7 * b.dir, b.y + flap);
-    ctx.stroke();
+  birds.forEach(b=>{
+    b.x+=b.speed*b.dir*0.018; b.wing+=0.19;
+    if(b.x>width+45){b.x=-45;b.y=18+Math.random()*height*0.15;}
+    if(b.x<-45){b.x=width+45;b.y=18+Math.random()*height*0.15;}
+    const flap=Math.sin(b.wing)*5.5;
+    ctx.strokeStyle="#1e293b"; ctx.lineWidth=1.9; ctx.lineCap="round";
+    ctx.beginPath(); ctx.moveTo(b.x-8*b.dir,b.y+flap); ctx.quadraticCurveTo(b.x,b.y-5,b.x+8*b.dir,b.y+flap); ctx.stroke();
   });
 }
 
-function drawMountain(pts, color, yBase) {
-  ctx.beginPath();
-  ctx.moveTo(0, height * yBase);
-  pts.forEach(p => ctx.lineTo(width * p[0], height * p[1]));
-  ctx.lineTo(width, height * (yBase + 0.04));
-  ctx.lineTo(width, height * 0.50);
-  ctx.lineTo(0, height * 0.50);
-  ctx.closePath();
-  ctx.fillStyle = color;
-  ctx.fill();
+function drawMountain(pts,color,yBase){
+  ctx.beginPath(); ctx.moveTo(0,height*yBase);
+  pts.forEach(p=>ctx.lineTo(width*p[0],height*p[1]));
+  ctx.lineTo(width,height*(yBase+0.04)); ctx.lineTo(width,height*0.50); ctx.lineTo(0,height*0.50);
+  ctx.closePath(); ctx.fillStyle=color; ctx.fill();
 }
 
-function drawMountains() {
-  // Far range
-  drawMountain([
-    [0,0.30],[0.12,0.14],[0.20,0.26],[0.33,0.08],[0.47,0.28],
-    [0.60,0.11],[0.74,0.27],[0.87,0.15],[1,0.31]
-  ], "#6b8a92", 0.35);
-
-  // Snow
-  ctx.fillStyle = "#eef6f4";
-  [[0.33,0.08,0.05],[0.60,0.11,0.042],[0.12,0.14,0.038],[0.87,0.15,0.032]].forEach(([x,y,s]) => {
+function drawMountains(){
+  drawMountain([[0,.30],[.12,.14],[.20,.26],[.33,.08],[.47,.28],[.60,.11],[.74,.27],[.87,.15],[1,.31]],"#6b8a92",.35);
+  ctx.fillStyle="#eef6f4";
+  [[.33,.08,.05],[.60,.11,.042],[.12,.14,.038],[.87,.15,.032]].forEach(([x,y,s])=>{
     ctx.beginPath();
-    ctx.moveTo(width*x, height*y);
-    ctx.lineTo(width*(x-s), height*(y+s*1.6));
-    ctx.lineTo(width*(x-s*0.2), height*(y+s));
-    ctx.lineTo(width*x, height*(y+s*1.3));
-    ctx.lineTo(width*(x+s*0.15), height*(y+s*0.9));
-    ctx.lineTo(width*(x+s), height*(y+s*1.6));
-    ctx.closePath();
-    ctx.fill();
+    ctx.moveTo(width*x,height*y);
+    ctx.lineTo(width*(x-s),height*(y+s*1.6));
+    ctx.lineTo(width*(x-s*.2),height*(y+s));
+    ctx.lineTo(width*x,height*(y+s*1.3));
+    ctx.lineTo(width*(x+s*.15),height*(y+s*.9));
+    ctx.lineTo(width*(x+s),height*(y+s*1.6));
+    ctx.closePath(); ctx.fill();
   });
+  drawMountain([[0,.38],[.09,.28],[.18,.36],[.30,.22],[.42,.37],[.57,.26],[.71,.37],[.85,.25],[1,.36]],"#2a5349",.38);
 
-  // Near range
-  drawMountain([
-    [0,0.38],[0.09,0.28],[0.18,0.36],[0.30,0.22],[0.42,0.37],
-    [0.57,0.26],[0.71,0.37],[0.85,0.25],[1,0.36]
-  ], "#2a5349", 0.38);
-
-  // Trees
-  for (let i = 0; i < 28; i++) {
-    const x = (i / 27) * width;
-    const y = height * (0.37 + Math.sin(i * 1.7) * 0.015);
-    const sz = 10 + (i % 5) * 3.2;
-    ctx.fillStyle = i % 3 === 0 ? "#0f3d36" : (i % 2 ? "#145043" : "#1a5c4a");
-    ctx.beginPath();
-    ctx.moveTo(x, y - sz);
-    ctx.lineTo(x - sz * 0.7, y + sz * 0.9);
-    ctx.lineTo(x + sz * 0.7, y + sz * 0.9);
-    ctx.closePath();
-    ctx.fill();
-    // trunk
-    ctx.fillStyle = "#2d1f14";
-    ctx.fillRect(x - 2, y + sz * 0.7, 4, 8);
+  for(let i=0;i<30;i++){
+    const x=(i/29)*width;
+    const y=height*(.37+Math.sin(i*1.7)*.015);
+    const sz=10+(i%5)*3.3;
+    ctx.fillStyle=i%3===0?"#0f3d36":(i%2?"#145043":"#1a5c4a");
+    ctx.beginPath(); ctx.moveTo(x,y-sz); ctx.lineTo(x-sz*.7,y+sz*.9); ctx.lineTo(x+sz*.7,y+sz*.9); ctx.closePath(); ctx.fill();
+    ctx.fillStyle="#2d1f14"; ctx.fillRect(x-2,y+sz*.7,4,8);
   }
 }
 
-function drawWater() {
-  const top = height * 0.42;
-  const g = ctx.createLinearGradient(0, top, 0, height);
-  g.addColorStop(0, "#3aa0a8");
-  g.addColorStop(0.15, "#1a7f96");
-  g.addColorStop(0.45, "#0a5c7a");
-  g.addColorStop(0.75, "#043a55");
-  g.addColorStop(1, "#021e30");
-  ctx.fillStyle = g;
-  ctx.fillRect(0, top, width, height - top);
+function drawWater(){
+  const top=height*.42;
+  const g=ctx.createLinearGradient(0,top,0,height);
+  g.addColorStop(0,"#3aa0a8"); g.addColorStop(.15,"#1a7f96"); g.addColorStop(.45,"#0a5c7a"); g.addColorStop(.75,"#043a55"); g.addColorStop(1,"#021e30");
+  ctx.fillStyle=g; ctx.fillRect(0,top,width,height-top);
 
-  // Surface sparkles
-  sparkles.forEach(s => {
-    s.phase += s.speed * 0.04;
-    const a = 0.25 + Math.sin(s.phase) * 0.35;
-    ctx.globalAlpha = Math.max(0, a);
-    ctx.fillStyle = "#e0f7fa";
-    ctx.beginPath();
-    ctx.arc(s.x, s.y + Math.sin(elapsed * 1.5 + s.phase) * 1.5, s.size, 0, Math.PI * 2);
-    ctx.fill();
+  sparkles.forEach(s=>{
+    s.phase+=s.speed*.04;
+    const a=.22+Math.sin(s.phase)*.38;
+    ctx.globalAlpha=Math.max(0,a); ctx.fillStyle="#e0f7fa";
+    ctx.beginPath(); ctx.arc(s.x,s.y+Math.sin(elapsed*1.5+s.phase)*1.6,s.size,0,Math.PI*2); ctx.fill();
   });
-  ctx.globalAlpha = 1;
+  ctx.globalAlpha=1;
 
-  // Horizontal reflection streaks
-  for (let i = 0; i < 22; i++) {
-    const y = top + 6 + i * (height * 0.5 / 22);
-    const x = ((i * 97 + elapsed * 14) % (width + 80)) - 40;
-    const len = 18 + (i % 6) * 10;
-    ctx.strokeStyle = i % 4 === 0 ? "rgba(200,250,255,0.22)" : "rgba(160,230,245,0.1)";
-    ctx.lineWidth = 1 + (i % 3) * 0.4;
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x + len, y);
-    ctx.stroke();
+  for(let i=0;i<24;i++){
+    const y=top+5+i*(height*.5/24);
+    const x=((i*97+elapsed*15)%(width+90))-45;
+    const len=16+(i%6)*11;
+    ctx.strokeStyle=i%4===0?"rgba(200,250,255,.24)":"rgba(160,230,245,.11)";
+    ctx.lineWidth=1+(i%3)*.4;
+    ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+len,y); ctx.stroke();
   }
 
-  // Animated wave lines
-  for (let i = 0; i < 8; i++) {
+  for(let i=0;i<9;i++){
     ctx.beginPath();
-    const y = top + 6 + i * height * 0.07;
-    for (let x = 0; x <= width; x += 10) {
-      const wy = y + Math.sin(x * 0.022 + elapsed * 1.4 + i * 0.7) * (2.2 + i * 0.15);
-      x === 0 ? ctx.moveTo(x, wy) : ctx.lineTo(x, wy);
+    const y=top+5+i*height*.065;
+    for(let x=0;x<=width;x+=9){
+      const wy=y+Math.sin(x*.022+elapsed*1.45+i*.7)*(2.3+i*.14);
+      x===0?ctx.moveTo(x,wy):ctx.lineTo(x,wy);
     }
-    ctx.strokeStyle = `rgba(180,240,250,${0.08 + i * 0.012})`;
-    ctx.lineWidth = 1.4;
-    ctx.stroke();
+    ctx.strokeStyle=`rgba(180,240,250,${.07+i*.012})`;
+    ctx.lineWidth=1.4; ctx.stroke();
   }
 }
 
-function drawOneFish(f, t) {
-  const size = f.type.size * f.scale * 15.5;
-  const facing = f.direction;
-  ctx.save();
-  ctx.translate(f.x, f.y);
-  ctx.scale(facing, 1);
+function drawOneFish(f,t){
+  const size=f.type.size*f.scale*15.5;
+  const facing=f.direction;
+  ctx.save(); ctx.translate(f.x,f.y); ctx.scale(facing,1);
+  const wiggle=Math.sin(t*7.5+f.phase)*size*.18;
 
-  const wiggle = Math.sin(t * 7.5 + f.phase) * size * 0.18;
-
-  // Tail
-  ctx.fillStyle = f.type.color;
+  ctx.fillStyle=f.type.color;
   ctx.beginPath();
-  ctx.moveTo(-size * 0.55, 0);
-  ctx.lineTo(-size * 1.28, -size * 0.5 + wiggle);
-  ctx.lineTo(-size * 1.05, wiggle * 0.4);
-  ctx.lineTo(-size * 1.28, size * 0.5 + wiggle);
-  ctx.closePath();
-  ctx.fill();
+  ctx.moveTo(-size*.55,0);
+  ctx.lineTo(-size*1.28,-size*.5+wiggle);
+  ctx.lineTo(-size*1.05,wiggle*.4);
+  ctx.lineTo(-size*1.28,size*.5+wiggle);
+  ctx.closePath(); ctx.fill();
 
-  // Body
-  const bg = ctx.createLinearGradient(0, -size * 0.45, 0, size * 0.45);
-  bg.addColorStop(0, "#ffffffcc");
-  bg.addColorStop(0.12, f.type.color);
-  bg.addColorStop(0.65, f.type.color);
-  bg.addColorStop(1, f.type.belly);
-  ctx.fillStyle = bg;
-  ctx.beginPath();
-  ctx.ellipse(0, 0, size, size * 0.42, 0, 0, Math.PI * 2);
-  ctx.fill();
+  const bg=ctx.createLinearGradient(0,-size*.45,0,size*.45);
+  bg.addColorStop(0,"#ffffffcc"); bg.addColorStop(.12,f.type.color); bg.addColorStop(.65,f.type.color); bg.addColorStop(1,f.type.belly);
+  ctx.fillStyle=bg;
+  ctx.beginPath(); ctx.ellipse(0,0,size,size*.42,0,0,Math.PI*2); ctx.fill();
 
-  // Dorsal
-  ctx.fillStyle = f.type.color;
-  ctx.beginPath();
-  ctx.moveTo(-size * 0.2, -size * 0.28);
-  ctx.lineTo(size * 0.15, -size * 0.68);
-  ctx.lineTo(size * 0.5, -size * 0.26);
-  ctx.closePath();
-  ctx.fill();
+  ctx.fillStyle=f.type.color;
+  ctx.beginPath(); ctx.moveTo(-size*.2,-size*.28); ctx.lineTo(size*.15,-size*.68); ctx.lineTo(size*.5,-size*.26); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(-size*.1,size*.25); ctx.lineTo(size*.3,size*.55); ctx.lineTo(size*.48,size*.22); ctx.closePath(); ctx.fill();
 
-  // Pectoral
-  ctx.beginPath();
-  ctx.moveTo(-size * 0.1, size * 0.25);
-  ctx.lineTo(size * 0.3, size * 0.55);
-  ctx.lineTo(size * 0.48, size * 0.22);
-  ctx.closePath();
-  ctx.fill();
+  ctx.strokeStyle="rgba(30,50,60,.55)"; ctx.lineWidth=1.3;
+  ctx.beginPath(); ctx.arc(size*.45,0,size*.2,-1.15,1.15); ctx.stroke();
 
-  // Gills
-  ctx.strokeStyle = "rgba(30,50,60,0.55)";
-  ctx.lineWidth = 1.3;
-  ctx.beginPath();
-  ctx.arc(size * 0.45, 0, size * 0.2, -1.15, 1.15);
-  ctx.stroke();
+  ctx.strokeStyle="rgba(255,255,255,.22)"; ctx.lineWidth=.7;
+  for(let i=-1;i<=1;i++){ctx.beginPath();ctx.arc(-size*.05+i*size*.22,0,size*.16,-.85,.85);ctx.stroke();}
 
-  // Scale arcs
-  ctx.strokeStyle = "rgba(255,255,255,0.22)";
-  ctx.lineWidth = 0.7;
-  for (let i = -1; i <= 1; i++) {
-    ctx.beginPath();
-    ctx.arc(-size * 0.05 + i * size * 0.22, 0, size * 0.16, -0.85, 0.85);
-    ctx.stroke();
-  }
-
-  // Eye
-  ctx.fillStyle = "#f8fafc";
-  ctx.beginPath();
-  ctx.arc(size * 0.65, -size * 0.07, size * 0.11, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = "#0f172a";
-  ctx.beginPath();
-  ctx.arc(size * 0.68, -size * 0.07, size * 0.055, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = "#fff";
-  ctx.beginPath();
-  ctx.arc(size * 0.66, -size * 0.1, size * 0.025, 0, Math.PI * 2);
-  ctx.fill();
-
+  ctx.fillStyle="#f8fafc"; ctx.beginPath(); ctx.arc(size*.65,-size*.07,size*.11,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle="#0f172a"; ctx.beginPath(); ctx.arc(size*.68,-size*.07,size*.055,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle="#fff"; ctx.beginPath(); ctx.arc(size*.66,-size*.1,size*.025,0,Math.PI*2); ctx.fill();
   ctx.restore();
 }
 
-function drawFish() {
-  fish.forEach(f => {
-    if (f.caught) return;
-    if (f.hooked && targetFish === f) {
-      f.x += (hookX - f.x) * 0.04;
-      f.y += (hookY - f.y) * 0.04;
-    } else if (state === "waiting" && !f.hooked) {
-      const dx = hookX - f.x, dy = hookY - f.y;
-      const dist = Math.hypot(dx, dy);
-      if (dist < 130 && Math.random() < 0.03) {
-        f.x += Math.sign(dx) * 1.8;
-        f.y += Math.sign(dy) * 0.7;
-      } else {
-        f.x += f.direction * f.speed * 0.022;
-        f.y += Math.sin(elapsed * 1.15 + f.phase) * 0.14;
-      }
-    } else {
-      f.x += f.direction * f.speed * 0.022;
-      f.y += Math.sin(elapsed * 1.15 + f.phase) * 0.14;
+function drawFish(){
+  fish.forEach(f=>{
+    if(f.caught) return;
+    if(f.hooked&&targetFish===f){
+      f.x+=(hookX-f.x)*.04; f.y+=(hookY-f.y)*.04;
+    }else if(state==="waiting"&&!f.hooked){
+      const dx=hookX-f.x,dy=hookY-f.y,dist=Math.hypot(dx,dy);
+      if(dist<135&&Math.random()<.032){f.x+=Math.sign(dx)*1.9;f.y+=Math.sign(dy)*.75;}
+      else{f.x+=f.direction*f.speed*.022;f.y+=Math.sin(elapsed*1.15+f.phase)*.14;}
+    }else{
+      f.x+=f.direction*f.speed*.022; f.y+=Math.sin(elapsed*1.15+f.phase)*.14;
     }
-    if (f.x > width + 70) f.x = -70;
-    if (f.x < -70) f.x = width + 70;
-    if (!f.hooked && Math.random() < 0.004) f.direction *= -1;
-    drawOneFish(f, elapsed);
+    if(f.x>width+70) f.x=-70; if(f.x<-70) f.x=width+70;
+    if(!f.hooked&&Math.random()<.004) f.direction*=-1;
+    drawOneFish(f,elapsed);
   });
 }
 
-function drawBoat() {
-  const x = boatX;
-  const y = boatY + Math.sin(elapsed * 1.35) * 2.2;
+function drawBoat(){
+  const x=boatX, y=boatY+Math.sin(elapsed*1.35)*2.2;
+  ctx.fillStyle="rgba(5,40,60,.45)";
+  ctx.beginPath(); ctx.ellipse(x,y+34,72,9,0,0,Math.PI*2); ctx.fill();
 
-  // Shadow
-  ctx.fillStyle = "rgba(5,40,60,0.45)";
+  const hull=ctx.createLinearGradient(x,y-2,x,y+38);
+  hull.addColorStop(0,"#e0b07a"); hull.addColorStop(.35,"#a86b3c"); hull.addColorStop(1,"#5c3018");
+  ctx.fillStyle=hull;
   ctx.beginPath();
-  ctx.ellipse(x, y + 34, 72, 9, 0, 0, Math.PI * 2);
-  ctx.fill();
+  ctx.moveTo(x-68,y); ctx.lineTo(x+68,y); ctx.lineTo(x+48,y+30);
+  ctx.quadraticCurveTo(x,y+44,x-48,y+30); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle="#3d2010"; ctx.lineWidth=2.8; ctx.stroke();
 
-  // Hull
-  const hull = ctx.createLinearGradient(x, y - 2, x, y + 38);
-  hull.addColorStop(0, "#e0b07a");
-  hull.addColorStop(0.35, "#a86b3c");
-  hull.addColorStop(1, "#5c3018");
-  ctx.fillStyle = hull;
-  ctx.beginPath();
-  ctx.moveTo(x - 68, y);
-  ctx.lineTo(x + 68, y);
-  ctx.lineTo(x + 48, y + 30);
-  ctx.quadraticCurveTo(x, y + 44, x - 48, y + 30);
-  ctx.closePath();
-  ctx.fill();
-  ctx.strokeStyle = "#3d2010";
-  ctx.lineWidth = 2.8;
-  ctx.stroke();
+  ctx.strokeStyle="#f0d4a8"; ctx.lineWidth=2.5;
+  ctx.beginPath(); ctx.moveTo(x-58,y+6); ctx.lineTo(x+58,y+6); ctx.stroke();
+  ctx.fillStyle="#c9a87a"; ctx.fillRect(x-28,y+8,56,6);
 
-  // Gunwale
-  ctx.strokeStyle = "#f0d4a8";
-  ctx.lineWidth = 2.5;
-  ctx.beginPath();
-  ctx.moveTo(x - 58, y + 6);
-  ctx.lineTo(x + 58, y + 6);
-  ctx.stroke();
+  ctx.strokeStyle="#1e2d3d"; ctx.lineWidth=7; ctx.lineCap="round";
+  ctx.beginPath(); ctx.moveTo(x-5,y-8); ctx.lineTo(x-14,y+8); ctx.moveTo(x+5,y-8); ctx.lineTo(x+14,y+8); ctx.stroke();
 
-  // Seat
-  ctx.fillStyle = "#c9a87a";
-  ctx.fillRect(x - 28, y + 8, 56, 6);
+  const shirt=selectedPlayer==="Ryan"?"#0e7490":selectedPlayer==="Clay"?"#64748b":selectedPlayer==="Justin"?"#15803d":"#b45309";
+  ctx.fillStyle=shirt;
+  ctx.beginPath(); ctx.roundRect(x-14,y-40,28,34,8); ctx.fill();
 
-  // Legs
-  ctx.strokeStyle = "#1e2d3d";
-  ctx.lineWidth = 7;
-  ctx.lineCap = "round";
-  ctx.beginPath();
-  ctx.moveTo(x - 5, y - 8);
-  ctx.lineTo(x - 14, y + 8);
-  ctx.moveTo(x + 5, y - 8);
-  ctx.lineTo(x + 14, y + 8);
-  ctx.stroke();
+  ctx.strokeStyle="#d4a06a"; ctx.lineWidth=6.5;
+  ctx.beginPath(); ctx.moveTo(x-11,y-33); ctx.lineTo(x+14,y-22); ctx.lineTo(x+32,y-26); ctx.stroke();
 
-  // Shirt color by player
-  const shirt = selectedPlayer === "Ryan" ? "#0e7490" :
-                selectedPlayer === "Clay" ? "#64748b" :
-                selectedPlayer === "Justin" ? "#15803d" : "#b45309";
-  ctx.fillStyle = shirt;
-  ctx.beginPath();
-  ctx.roundRect(x - 14, y - 40, 28, 34, 8);
-  ctx.fill();
+  ctx.fillStyle="#d4a06a"; ctx.fillRect(x-5,y-50,10,12);
+  ctx.fillStyle="#e8b888"; ctx.beginPath(); ctx.ellipse(x,y-58,13,15.5,0,0,Math.PI*2); ctx.fill();
 
-  // Arms
-  ctx.strokeStyle = "#d4a06a";
-  ctx.lineWidth = 6.5;
-  ctx.beginPath();
-  ctx.moveTo(x - 11, y - 33);
-  ctx.lineTo(x + 14, y - 22);
-  ctx.lineTo(x + 32, y - 26);
-  ctx.stroke();
+  ctx.fillStyle=(selectedPlayer==="Bob"||selectedPlayer==="Clay")?"#e5e7eb":"#3d2e24";
+  ctx.beginPath(); ctx.arc(x,y-64,13,Math.PI,Math.PI*2); ctx.fill();
 
-  // Head
-  ctx.fillStyle = "#d4a06a";
-  ctx.fillRect(x - 5, y - 50, 10, 12);
-  ctx.fillStyle = "#e8b888";
-  ctx.beginPath();
-  ctx.ellipse(x, y - 58, 13, 15.5, 0, 0, Math.PI * 2);
-  ctx.fill();
+  ctx.fillStyle="#14532d";
+  ctx.beginPath(); ctx.ellipse(x,y-69,15,5.5,0,Math.PI,Math.PI*2); ctx.fill();
+  ctx.fillRect(x-10,y-71,20,5);
 
-  // Hair
-  ctx.fillStyle = (selectedPlayer === "Bob" || selectedPlayer === "Clay") ? "#e5e7eb" : "#3d2e24";
-  ctx.beginPath();
-  ctx.arc(x, y - 64, 13, Math.PI, Math.PI * 2);
-  ctx.fill();
-
-  // Cap
-  ctx.fillStyle = "#14532d";
-  ctx.beginPath();
-  ctx.ellipse(x, y - 69, 15, 5.5, 0, Math.PI, Math.PI * 2);
-  ctx.fill();
-  ctx.fillRect(x - 10, y - 71, 20, 5);
-
-  // Rod
-  ctx.strokeStyle = "#e8c98a";
-  ctx.lineWidth = 2.4;
-  ctx.beginPath();
-  ctx.moveTo(x + 14, y - 26);
-  ctx.quadraticCurveTo(x + 28, y - 68, x + 48, y - 74);
-  ctx.stroke();
-  ctx.lineCap = "butt";
+  ctx.strokeStyle="#e8c98a"; ctx.lineWidth=2.4;
+  ctx.beginPath(); ctx.moveTo(x+14,y-26); ctx.quadraticCurveTo(x+28,y-68,x+48,y-74); ctx.stroke();
+  ctx.lineCap="butt";
 }
 
-function drawFishingLine() {
-  if (state === "idle" || state === "caught") return;
-  const sx = boatX + 30, sy = boatY - 26;
-  const tension = state === "fighting" ? Math.sin(elapsed * 14) * 16 : 5;
+function drawFishingLine(){
+  if(state==="idle"||state==="caught") return;
+  const sx=boatX+30,sy=boatY-26;
+  const tension=state==="fighting"?Math.sin(elapsed*14)*16:5;
+  ctx.strokeStyle="#f1f5f9"; ctx.lineWidth=1.6;
+  ctx.beginPath(); ctx.moveTo(sx,sy);
+  ctx.quadraticCurveTo((sx+hookX)/2+tension,(sy+hookY)/2,hookX,hookY); ctx.stroke();
 
-  ctx.strokeStyle = "#f1f5f9";
-  ctx.lineWidth = 1.6;
-  ctx.beginPath();
-  ctx.moveTo(sx, sy);
-  ctx.quadraticCurveTo((sx + hookX) / 2 + tension, (sy + hookY) / 2, hookX, hookY);
-  ctx.stroke();
+  ctx.fillStyle="#ef4444"; ctx.beginPath(); ctx.arc(hookX,hookY-8,5.5,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle="#f8fafc"; ctx.beginPath(); ctx.arc(hookX,hookY-11,3.2,0,Math.PI*2); ctx.fill();
 
-  // Bobber
-  ctx.fillStyle = "#ef4444";
-  ctx.beginPath();
-  ctx.arc(hookX, hookY - 8, 5.5, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = "#f8fafc";
-  ctx.beginPath();
-  ctx.arc(hookX, hookY - 11, 3.2, 0, Math.PI * 2);
-  ctx.fill();
+  ctx.strokeStyle="#cbd5e1"; ctx.lineWidth=2.1;
+  ctx.beginPath(); ctx.moveTo(hookX,hookY-4); ctx.lineTo(hookX,hookY+7);
+  ctx.arc(hookX+4.5,hookY+7,4.5,Math.PI,Math.PI*1.7); ctx.stroke();
 
-  // Hook
-  ctx.strokeStyle = "#cbd5e1";
-  ctx.lineWidth = 2.1;
-  ctx.beginPath();
-  ctx.moveTo(hookX, hookY - 4);
-  ctx.lineTo(hookX, hookY + 7);
-  ctx.arc(hookX + 4.5, hookY + 7, 4.5, Math.PI, Math.PI * 1.7);
-  ctx.stroke();
+  ctx.fillStyle="#fb7185"; ctx.beginPath(); ctx.arc(hookX,hookY-3,3.2,0,Math.PI*2); ctx.fill();
 
-  // Bait
-  ctx.fillStyle = "#fb7185";
-  ctx.beginPath();
-  ctx.arc(hookX, hookY - 3, 3.2, 0, Math.PI * 2);
-  ctx.fill();
-
-  if (state === "biting") {
-    for (let i = 0; i < 4; i++) {
+  if(state==="biting"){
+    for(let i=0;i<4;i++){
       ctx.beginPath();
-      ctx.ellipse(hookX, hookY, 12 + i * 8 + Math.sin(elapsed * 12) * 3, 4 + i * 2.5, 0, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(255,255,255,${0.5 - i * 0.1})`;
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
+      ctx.ellipse(hookX,hookY,12+i*8+Math.sin(elapsed*12)*3,4+i*2.5,0,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(255,255,255,${.5-i*.1})`; ctx.lineWidth=1.5; ctx.stroke();
     }
   }
 }
 
-function createSplash(x, y, count = 20) {
-  for (let i = 0; i < count; i++) {
-    particles.push({
-      x, y,
-      vx: (Math.random() - 0.5) * 180,
-      vy: -Math.random() * 170 - 20,
-      life: 0.5 + Math.random() * 0.7,
-      maxLife: 1.2,
-      size: 2 + Math.random() * 4.5
-    });
+function createSplash(x,y,count=22){
+  for(let i=0;i<count;i++){
+    particles.push({x,y,vx:(Math.random()-.5)*190,vy:-Math.random()*180-25,life:.5+Math.random()*.7,maxLife:1.2,size:2+Math.random()*4.8});
   }
 }
-
-function drawParticles(dt) {
-  particles = particles.filter(p => p.life > 0);
-  particles.forEach(p => {
-    p.x += p.vx * dt;
-    p.y += p.vy * dt;
-    p.vy += 220 * dt;
-    p.life -= dt;
-    ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
-    ctx.fillStyle = "#dffbff";
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fill();
+function drawParticles(dt){
+  particles=particles.filter(p=>p.life>0);
+  particles.forEach(p=>{
+    p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=230*dt; p.life-=dt;
+    ctx.globalAlpha=Math.max(0,p.life/p.maxLife); ctx.fillStyle="#dffbff";
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill();
   });
-  ctx.globalAlpha = 1;
+  ctx.globalAlpha=1;
 }
 
-function drawFightBar() {
-  if (state !== "fighting") return;
-  const bw = Math.min(width * 0.7, 300);
-  const bh = 14;
-  const x = (width - bw) / 2;
-  const y = height * 0.09;
-
-  ctx.fillStyle = "rgba(7,24,39,0.82)";
-  ctx.beginPath();
-  ctx.roundRect(x - 14, y - 28, bw + 28, 58, 12);
-  ctx.fill();
-
-  ctx.fillStyle = "#fff";
-  ctx.font = "bold 11px system-ui,sans-serif";
-  ctx.textAlign = "center";
-  ctx.fillText("REELING PROGRESS", width / 2, y - 12);
-
-  ctx.fillStyle = "#1e293b";
-  ctx.beginPath();
-  ctx.roundRect(x, y, bw, bh, 7);
-  ctx.fill();
-
-  const pct = Math.max(0, Math.min(1, reelProgress / 100));
-  const barG = ctx.createLinearGradient(x, 0, x + bw, 0);
-  barG.addColorStop(0, "#22c55e");
-  barG.addColorStop(1, "#a3e635");
-  ctx.fillStyle = barG;
-  ctx.beginPath();
-  ctx.roundRect(x, y, bw * pct, bh, 7);
-  ctx.fill();
-
-  ctx.fillStyle = "#fff";
-  ctx.font = "bold 10px system-ui,sans-serif";
-  ctx.fillText(Math.round(reelProgress) + "%", width / 2, y + 11);
+function drawFightBar(){
+  if(state!=="fighting") return;
+  const bw=Math.min(width*.7,300),bh=14,x=(width-bw)/2,y=height*.09;
+  ctx.fillStyle="rgba(7,24,39,.82)";
+  ctx.beginPath(); ctx.roundRect(x-14,y-28,bw+28,58,12); ctx.fill();
+  ctx.fillStyle="#fff"; ctx.font="bold 11px system-ui,sans-serif"; ctx.textAlign="center";
+  ctx.fillText("REELING PROGRESS",width/2,y-12);
+  ctx.fillStyle="#1e293b"; ctx.beginPath(); ctx.roundRect(x,y,bw,bh,7); ctx.fill();
+  const pct=Math.max(0,Math.min(1,reelProgress/100));
+  const barG=ctx.createLinearGradient(x,0,x+bw,0);
+  barG.addColorStop(0,"#22c55e"); barG.addColorStop(1,"#a3e635");
+  ctx.fillStyle=barG; ctx.beginPath(); ctx.roundRect(x,y,bw*pct,bh,7); ctx.fill();
+  ctx.fillStyle="#fff"; ctx.font="bold 10px system-ui,sans-serif";
+  ctx.fillText(Math.round(reelProgress)+"%",width/2,y+11);
 }
 
-function render(dt) {
-  ctx.clearRect(0, 0, width, height);
-  drawSky();
-  drawMountains();
-  drawWater();
-  drawFish();
-  drawBoat();
-  drawFishingLine();
-  drawParticles(dt);
-  drawFightBar();
-
-  if (state === "waiting" || state === "fighting") {
-    ctx.fillStyle = "rgba(255,255,255,0.65)";
-    ctx.font = "11px system-ui,sans-serif";
-    ctx.textAlign = "left";
-    ctx.fillText("DEPTH " + Math.round((hookY / Math.max(height, 1)) * 100) + "%", 12, height - 12);
+function render(dt){
+  ctx.clearRect(0,0,width,height);
+  drawSky(); drawMountains(); drawWater(); drawFish(); drawBoat(); drawFishingLine(); drawParticles(dt); drawFightBar();
+  if(state==="waiting"||state==="fighting"){
+    ctx.fillStyle="rgba(255,255,255,.65)"; ctx.font="11px system-ui,sans-serif"; ctx.textAlign="left";
+    ctx.fillText("DEPTH "+Math.round((hookY/Math.max(height,1))*100)+"%",12,height-12);
   }
 }
 
-function gameLoop(ts) {
-  if (!gameScreen.isConnected || gameScreen.style.display === "none") {
-    animationFrame = null;
-    return;
-  }
-  const dt = Math.min(0.05, lastTime ? (ts - lastTime) / 1000 : 0.016);
-  lastTime = ts;
-  elapsed += dt;
-  render(dt);
-  animationFrame = requestAnimationFrame(gameLoop);
+function gameLoop(ts){
+  if(!gameScreen.isConnected||gameScreen.style.display==="none"){animationFrame=null;return;}
+  const dt=Math.min(.05,lastTime?(ts-lastTime)/1000:.016);
+  lastTime=ts; elapsed+=dt; render(dt);
+  animationFrame=requestAnimationFrame(gameLoop);
 }
 
-// ========== GAME FLOW ==========
-function startGame() {
-  clearAllTimers();
-  resize();
-  state = "idle";
-  catches = 0;
-  totalWeight = 0;
-  targetFish = null;
-  reelProgress = 0;
-  particles = [];
+function startGame(){
+  clearAllTimers(); resize();
+  state="idle"; targetFish=null; reelProgress=0; particles=[];
   updateCounter();
-  castBtn.style.display = "block";
-  castBtn.disabled = false;
-  reelBtn.style.display = "none";
-  releaseBtn.style.display = "none";
-  statusText.textContent = "Find the fish! Tap CAST to get your line in the water.";
-  if (animationFrame) cancelAnimationFrame(animationFrame);
-  lastTime = 0;
-  elapsed = 0;
-  animationFrame = requestAnimationFrame(gameLoop);
+  castBtn.style.display="block"; castBtn.disabled=false;
+  reelBtn.style.display="none"; releaseBtn.style.display="none";
+  statusText.textContent="Find the fish! Tap CAST to get your line in the water.";
+  if(animationFrame) cancelAnimationFrame(animationFrame);
+  lastTime=0; elapsed=0;
+  animationFrame=requestAnimationFrame(gameLoop);
 }
 
-function clearAllTimers() {
-  clearTimeout(biteTimer);
-  clearInterval(fightTimer);
-  clearTimeout(escapeTimer);
-  biteTimer = fightTimer = escapeTimer = null;
+function clearAllTimers(){
+  clearTimeout(biteTimer); clearInterval(fightTimer); clearTimeout(escapeTimer);
+  biteTimer=fightTimer=escapeTimer=null;
 }
 
-castBtn.addEventListener("click", castLine);
-function castLine() {
-  if (state !== "idle") return;
-  state = "casting";
-  castBtn.disabled = true;
-  hookX = boatX + Math.min(95, width * 0.24);
-  hookY = height * 0.39;
-  statusText.textContent = "Casting... bait is sinking!";
-  const startY = hookY, endY = height * 0.82, duration = 1300, t0 = performance.now();
-  function anim(now) {
-    if (state !== "casting") return;
-    const p = Math.min(1, (now - t0) / duration);
-    const e = 1 - Math.pow(1 - p, 3);
-    hookY = startY + (endY - startY) * e;
-    if (p < 1) requestAnimationFrame(anim);
-    else startWaiting();
+castBtn.addEventListener("click",castLine);
+function castLine(){
+  if(state!=="idle") return;
+  initAudio(); sfxCast();
+  state="casting"; castBtn.disabled=true;
+  hookX=boatX+Math.min(95,width*.24); hookY=height*.39;
+  statusText.textContent="Casting... bait is sinking!";
+  const startY=hookY,endY=height*.82,duration=1250,t0=performance.now();
+  function anim(now){
+    if(state!=="casting") return;
+    const p=Math.min(1,(now-t0)/duration);
+    const e=1-Math.pow(1-p,3);
+    hookY=startY+(endY-startY)*e;
+    if(p<1) requestAnimationFrame(anim); else startWaiting();
   }
   requestAnimationFrame(anim);
 }
 
-function startWaiting() {
-  state = "waiting";
-  hookY = height * (0.68 + Math.random() * 0.14);
-  statusText.textContent = "Bait is in the water. Waiting for a bite...";
-  biteTimer = setTimeout(() => {
-    if (state !== "waiting") return;
-    let cands = fish.filter(f => !f.caught && !f.hooked);
-    if (!cands.length) { createFish(); cands = fish; }
-    cands.sort((a, b) => Math.hypot(a.x - hookX, a.y - hookY) - Math.hypot(b.x - hookX, b.y - hookY));
-    const chosen = cands[0];
-    targetFish = chosen;
-    chosen.x = hookX - 18;
-    chosen.y = hookY + 10;
-    chosen.hooked = true;
-    state = "biting";
-    createSplash(hookX, hookY, 22);
-    statusText.textContent = "🐟 BITE! A fish took the bait — REEL IN NOW!";
-    castBtn.style.display = "none";
-    reelBtn.style.display = "block";
-    escapeTimer = setTimeout(() => {
-      if (state === "biting") loseFish("The fish spit the hook! Cast again.");
-    }, 6000);
-  }, 2200 + Math.random() * 5000);
+function startWaiting(){
+  state="waiting";
+  hookY=height*(.68+Math.random()*.14);
+  statusText.textContent="Bait is in the water. Waiting for a bite...";
+  biteTimer=setTimeout(()=>{
+    if(state!=="waiting") return;
+    let cands=fish.filter(f=>!f.caught&&!f.hooked);
+    if(!cands.length){createFish();cands=fish;}
+    cands.sort((a,b)=>Math.hypot(a.x-hookX,a.y-hookY)-Math.hypot(b.x-hookX,b.y-hookY));
+    const chosen=cands[0];
+    targetFish=chosen; chosen.x=hookX-18; chosen.y=hookY+10; chosen.hooked=true;
+    state="biting"; createSplash(hookX,hookY,24); sfxBite(); sfxSplash();
+    statusText.textContent="🐟 BITE! A fish took the bait — REEL IN NOW!";
+    castBtn.style.display="none"; reelBtn.style.display="block";
+    escapeTimer=setTimeout(()=>{if(state==="biting"){sfxEscape();loseFish("The fish spit the hook! Cast again.");}},5800);
+  },2000+Math.random()*4800);
 }
 
-reelBtn.addEventListener("click", reelIn);
-function reelIn() {
-  if (state !== "biting" && state !== "fighting") return;
-  if (state === "biting") {
-    clearTimeout(escapeTimer);
-    escapeTimer = null;
-    state = "fighting";
-    reelProgress = 8;
-    statusText.textContent = "It's fighting! Keep tapping REEL IN!";
-    fightTimer = setInterval(() => {
-      if (state !== "fighting") return;
-      const sm = targetFish ? targetFish.type.size * targetFish.scale : 1;
-      reelProgress -= (0.4 + sm * 0.32) * (0.8 + Math.random() * 1.4);
-      reelProgress = Math.max(0, reelProgress);
-      if (Math.random() < 0.12) {
-        reelProgress = Math.max(0, reelProgress - 5);
-        statusText.textContent = "Strong run! Keep reeling!";
-      }
-      if (reelProgress >= 100) landFish();
-    }, 240);
+reelBtn.addEventListener("click",reelIn);
+function reelIn(){
+  if(state!=="biting"&&state!=="fighting") return;
+  sfxReel();
+  if(state==="biting"){
+    clearTimeout(escapeTimer); escapeTimer=null;
+    state="fighting"; reelProgress=10;
+    statusText.textContent="It's fighting! Keep tapping REEL IN!";
+    fightTimer=setInterval(()=>{
+      if(state!=="fighting") return;
+      const sm=targetFish?targetFish.type.size*targetFish.scale:1;
+      reelProgress-=(.38+sm*.3)*(0.7+Math.random()*1.5);
+      reelProgress=Math.max(0,reelProgress);
+      if(Math.random()<.11){reelProgress=Math.max(0,reelProgress-5.5);statusText.textContent="Strong run! Keep reeling!";}
+      if(reelProgress>=100) landFish();
+    },230);
   }
-  if (state === "fighting") {
-    const sm = targetFish ? targetFish.type.size * targetFish.scale : 1;
-    const gain = Math.max(2.8, 11 - sm * 1.4);
-    reelProgress = Math.min(100, reelProgress + gain + Math.random() * 2.5);
-    if (targetFish) {
-      targetFish.x += (boatX + 18 - targetFish.x) * 0.1;
-      targetFish.y += (height * 0.48 - targetFish.y) * 0.05;
-    }
-    if (reelProgress >= 100) landFish();
+  if(state==="fighting"){
+    const sm=targetFish?targetFish.type.size*targetFish.scale:1;
+    const gain=Math.max(2.9,11.5-sm*1.35);
+    reelProgress=Math.min(100,reelProgress+gain+Math.random()*2.6);
+    if(targetFish){targetFish.x+=(boatX+18-targetFish.x)*.11;targetFish.y+=(height*.48-targetFish.y)*.055;}
+    if(reelProgress>=100) landFish();
   }
 }
 
-function landFish() {
-  if (state !== "fighting" || !targetFish) return;
-  clearAllTimers();
-  state = "caught";
-  const caught = targetFish;
-  caught.caught = true;
-  caught.hooked = false;
-  createSplash(boatX, boatY + 10, 28);
+function landFish(){
+  if(state!=="fighting"||!targetFish) return;
+  clearAllTimers(); state="caught";
+  const caught=targetFish; caught.caught=true; caught.hooked=false;
+  createSplash(boatX,boatY+10,30); sfxSuccess(); sfxSplash();
 
-  const t = caught.type;
-  const inches = Math.round(t.min + Math.random() * (t.max - t.min));
-  const pounds = Math.max(0.2, Math.pow(inches / 12, 3) * t.weight * (0.75 + Math.random() * 0.5));
-  catches++;
-  totalWeight += pounds;
-  updateCounter();
+  const t=caught.type;
+  const inches=Math.round(t.min+Math.random()*(t.max-t.min));
+  const pounds=Math.max(.2,Math.pow(inches/12,3)*t.weight*(.75+Math.random()*.5));
+  catches++; totalWeight+=pounds;
+  if(inches>bestFish.inches) bestFish={name:t.name,inches,pounds};
+  saveStats(); updateCounter();
 
-  statusText.textContent = "🎉 Nice catch! You landed a " + t.name + "!";
-  castBtn.style.display = "none";
-  reelBtn.style.display = "none";
-  releaseBtn.style.display = "block";
+  let rarity="Common", title="FISH CAUGHT!";
+  if(inches>=28||t.rarity<.3){rarity="Legendary"; title="LEGENDARY CATCH!";}
+  else if(inches>=22||t.rarity<.5){rarity="Trophy"; title="TROPHY FISH!";}
+  else if(t.rarity<.7){rarity="Rare"; title="NICE CATCH!";}
 
-  catchEmoji.textContent = t.emoji;
-  document.getElementById("catch-title").textContent =
-    inches >= 28 ? "LEGENDARY CATCH!" : inches >= 22 ? "TROPHY FISH!" : "FISH CAUGHT!";
-  catchDetails.innerHTML =
-    `<strong>Species:</strong> ${t.name}<br>` +
-    `<strong>Length:</strong> ${inches} in<br>` +
-    `<strong>Est. weight:</strong> ${pounds.toFixed(1)} lbs<br>` +
-    `<strong>Total catches:</strong> ${catches}<br>` +
+  statusText.textContent=`🎉 ${title} You landed a ${t.name}!`;
+  castBtn.style.display="none"; reelBtn.style.display="none"; releaseBtn.style.display="block";
+  catchEmoji.textContent=t.emoji;
+  document.getElementById("catch-title").textContent=title;
+  catchDetails.innerHTML=
+    `<strong>Species:</strong> ${t.name}<br>`+
+    `<strong>Length:</strong> ${inches} in<br>`+
+    `<strong>Est. weight:</strong> ${pounds.toFixed(1)} lbs<br>`+
+    `<strong>Rarity:</strong> ${rarity}<br>`+
+    `<strong>Total catches:</strong> ${catches}<br>`+
     `<strong>Total weight:</strong> ${totalWeight.toFixed(1)} lbs`;
-  catchCard.style.display = "block";
+  catchCard.style.display="block";
 }
 
-function loseFish(msg) {
+function loseFish(msg){
   clearAllTimers();
-  if (targetFish) { targetFish.hooked = false; targetFish = null; }
-  state = "idle";
-  reelProgress = 0;
-  castBtn.style.display = "block";
-  castBtn.disabled = false;
-  reelBtn.style.display = "none";
-  releaseBtn.style.display = "none";
-  statusText.textContent = msg;
+  if(targetFish){targetFish.hooked=false;targetFish=null;}
+  state="idle"; reelProgress=0;
+  castBtn.style.display="block"; castBtn.disabled=false;
+  reelBtn.style.display="none"; releaseBtn.style.display="none";
+  statusText.textContent=msg;
 }
 
-keepFishingBtn.addEventListener("click", closeCatch);
-releaseBtn.addEventListener("click", closeCatch);
-function closeCatch() {
-  catchCard.style.display = "none";
-  if (targetFish) {
-    targetFish.caught = true;
-    targetFish.hooked = false;
-    targetFish = null;
-  }
-  if (fish.filter(f => !f.caught).length < 7) createFish();
-  state = "idle";
-  reelProgress = 0;
-  castBtn.style.display = "block";
-  castBtn.disabled = false;
-  reelBtn.style.display = "none";
-  releaseBtn.style.display = "none";
-  statusText.textContent = "Ready for another cast? Let's catch a bigger one!";
+keepFishingBtn.addEventListener("click",closeCatch);
+releaseBtn.addEventListener("click",closeCatch);
+function closeCatch(){
+  catchCard.style.display="none";
+  if(targetFish){targetFish.caught=true;targetFish.hooked=false;targetFish=null;}
+  if(fish.filter(f=>!f.caught).length<7) createFish();
+  state="idle"; reelProgress=0;
+  castBtn.style.display="block"; castBtn.disabled=false;
+  reelBtn.style.display="none"; releaseBtn.style.display="none";
+  statusText.textContent="Ready for another cast? Let's catch a bigger one!";
 }
 
-function updateCounter() {
-  fishCounter.textContent = "Catches: " + catches;
-}
-
-window.addEventListener("resize", () => {
-  if (gameScreen.style.display === "flex") resize();
+logBtn.addEventListener("click",()=>{
+  logContent.innerHTML=
+    `<strong>Total catches:</strong> ${catches}<br>`+
+    `<strong>Total weight:</strong> ${totalWeight.toFixed(1)} lbs<br>`+
+    `<strong>Best fish:</strong> ${bestFish.name}<br>`+
+    (bestFish.inches?`${bestFish.inches} in / ${bestFish.pounds.toFixed(1)} lbs`:"—");
+  logModal.style.display="block";
 });
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) {
-    clearTimeout(biteTimer); biteTimer = null;
-    clearTimeout(escapeTimer); escapeTimer = null;
-  }
+closeLogBtn.addEventListener("click",()=>logModal.style.display="none");
+
+function updateCounter(){ fishCounter.textContent="Catches: "+catches; }
+
+window.addEventListener("resize",()=>{if(gameScreen.style.display==="flex") resize();});
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden){clearTimeout(biteTimer);biteTimer=null;clearTimeout(escapeTimer);escapeTimer=null;}
 });
 })();
 </script>
