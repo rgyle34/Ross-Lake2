@@ -23,7 +23,7 @@
     box-shadow: 0 0 20px #0ff, inset 0 0 20px #003;
     max-width: 100%;
     max-height: 100vh;
-    touch-action: none; /* prevent browser gestures */
+    touch-action: none;
   }
   #ui {
     position: absolute;
@@ -58,11 +58,50 @@
     box-shadow: 0 0 10px #0ff;
   }
   button:hover { background: #fff; }
+  #titleScreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 10, 0.85);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 30;
+    color: #0ff;
+    text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+    cursor: pointer;
+    touch-action: none;
+  }
+  #titleScreen h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    animation: glow 1.5s ease-in-out infinite alternate;
+  }
+  #titleScreen p {
+    font-size: 1.5rem;
+    animation: blink 1.2s infinite;
+  }
+  @keyframes glow {
+    from { text-shadow: 0 0 10px #0ff; }
+    to { text-shadow: 0 0 20px #0ff, 0 0 30px #0ff; }
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
 </style>
 </head>
 <body>
 <canvas id="game" width="800" height="600"></canvas>
-<div id="ui">
+<div id="titleScreen" onclick="startGame()">
+  <h1>P-Knuckles<br>Space Adventure</h1>
+  <p>Tap to Start</p>
+</div>
+<div id="ui" style="display:none;">
   Score: <span id="score">0</span> | Wave: <span id="wave">1</span> | Lives: <span id="lives">3</span> | Weapon: <span id="weapon">Laser</span>
 </div>
 <div id="gameOver">
@@ -78,11 +117,11 @@ const W = canvas.width;
 const H = canvas.height;
 
 // Game state
-let score = 0, wave = 1, lives = 3, gameOver = false;
+let score = 0, wave = 1, lives = 3, gameOver = false, gameStarted = false;
 let keys = {};
 let currentWeapon = 'laser';
 let weaponTimer = 0;
-const WEAPON_DURATION = 10000; // ms
+const WEAPON_DURATION = 10000;
 
 // Entities
 let player, bullets = [], enemies = [], powerups = [], particles = [], stars = [];
@@ -145,7 +184,6 @@ class Player {
   draw() {
     ctx.save();
     ctx.translate(this.x, this.y);
-    // Ship body
     ctx.fillStyle = '#0ff';
     ctx.shadowBlur = 15;
     ctx.shadowColor = '#0ff';
@@ -155,7 +193,6 @@ class Player {
     ctx.lineTo(15, 20);
     ctx.closePath();
     ctx.fill();
-    // Cockpit
     ctx.fillStyle = '#fff';
     ctx.beginPath();
     ctx.arc(0, -5, 6, 0, Math.PI * 2);
@@ -202,7 +239,6 @@ class Bullet {
     this.x += this.vx;
     this.y += this.vy;
     this.life--;
-    // Trail particles
     if (Math.random() < 0.6) {
       particles.push(new Particle(this.x, this.y, this.color, 2, 15));
     }
@@ -231,7 +267,6 @@ class Bullet {
   explode() {
     if (this.type === 'bomb') {
       createExplosion(this.x, this.y, '#f80', 60);
-      // Damage nearby
       enemies.forEach(e => {
         if (Math.hypot(e.x - this.x, e.y - this.y) < 80) e.hp -= 3;
       });
@@ -257,7 +292,6 @@ class Enemy {
     if (this.y > H + 40) return false;
     this.shootTimer--;
     if (this.shootTimer <= 0 && Math.random() < 0.3) {
-      // Enemy bullets (simple)
       bullets.push(new Bullet(this.x, this.y + 15, 0, 4, '#f00', 'enemy'));
       this.shootTimer = 90 + Math.random() * 60;
     }
@@ -276,7 +310,6 @@ class Enemy {
     ctx.lineTo(15, -10);
     ctx.closePath();
     ctx.fill();
-    // Eyes
     ctx.fillStyle = '#fff';
     ctx.fillRect(-6, -2, 4, 4);
     ctx.fillRect(2, -2, 4, 4);
@@ -383,9 +416,8 @@ function updateUI() {
 }
 
 function gameLoop() {
-  if (gameOver) return;
+  if (!gameStarted || gameOver) return;
 
-  // Stars
   stars.forEach(s => {
     s.y += s.speed;
     if (s.y > H) s.y = 0;
@@ -393,10 +425,8 @@ function gameLoop() {
 
   player.update();
 
-  // Bullets
   bullets = bullets.filter(b => {
     if (!b.update()) return false;
-    // Player bullets hit enemies
     if (b.type !== 'enemy') {
       for (let i = enemies.length - 1; i >= 0; i--) {
         const e = enemies[i];
@@ -411,7 +441,6 @@ function gameLoop() {
         }
       }
     } else {
-      // Enemy bullets hit player
       if (Math.abs(b.x - player.x) < 20 && Math.abs(b.y - player.y) < 20) {
         player.hit();
         return false;
@@ -420,10 +449,8 @@ function gameLoop() {
     return true;
   });
 
-  // Enemies
   enemies = enemies.filter(e => e.update());
 
-  // Powerups
   powerups = powerups.filter(p => {
     if (!p.update()) return false;
     if (Math.abs(p.x - player.x) < 25 && Math.abs(p.y - player.y) < 25) {
@@ -433,10 +460,8 @@ function gameLoop() {
     return true;
   });
 
-  // Particles
   particles = particles.filter(p => p.update());
 
-  // Weapon timer
   if (weaponTimer > 0) {
     weaponTimer -= 16;
     if (weaponTimer <= 0) {
@@ -445,14 +470,12 @@ function gameLoop() {
     }
   }
 
-  // Wave complete
   if (enemies.length === 0 && !gameOver) {
     wave++;
     updateUI();
     spawnWave();
   }
 
-  // Draw
   ctx.fillStyle = 'rgba(0,0,10,0.3)';
   ctx.fillRect(0, 0, W, H);
 
@@ -470,14 +493,28 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 
+function startGame() {
+  if (gameStarted) return;
+  gameStarted = true;
+  document.getElementById('titleScreen').style.display = 'none';
+  document.getElementById('ui').style.display = 'block';
+  player = new Player();
+  updateUI();
+  spawnWave();
+  gameLoop();
+}
+
 function restart() {
   score = 0; wave = 1; lives = 3; gameOver = false;
   currentWeapon = 'laser';
   weaponTimer = 0;
   bullets = []; enemies = []; powerups = []; particles = [];
-  player = new Player();
+  gameStarted = true;
   document.getElementById('gameOver').style.display = 'none';
+  document.getElementById('titleScreen').style.display = 'none';
+  document.getElementById('ui').style.display = 'block';
   document.getElementById('weapon').textContent = 'Laser';
+  player = new Player();
   updateUI();
   spawnWave();
   gameLoop();
@@ -517,11 +554,19 @@ canvas.addEventListener('touchcancel', (e) => {
   touching = false;
 }, { passive: false });
 
-// Start
-player = new Player();
-updateUI();
-spawnWave();
-gameLoop();
+// Keyboard start
+window.addEventListener('keydown', e => {
+  if (!gameStarted && (e.key === ' ' || e.key === 'Enter')) {
+    e.preventDefault();
+    startGame();
+  }
+});
+
+// Touch on title screen
+document.getElementById('titleScreen').addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  startGame();
+}, { passive: false });
 </script>
 </body>
 </html>
