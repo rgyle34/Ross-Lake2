@@ -46,6 +46,21 @@
     display: none;
     z-index: 20;
   }
+  #victoryScreen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #0f0;
+    text-align: center;
+    text-shadow: 0 0 10px #0f0;
+    display: none;
+    z-index: 20;
+    background: rgba(0, 20, 0, 0.8);
+    padding: 30px;
+    border: 2px solid #0f0;
+    box-shadow: 0 0 20px #0f0;
+  }
   button {
     background: #0ff;
     color: #000;
@@ -109,6 +124,11 @@
   <p>Final Score: <span id="finalScore">0</span></p>
   <button onclick="restart()">Restart</button>
 </div>
+<div id="victoryScreen">
+  <h1>LEVEL COMPLETE!</h1>
+  <p>You won P-Knuckle’s phone number:<br><strong>858-245-3935</strong></p>
+  <button onclick="restart()">Play Again</button>
+</div>
 
 <script>
 const canvas = document.getElementById('game');
@@ -118,13 +138,18 @@ const H = canvas.height;
 
 // Game state
 let score = 0, wave = 1, lives = 3, gameOver = false, gameStarted = false;
+let level = 1;
+let bossActive = false;
+let levelWon = false;
 let keys = {};
 let currentWeapon = 'laser';
 let weaponTimer = 0;
 const WEAPON_DURATION = 10000;
+const LEVEL1_WAVES = 2; // Short level 1: 2 waves then boss
 
 // Entities
 let player, bullets = [], enemies = [], powerups = [], particles = [], stars = [];
+let boss = null;
 
 // Stars for background
 for (let i = 0; i < 150; i++) {
@@ -325,6 +350,96 @@ class Enemy {
   }
 }
 
+class Boss {
+  constructor() {
+    this.name = 'R-Gyle';
+    this.x = W / 2;
+    this.y = 80;
+    this.w = 80;
+    this.h = 70;
+    this.hp = 30;
+    this.maxHp = 30;
+    this.speed = 2;
+    this.dir = 1;
+    this.color = '#f44';
+    this.shootTimer = 40;
+    this.phase = 1;
+  }
+  update() {
+    // Side to side movement
+    this.x += this.speed * this.dir;
+    if (this.x < 60 || this.x > W - 60) this.dir *= -1;
+    // Occasional dive
+    if (Math.random() < 0.005) {
+      this.y = Math.min(200, this.y + 20);
+    } else if (this.y > 80) {
+      this.y -= 0.5;
+    }
+
+    this.shootTimer--;
+    if (this.shootTimer <= 0) {
+      // Spread shot
+      for (let i = -2; i <= 2; i++) {
+        bullets.push(new Bullet(this.x, this.y + 30, i * 1.5, 5 + Math.random(), '#f00', 'enemy'));
+      }
+      this.shootTimer = this.hp < 15 ? 30 : 50;
+    }
+    return true;
+  }
+  draw() {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.fillStyle = this.color;
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = this.color;
+    // Larger boss shape
+    ctx.beginPath();
+    ctx.moveTo(0, 35);
+    ctx.lineTo(-40, -20);
+    ctx.lineTo(-20, -30);
+    ctx.lineTo(0, -10);
+    ctx.lineTo(20, -30);
+    ctx.lineTo(40, -20);
+    ctx.closePath();
+    ctx.fill();
+    // Eyes
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(-15, -5, 8, 8);
+    ctx.fillRect(7, -5, 8, 8);
+    ctx.fillStyle = '#f00';
+    ctx.fillRect(-13, -3, 4, 4);
+    ctx.fillRect(9, -3, 4, 4);
+    ctx.restore();
+
+    // Health bar
+    ctx.fillStyle = '#333';
+    ctx.fillRect(this.x - 40, this.y - 50, 80, 8);
+    ctx.fillStyle = '#0f0';
+    ctx.fillRect(this.x - 40, this.y - 50, 80 * (this.hp / this.maxHp), 8);
+    // Name
+    ctx.fillStyle = '#0ff';
+    ctx.font = '14px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(this.name, this.x, this.y - 60);
+  }
+  destroy() {
+    score += 5000;
+    createExplosion(this.x, this.y, this.color, 80);
+    // Extra explosions
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => createExplosion(this.x + (Math.random()-0.5)*60, this.y + (Math.random()-0.5)*40, '#f80', 30), i * 100);
+    }
+  }
+  hit() {
+    this.hp--;
+    if (this.hp <= 0) {
+      this.destroy();
+      return true; // destroyed
+    }
+    return false;
+  }
+}
+
 class Powerup {
   constructor(x, y, type) {
     this.x = x;
@@ -398,14 +513,14 @@ function createExplosion(x, y, color, count) {
 }
 
 function spawnWave() {
-  const count = 5 + wave * 2;
+  const count = level === 1 ? (3 + wave * 2) : (5 + wave * 2); // Shorter for level 1
   for (let i = 0; i < count; i++) {
     setTimeout(() => {
-      if (!gameOver) {
+      if (!gameOver && !levelWon) {
         const x = 50 + Math.random() * (W - 100);
         enemies.push(new Enemy(x, -40, Math.random() < 0.2 ? 'tough' : 'basic'));
       }
-    }, i * 200);
+    }, i * 250);
   }
 }
 
@@ -428,6 +543,7 @@ function gameLoop() {
   bullets = bullets.filter(b => {
     if (!b.update()) return false;
     if (b.type !== 'enemy') {
+      // Check regular enemies
       for (let i = enemies.length - 1; i >= 0; i--) {
         const e = enemies[i];
         if (Math.abs(b.x - e.x) < 20 && Math.abs(b.y - e.y) < 20) {
@@ -440,6 +556,19 @@ function gameLoop() {
           return false;
         }
       }
+      // Check boss
+      if (boss && Math.abs(b.x - boss.x) < 40 && Math.abs(b.y - boss.y) < 35) {
+        b.explode();
+        if (boss.hit()) {
+          boss = null;
+          bossActive = false;
+          // Level 1 complete
+          levelWon = true;
+          gameOver = true; // pause loop
+          document.getElementById('victoryScreen').style.display = 'block';
+        }
+        return false;
+      }
     } else {
       if (Math.abs(b.x - player.x) < 20 && Math.abs(b.y - player.y) < 20) {
         player.hit();
@@ -448,6 +577,11 @@ function gameLoop() {
     }
     return true;
   });
+
+  // Update boss
+  if (boss) {
+    boss.update();
+  }
 
   enemies = enemies.filter(e => e.update());
 
@@ -470,10 +604,17 @@ function gameLoop() {
     }
   }
 
-  if (enemies.length === 0 && !gameOver) {
-    wave++;
-    updateUI();
-    spawnWave();
+  if (enemies.length === 0 && !bossActive && !levelWon && !gameOver) {
+    if (level === 1 && wave >= LEVEL1_WAVES) {
+      // Spawn the boss
+      boss = new Boss();
+      bossActive = true;
+      document.getElementById('wave').textContent = 'BOSS';
+    } else {
+      wave++;
+      updateUI();
+      spawnWave();
+    }
   }
 
   ctx.fillStyle = 'rgba(0,0,10,0.3)';
@@ -487,6 +628,7 @@ function gameLoop() {
   particles.forEach(p => p.draw());
   powerups.forEach(p => p.draw());
   enemies.forEach(e => e.draw());
+  if (boss) boss.draw();
   bullets.forEach(b => b.draw());
   player.draw();
 
@@ -505,12 +647,14 @@ function startGame() {
 }
 
 function restart() {
-  score = 0; wave = 1; lives = 3; gameOver = false;
+  score = 0; wave = 1; lives = 3; gameOver = false; levelWon = false;
+  level = 1; bossActive = false; boss = null;
   currentWeapon = 'laser';
   weaponTimer = 0;
   bullets = []; enemies = []; powerups = []; particles = [];
   gameStarted = true;
   document.getElementById('gameOver').style.display = 'none';
+  document.getElementById('victoryScreen').style.display = 'none';
   document.getElementById('titleScreen').style.display = 'none';
   document.getElementById('ui').style.display = 'block';
   document.getElementById('weapon').textContent = 'Laser';
